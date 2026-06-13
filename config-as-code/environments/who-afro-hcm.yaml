@@ -688,7 +688,7 @@ egov-indexer:
   memory_limits: 768Mi
   hpa:
     enabled: true
-    minReplicas: 4
+    minReplicas: 2
     maxReplicas: 10
     cpuTargetPercentage: 70
     memoryTargetPercentage: 80
@@ -718,7 +718,7 @@ egov-persister:
   replicas: 4
   hpa:
     enabled: true
-    minReplicas: 4
+    minReplicas: 2
     maxReplicas: 10
     cpuTargetPercentage: 70
     memoryTargetPercentage: 80
@@ -875,7 +875,7 @@ gateway:
   memory_limits: 1Gi
   hpa:
     enabled: true
-    minReplicas: 4
+    minReplicas: 2
     maxReplicas: 10
     cpuTargetPercentage: 70
     memoryTargetPercentage: 80
@@ -1003,14 +1003,14 @@ egov-localization:
   image:
     repository: egovio/egov-localization
     tag: redis-localization-key-5c0a4c4
-  replicas: 4
+  replicas: 2
   memory_requests: 512Mi
   memory_limits: 768Mi
   cpu_requests: 200m
   cpu_limits: 300m
   hpa:
     enabled: true
-    minReplicas: 4
+    minReplicas: 2
     maxReplicas: 10
     cpuTargetPercentage: 70
     memoryTargetPercentage: 80
