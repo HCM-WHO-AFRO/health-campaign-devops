@@ -91,7 +91,7 @@ hcm-digit-ui:
     context: "chaduat/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: single-web-app-hcm-digit-ui-6a8fe01
+    tag: HCMPRE-3966-63a053a
   env: |
     - name: COUNTRY_PREFIX
       value: "chaduat"
