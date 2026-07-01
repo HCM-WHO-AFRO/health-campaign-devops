@@ -482,7 +482,7 @@ egov-otp:
         tag: master-1e8d2bb
   image:
     repository: egovio/egov-otp
-    tag: master-1e8d2bb
+    tag: central-instance-28a606e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
