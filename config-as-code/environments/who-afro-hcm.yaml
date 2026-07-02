@@ -1114,7 +1114,7 @@ boundary-service:
         tag: master-1e8d2bb
   image:
     repository: egovio/boundary-service
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
