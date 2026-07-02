@@ -6,17 +6,18 @@ global:
   schema:
     - chad
     - congob
+    - zambia
 
 cluster-configs:
     namespaces:
       create: true
-      values: [ backbone, cert-manager, egov, es-cluster, kafka-kraft, logging, monitoring, playground, zookeeper-cluster, chad, chaduat ]
+      values: [ backbone, cert-manager, egov, es-cluster, kafka-kraft, logging, monitoring, playground, zookeeper-cluster, chad, chaduat, zambia ]
       
     root-ingress:
       cert-issuer: letsencrypt-prod
     configmaps:
         egov-config:
-            namespace: [ egov, es-cluster, monitoring, chad, congob, chaduat ]
+            namespace: [ egov, es-cluster, monitoring, chad, congob, chaduat, zambia ]
             data:
                 db-host: afrohcm-t-euw-server.postgres.database.azure.com ## Add db-host name example: egov-demo.database.azure.com
                 db-name: afrohcm-t-euw-db ## Add db-name
@@ -25,6 +26,7 @@ cluster-configs:
                 chad-db-url: "jdbc:postgresql://afrohcm-t-euw-server.postgres.database.azure.com:5432/afrohcm-t-euw-db?currentSchema=chad"
                 congob-db-url: "jdbc:postgresql://afrohcm-t-euw-server.postgres.database.azure.com:5432/afrohcm-t-euw-db?currentSchema=congob"
                 chaduat-db-url: "jdbc:postgresql://afrohcm-t-euw-server.postgres.database.azure.com:5432/afrohcm-t-euw-db?currentSchema=chaduat"
+                zambia-db-url: "jdbc:postgresql://afrohcm-t-euw-server.postgres.database.azure.com:5432/afrohcm-t-euw-db?currentSchema=zambia"
                 domain: campaigns.afro.who.int ## Add your Domain Name
                 redis-host: "redis.backbone.svc.cluster.local"
                 redis-downsync-host: ""
@@ -34,7 +36,7 @@ cluster-configs:
                 is-environment-central-instance: "true"
                 egov-state-level-tenant-id: "chad"
                 state-level-tenant-id: "chad"
-                kafka-tenant-id-pattern: "chad-|congob-|chaduat-"
+                kafka-tenant-id-pattern: "chad-|congob-|chaduat-|zambia-"
                 s3-assets-bucket: "(pg-health-egov-assets|egov-health-playground-assets)"
                 es-host: "elasticsearch-data.es-cluster"
                 es-host-6: "elasticsearch-data.es-cluster"
@@ -55,12 +57,12 @@ cluster-configs:
                 timezone: "UTC"
                 tracer-errors-provideexceptionindetails: "true"
                 egov-internal-microservice-user-uuid: fa0f820c-49df-46bb-8e62-8a0ec5d9af5e
-                db-schema-names: "chad,congob,chaduat"
+                db-schema-names: "chad,congob,chaduat,zambia"
                 kibana-base-path: kibana-upgrade 
                 kibana-host: "http://kibana-v1.es-upgrade:5601/"
 
         egov-service-host:
-            namespace: [ egov, es-cluster, monitoring, chad, congob, chaduat ]
+            namespace: [ egov, es-cluster, monitoring, chad, congob, chaduat, zambia ]
             data:
               asset-services: "http://asset-services:8080/"
               boundary-management: 'http://boundary-management.egov:8080/'
@@ -86,6 +88,12 @@ cluster-configs:
               congob-census-service: 'http://census-service.congob:8080/'
               congob-project-factory: 'http://project-factory.congob:8080/'
               congob-transformer: 'http://transformer.congob:8080/'
+              zambia-dashboard-analytics: "http://dashboard-analytics.zambia:8080/"
+              zambia-resource-generator: 'http://resource-generator.zambia:8080/'
+              zambia-plan-service: 'http://plan-service.zambia:8080/'
+              zambia-census-service: 'http://census-service.zambia:8080/'
+              zambia-project-factory: 'http://project-factory.zambia:8080/'
+              zambia-transformer: 'http://transformer.zambia:8080/'
               chaduat-dashboard-analytics: "http://dashboard-analytics.chaduat:8080/"
               chaduat-resource-generator: 'http://resource-generator.chaduat:8080/'
               chaduat-plan-service: 'http://plan-service.chaduat:8080/'
@@ -701,7 +709,7 @@ egov-indexer:
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"        ##### Change repo url with Your fork Repo url
       branch: "DEMO"
-  egov-indexer-yaml-repo-path: "/work-dir/health-campaign-config/egov-indexer/chad,/work-dir/health-campaign-config/egov-indexer/congob"
+  egov-indexer-yaml-repo-path: "/work-dir/health-campaign-config/egov-indexer/chad,/work-dir/health-campaign-config/egov-indexer/congob,/work-dir/health-campaign-config/egov-indexer/zambia"
 
 egov-persister:
   image:
@@ -724,7 +732,7 @@ egov-persister:
     memoryTargetPercentage: 80
   images:
     - egovio/egov-persister
-  persist-yml-path: "/work-dir/health-campaign-config/egov-persister/chad,/work-dir/health-campaign-config/egov-persister/congob,/work-dir/health-campaign-config/egov-persister/common"
+  persist-yml-path: "/work-dir/health-campaign-config/egov-persister/chad,/work-dir/health-campaign-config/egov-persister/congob,/work-dir/health-campaign-config/egov-persister/zambia,/work-dir/health-campaign-config/egov-persister/common"
   initContainers:
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"      ##### Change repo url with Your fork Repo url
