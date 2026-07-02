@@ -520,7 +520,7 @@ egov-user:
         tag: feature-sso-impl-1e23b63
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-1e23b63
+    tag: central-instance-99d5967
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
@@ -706,7 +706,7 @@ egov-indexer:
 egov-persister:
   image:
     repository: egovio/egov-persister
-    tag: master-3b238aa
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -866,7 +866,7 @@ zuul:
 gateway:
   image:
     repository: egovio/gateway
-    tag: gatewat-rate-limit-per-route-f808ba0
+    tag: gatewat-rate-limit-per-route-7713c5c
   replicas: 4
   custom-filter-property: "false"
   cpu_requests: 200m
@@ -958,7 +958,7 @@ egov-workflow-v2:
         tag: central-instance-1248cc50e5-38
   image:
     repository: egovio/egov-workflow-v2
-    tag: central-instance-1248cc50e5-38
+    tag: central-instance-28a606e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1023,7 +1023,7 @@ egov-url-shortening:
         tag: master-1e8d2bb
   image:
     repository: egovio/egov-url-shortening
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1155,7 +1155,7 @@ inbox:
 error-handler:
   image:
     repository: egovio/error-handler
-    tag: master-impel-dump-a28582d
+    tag: master-impel-dump-dd15d3a
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1217,7 +1217,7 @@ facility:
         tag: master-b91815e
   image:
     repository: egovio/facility
-    tag: master-b91815e
+    tag: master-1ffeec1
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
