@@ -335,7 +335,7 @@ egov-filestore:
         tag: master-1e8d2bb
   image:
     repository: egovio/egov-filestore
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -368,7 +368,7 @@ egov-idgen:
         tag: master-1e8d2bb
   image:
     repository: egovio/egov-idgen
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -619,8 +619,8 @@ egov-malware-detection:
         repository: "egov-malware-detection-db"
         tag: 2.9.4-malware-detection-master-d07ae66
   image:
-    repository: "egov-malware-detection"
-    tag: 2.9.4-malware-detection-master-d07ae66
+    repository: "egovio/egov-malware-detection"
+    tag: base-docker-upgrade-f2da0a7
   namespace: egov
   central-instance-name: egov
   central-instance-build: true
@@ -677,7 +677,7 @@ boundary-management:
 egov-indexer:
   image:
     repository: egovio/egov-indexer
-    tag: indexer-17-searchBody-1799f17903-57
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -977,7 +977,7 @@ egov-hrms:
         tag: master-b91815e
   image:
     repository: egovio/egov-hrms
-    tag: master-b91815e
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1002,7 +1002,7 @@ egov-localization:
         tag: redis-localization-key-5c0a4c4
   image:
     repository: egovio/egov-localization
-    tag: redis-localization-key-5c0a4c4
+    tag: base-docker-upgrade-f2da0a7
   replicas: 2
   memory_requests: 512Mi
   memory_limits: 768Mi
@@ -1031,7 +1031,7 @@ egov-url-shortening:
 egov-notification-mail:
   image:
     repository: egovio/egov-notification-mail
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1176,7 +1176,7 @@ egov-enc-service:
         tag: central-instance-e346023dcb-26
   image:
     repository: egovio/egov-enc-service
-    tag: central-instance-e346023dcb-26
+    tag: central-instance-12bfc75
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1187,7 +1187,7 @@ egov-enc-service:
 egov-accesscontrol:
   image:
     repository: egovio/egov-accesscontrol
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
