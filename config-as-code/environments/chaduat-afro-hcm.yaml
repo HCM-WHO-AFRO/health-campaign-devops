@@ -91,7 +91,7 @@ hcm-digit-ui:
     context: "chaduat/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: HCMPRE-3966-5b1abd7
+    tag: vapt-single-web-2dfd36c
   env: |
     - name: COUNTRY_PREFIX
       value: "chaduat"
@@ -151,7 +151,7 @@ dashboard-ui:
   namespace: chaduat  
   image:
     repository: egovio/dashboard-ui
-    tag: HDDF-4931-6873013
+    tag: vapt-single-web-2bb19c0
   ingress:
     enabled: true
     context: "dashboard-ui"
