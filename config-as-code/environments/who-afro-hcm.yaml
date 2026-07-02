@@ -177,7 +177,7 @@ microplan-ui:
   namespace: egov
   image:
     repository: egovio/microplan-ui
-    tag: console-56ef678
+    tag: VAPT-pdfjs-fix-86a9e07-b9d6b21
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -211,7 +211,7 @@ payments-ui:
   namespace: egov
   image:
     repository: egovio/payments-ui
-    tag: HDDF-4931-2e2ecfd
+    tag: VAPT-pdfjs-fix-payments-dcd65c2
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -409,7 +409,7 @@ household:
         tag: vapt-docker-changes-ee5a31f
   image:
     repository: egovio/household
-    tag: master-b91815e
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -889,8 +889,8 @@ gateway:
 
 internal-gateway-scg:
   image:
-    repository: "internal-gateway-scg"
-    tag: 2.9-LTS-internal-gateway-cdac11d
+    repository: "egovio/internal-gateway-scg"
+    tag: 2.9-LTS-internal-gateway-c1856da
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1045,7 +1045,7 @@ mdms-v2:
         tag: central-instance-mdms-2-944672d
   image:
     repository: egovio/mdms-v2
-    tag: central-instance-mdms-2-944672d
+    tag: central-instance-28a606e
   ingress:
     replenishRate: "10"
     burstCapacity: "60"
@@ -1249,7 +1249,7 @@ individual:
         tag: master-b91815e
   image:
     repository: egovio/individual
-    tag: master-b91815e
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1419,7 +1419,7 @@ attendance:
         tag: master-6b124f9
   image:
     repository: egovio/health-attendance
-    tag: HCMPRE-1870-DataAccessErrorHandling-a7b1e6b
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1475,7 +1475,7 @@ muster-roll:
         tag: master-6b124f9
   image:
     repository: egovio/health-muster-roll
-    tag: master-89c74d7
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1714,7 +1714,7 @@ health-attendance:
         tag: master-6b124f9
   image:
     repository: egovio/health-attendance
-    tag: HCMPRE-1870-DataAccessErrorHandling-a7b1e6b
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1741,7 +1741,7 @@ health-muster-roll:
         tag: master-6b124f9
   image:
     repository: egovio/health-muster-roll
-    tag: master-89c74d7
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
