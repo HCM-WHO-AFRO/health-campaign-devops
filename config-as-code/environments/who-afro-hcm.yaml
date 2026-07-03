@@ -5,6 +5,7 @@ global:
     - campaigns.afro.who.int
   schema:
     - chad
+    - chaduat
     - congob
     - zambia
 
@@ -709,7 +710,7 @@ egov-indexer:
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"        ##### Change repo url with Your fork Repo url
       branch: "DEMO"
-  egov-indexer-yaml-repo-path: "/work-dir/health-campaign-config/egov-indexer/chad,/work-dir/health-campaign-config/egov-indexer/congob,/work-dir/health-campaign-config/egov-indexer/zambia"
+  egov-indexer-yaml-repo-path: "/work-dir/health-campaign-config/egov-indexer/chad,/work-dir/health-campaign-config/egov-indexer/chaduat,/work-dir/health-campaign-config/egov-indexer/congob,/work-dir/health-campaign-config/egov-indexer/zambia"
 
 egov-persister:
   image:
@@ -732,7 +733,7 @@ egov-persister:
     memoryTargetPercentage: 80
   images:
     - egovio/egov-persister
-  persist-yml-path: "/work-dir/health-campaign-config/egov-persister/chad,/work-dir/health-campaign-config/egov-persister/congob,/work-dir/health-campaign-config/egov-persister/zambia,/work-dir/health-campaign-config/egov-persister/common"
+  persist-yml-path: "/work-dir/health-campaign-config/egov-persister/chad,/work-dir/health-campaign-config/egov-persister/chaduat,/work-dir/health-campaign-config/egov-persister/congob,/work-dir/health-campaign-config/egov-persister/zambia,/work-dir/health-campaign-config/egov-persister/common"
   initContainers:
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"      ##### Change repo url with Your fork Repo url
