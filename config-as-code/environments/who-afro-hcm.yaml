@@ -1239,10 +1239,10 @@ project:
     dbMigration:
       image:
         repository: egovio/project-db
-        tag: master-1ffeec1
+        tag: master-1ffeec1-rebuild-1ffeec1
   image:
     repository: egovio/project
-    tag: master-1ffeec1
+    tag: master-1ffeec1-rebuild-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
