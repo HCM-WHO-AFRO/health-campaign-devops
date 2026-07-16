@@ -10,21 +10,10 @@ spec:
           - name: project-factory
           - name: transformer
           - name: resource-generator
-          - name: plan-service
           - name: excel-ingestion
           - name: census-service
           - name: auth-proxy
           - name: health-expense-calculator
-          - name: health-expense
-          - name: health-muster-roll
-          - name: health-attendance
-          - name: product
-          - name: household
-          - name: beneficiary-idgen
-          - name: referralmanagement
-          - name: individual
-          - name: stock
-          - name: facility
 
   template:
     metadata:

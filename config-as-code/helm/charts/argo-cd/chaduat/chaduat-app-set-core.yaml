@@ -7,8 +7,6 @@ spec:
   generators:
     - list:
         elements:
-          - name: service-request
-          - name: pgr-services
 
   template:
     metadata:
