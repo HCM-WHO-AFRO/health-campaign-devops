@@ -172,7 +172,10 @@ env: |
   - name: REDIS_PORT
     value: "6379"
   - name: REDIS_HOST
-    value: "redis.backbone"
+    valueFrom:
+      configMapKeyRef:
+        name: egov-config
+        key: redis-host
   - name: AUTO_RETRY_IF_HTTP_ERROR
     value: "socket hang up"
   - name: EXCLUDE_HIERARCHY_TYPE_FROM_BOUNDARY_CODES

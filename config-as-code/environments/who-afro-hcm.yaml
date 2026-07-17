@@ -12,7 +12,7 @@ global:
 cluster-configs:
     namespaces:
       create: true
-      values: [ backbone, cert-manager, egov, es-cluster, kafka-kraft, logging, monitoring, playground, zookeeper-cluster, chad, chaduat, zambia ]
+      values: [ backbone, cert-manager, egov, es-cluster, kafka-kraft, logging, monitoring, playground, zookeeper-cluster, chad, chaduat, congob, zambia ]
       
     root-ingress:
       cert-issuer: letsencrypt-prod
@@ -37,6 +37,8 @@ cluster-configs:
                 is-environment-central-instance: "true"
                 egov-state-level-tenant-id: "chad"
                 state-level-tenant-id: "chad"
+                boundary-hierarchy: "ADMIN"
+                boundary-hierarchy-chad: "POLIO_CHAD"
                 kafka-tenant-id-pattern: "chad-|congob-|chaduat-|zambia-"
                 s3-assets-bucket: "(pg-health-egov-assets|egov-health-playground-assets)"
                 es-host: "elasticsearch-data.es-cluster"
@@ -113,6 +115,9 @@ cluster-configs:
               egov-enc-service: "http://egov-enc-service.egov:8080/"
               egf-voucher-workflow: "http://egf-voucher-workflow.egov:8080/"
               egov-accesscontrol: "http://egov-accesscontrol.egov:8080/"
+              egov-notification-mail: "http://egov-notification-mail.egov:8080/"
+              egov-notification-push: "http://egov-notification-push.egov:8080/"
+              health-notification-service: "http://health-notification-service.egov:8080/"
               egov-user: "http://egov-user.egov:8080/"
               egov-user-egov: "http://egov-user.egov:8080/"
               egov-location: "http://egov-location.egov:8080/"
@@ -146,6 +151,7 @@ cluster-configs:
               product: "http://product.egov:8080/"
               household: "http://household.egov:8080/"
               individual: "http://individual.egov:8080/"
+              worker-registry-host: "http://worker-registry.egov:8080/"
               stock: "http://stock.egov:8080/"
               facility: "http://facility.egov:8080/"
               service-request: "http://service-request.egov:8080/"
@@ -409,6 +415,11 @@ pgr-services:
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
 
 household:
   initContainers:
@@ -452,6 +463,11 @@ service-request:
   memory_limits: 512Mi
   cpu_requests: 100m
   cpu_limits: 300m
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 referralmanagement:
   initContainers:
@@ -469,6 +485,13 @@ referralmanagement:
   heap: "-Xmx384m -Xms384m"
   egov-mdms-service-host-key: 'mdms-service-v2'
   egov-mdms-service-endpoint-key: "/mdms-v2/v1/_search"
+  spring-datasource-tomcat-max-active: "5"
+  server-tomcat-max-threads: "10"
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 stock:
   initContainers:
@@ -481,7 +504,12 @@ stock:
     tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
-  central-instance-enabled: true 
+  central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 egov-otp:
   initContainers:
@@ -614,6 +642,11 @@ audit-service:
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
   persist-yml-path: "https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/works/egov-persister/attendance-service-persister.yml,https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/works/egov-persister/muster-service-persister.yml,https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/works/egov-persister/estimate-service.yml,https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/works/egov-persister/contract-service-persister.yml,https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/works/egov-persister/bankaccounts-persister.yml,https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/works/egov-persister/expense-bill-payment-persister.yaml,https://raw.githubusercontent.com/egovernments/configs/UNIFIED-DEV/egov-persister/mdms-persister.yml,https://raw.githubusercontent.com/HCM-WHO-AFRO/health-campaign-config/DEMO/egov-persister/boundary-persister.yml"
 
 egov-pg-service:
@@ -682,6 +715,11 @@ boundary-management:
   defaultTenantId: 'chad'
   validateCampaignIdInMetadata: 'false'
   replicas: 1
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 egov-indexer:
   image:
@@ -869,6 +907,11 @@ zuul:
   heap: "-Xmx704m -Xms512m"
   server-tomcat-max-threads: "350"
   server-tomcat-max-connections: "1500"
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
   egov-open-endpoints-whitelist: "/user/oauth/token,/user-otp/v1/_send,/otp/v1/_validate,/user/citizen/_create,/localization/messages,/localization/messages/v1/_search,/user/password/nologin/_update,/pgr/servicedefinition/v1/_search,/pgr/servicecategories/v1/_search,/pgr/v1/otp/_send,/pgr-master/receivingmode/v1/_search,/tenant/v1/tenant/_search,/egov-location/boundarys,/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName,/pgr-master/service/v1/_search,/egov-location/boundarys/getLocationByLocationName,/pgr-master/OTPConfig/_search,/pgr-master/serviceGroup/v1/_search,/egov-location/boundarys/isshapefileexist,/pgr/services/v1/_search,/hr-masters/hrconfigurations/_search,/collection-services/receipts/_view,/pgr-master/service/v2/_search,/pgr-master/servicedefinition/v1/_search,/citizen-services,/citizen-services/v1/requests/receipt/_create,/citizen-services/v1/pgresponse,/citizen-services/v1/requests/anonymous/_search,/egov-mdms-service/v1/_search,/egov-mdms-service/v1/_get,/egov-mdms-service/v1/_reload,/egov-mdms-service/v1/_reloadobj,/egov-location/boundarys/getshapefile,/egov-indexer/index-operations/_index,/egov-indexer/index-operations/_reload,/egov-mdms-service-test/v1/_search,/egov-mdms-create/v1/_update,/egov-mdms-create/v1/_create,/egov-mdms-service-test/v1/_reload,/filestore/v1/files/url,/egov-url-shortening,/whatsapp-webhook/messages,/edcr/rest/dcr/downloadfile,/dashboard-ingest/ingest/upload,/egov-searcher/water-services/wateropensearch/_get,/egov-searcher/sewerage-services/sewerageopensearch/_get,/xstate-chatbot/status,/xstate-chatbot/reminder,/nlp-engine/fuzzy/city,/nlp-engine/fuzzy/locality,/mdms-v2/schema/v1/_search,/mdms-v2/v2/_search,/mdms-v2/v2/_create,/mdms-v2/v1/_search,/mdms-v2/v2/_create/ACCESSCONTROL-ACTIONS-TEST.actions-test,/mdms-v2/v2/_create/ACCESSCONTROL-ROLES.roles,/mdms-v2/v2/_create/ACCESSCONTROL-ROLEACTIONS.roleactions,/mdms-v2/v2/_create,/boundary-service/boundary/_search"
   egov-mixed-mode-endpoints-whitelist: "/pgr/seva/v1/_create,/pgr/seva/v1/_search,/pgr/seva/v1/_count,/workflow/history/v1/_search,/filestore/v1/files/id,/filestore/v1/files,/filestore/v1/files/tag,/egov-common-masters/departments/_search,/pt-property/property/propertytypes/_search,/pt-property/properties/_search,/pt-property/property/usages/_search,/egov-idgen/id/_generate,/egf-masters/financialyears/_search,/egov-common-workflows/process/_start,/egov-common-workflows/process/_search,/egov-common-workflows/tasks,/egov-common-workflows/tasks/{id}/_update,/user/_search,/billing-service/demand/_dues,/billing-service/bill/_generate,/billing-service/demand/_create,/wcms/masters/waterchargesconfig/_search,/wcms/masters/usagetypes/_search,/wcms/masters/pipesizes/_search,/wcms-connection/connection/_getbillingtypes,/wcms-connection/connection/_getconnectiontypes,/wcms/masters/sourcetypes/_search,/wcms/masters/supplytypes/_search,/wcms/masters/storagereservoirs/_search,/wcms/masters/treatmentplants/_search,/wcms/masters/documenttypes-applicationtypes/_search,/wcms/masters/donations/_search,/wcms/masters/nonmeterwaterrates/_search,/wcms-connection/connection/_create,/egov-common-masters/genders/_search,/egov-common-workflows/designations/_search,/access/v1/actions/mdms/_get,/tl-services/v1/BPAREG/_create,/tl-services/v1/BPAREG/_update,/tl-calculator/v1/BPAREG/_getbill,/property-services/property/_search,/billing-service/bill/v2/_search,/egov-location/location/v11/boundarys/_search,/pg-service/transaction/v1/_create,/collection-services/payments/_search,/pdf-service/v1/_create,/billing-service/bill/v2/_fetchbill,/pg-service/transaction/v1/_update,/ws-services/wc/_search,/sw-services/swc/_search,/edcr/rest/dcr/scrutinydetails,/edcr/rest/dcr/occomparison,/egov-pdf/download/PAYMENT/consolidatedreceipt,/collection-services/payments/PT/_search,/collection-services/payments/WS/_search,/collection-services/payments/SW/_search,/collection-services/payments/WS.ONE_TIME_FEE/_search,/collection-services/payments/SW.ONE_TIME_FEE/_search,/turn-io-adapter/_transform,/egov-user-event/v1/events/_search"
 
@@ -977,6 +1020,11 @@ egov-workflow-v2:
   workflow-statelevel: "false"
   host-link: "https://egov-demo.egovernments.org/citizen/"
   pdf-link: "/download/epass?tenantId={TENANTID}&ids={UUID}"
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
 
 egov-hrms:
   initContainers:
@@ -995,6 +1043,11 @@ egov-hrms:
   heap: '-Xmx512m -Xms256m'
   memory_limits: 512Mi
   employee-applink: "https://egov-demo.egovernments.org/employee/user/login"
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 
 egov-weekly-impact-notifier:
@@ -1128,6 +1181,11 @@ boundary-service:
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
 
 excel-ingestion:
   initContainers:
@@ -1146,6 +1204,11 @@ transformer:
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 user-otp:
   image:
@@ -1169,6 +1232,11 @@ error-handler:
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 dss-dashboard:
   image:
@@ -1193,6 +1261,11 @@ egov-enc-service:
   replicas: 1
   heap: '-Xmx512m -Xms256m'
   memory_limits: 512Mi
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
 
 egov-accesscontrol:
   image:
@@ -1234,6 +1307,11 @@ facility:
   replicas: 1
   heap: '-Xmx512m -Xms256m'
   memory_limits: 512Mi
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 project:
   initContainers:
@@ -1250,6 +1328,11 @@ project:
   replicas: 1
   memory_limits: 768Mi
   heap: '-Xmx768m -Xms512m'
+  hpa:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    cpuTargetPercentage: 70
 
 individual:
   initContainers:
@@ -1295,6 +1378,11 @@ product:
   heap: "-Xmx512m -Xms256m"
   replicas: 1
   memory_limits: 512Mi
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 beneficiary-idgen:
   initContainers:
@@ -1357,6 +1445,11 @@ beneficiary-idgen:
   heap: "-Xmx768m -Xms256m"
   memory_limits: "1Gi"
   cpu_limits: "300m"
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 project-factory:
   initContainers:
@@ -1378,6 +1471,11 @@ project-factory:
   mdmsV1SearchEndpoint: 'mdms-v2/v1/_search'
   validateCampaignIdInMetadata: 'true'
   notCreateUserIfAlreadyThere: 'true'
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 plan-service:
   replicas: 0
@@ -1728,6 +1826,11 @@ health-attendance:
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 health-expense:
   replicas: 0
@@ -1755,21 +1858,68 @@ health-muster-roll:
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 egov-notification-push:
+  initContainers:
+    dbMigration:
+      image:
+        repository: egovio/egov-notification-push-db
+        tag: nigeria-go-deep-push-notification-batch-7d2ba39
+  image:
+    repository: egovio/egov-notification-push
+    tag: nigeria-go-deep-push-notification-batch-7d2ba39
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  heap: "-Xmx1296m -Xms1024m"
+  cpu_requests: 200m
+  memory_requests: 1.5Gi
+  cpu_limits: 600m
+  memory_limits: 2Gi
 
 health-notification-service:
+  initContainers:
+    dbMigration:
+      image:
+        repository: egovio/health-notification-service-db
+        tag: health-notification-service-cache-ca7303e
+  image:
+    repository: egovio/health-notification-service
+    tag: health-notification-service-cache-ca7303e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  heap: "-Xmx1024m -Xms512m"
+  cpu_requests: 100m
+  memory_requests: 768Mi
+  cpu_limits: 300m
+  memory_limits: 1296Mi
 
 worker-registry:
+  initContainers:
+    dbMigration:
+      image:
+        repository: egovio/worker-registry-db
+        tag: customize-2.0-worker-registry-8fce267
+  image:
+    repository: egovio/worker-registry
+    tag: customize-2.0-worker-registry-8fce267
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  heap: "-Xmx512m -Xms256m"
+  cpu_requests: 200m
+  memory_requests: 368Mi
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 auth-proxy:
   image:

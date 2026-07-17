@@ -140,14 +140,10 @@ env: |
         key: home-isolation-chatbot
   {{- end }}
   - name: SPRING_DATA_REDIS_HOST     
-  {{- if index .Values "cluster-configs" "configmaps" "egov-service-host" "data" "redis-host" }}   
     valueFrom:
       configMapKeyRef:
-        name: egov-service-host
-        key: redis-host   
-  {{- else }}
-    value: "redis.backbone"
-  {{- end }}
+        name: egov-config
+        key: redis-host
   - name: SPRING_CODEC_MAX_IN_MEMORY_SIZE
     value: "4194304"
   - name: SPRING_CLOUD_GATEWAY_DEFAULT_FILTERS_0_NAME

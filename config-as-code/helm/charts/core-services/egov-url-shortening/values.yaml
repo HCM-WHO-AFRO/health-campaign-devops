@@ -40,7 +40,10 @@ env: |
         key: tracer-errors-provideexceptionindetails
   {{- end }}
   - name: SPRING_REDIS_HOST
-    value: redis.backbone
+    valueFrom:
+      configMapKeyRef:
+        name: egov-config
+        key: redis-host
   - name: SPRING_REDIS_PORT
     value: "6379"
   - name: SERVER_CONTEXT_PATH

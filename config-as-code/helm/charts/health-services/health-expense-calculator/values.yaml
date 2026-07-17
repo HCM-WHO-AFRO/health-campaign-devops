@@ -181,7 +181,10 @@ env: |
     value: {{ index .Values "bill-generation-async-topic" | quote }}
   {{- end }}
   - name: SPRING_DATA_REDIS_HOST
-    value: redis.backbone
+    valueFrom:
+      configMapKeyRef:
+        name: egov-config
+        key: redis-host
   - name: SPRING_DATA_REDIS_PORT
     value: "6379"
   {{- if index .Values "spring-kafka-producer-properties-max-request-size" }}

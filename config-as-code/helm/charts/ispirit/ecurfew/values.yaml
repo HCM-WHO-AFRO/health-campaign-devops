@@ -138,11 +138,17 @@ env: |
   - name: SECURITY_REQUIRE_SSL
     value: "false" 
   - name: SPRING_REDIS_HOST
-    value: redis.backbone
+    valueFrom:
+      configMapKeyRef:
+        name: egov-config
+        key: redis-host
   - name: SPRING_REDIS_PORT
     value: "6379"
   - name: REDISHOST
-    value: redis.backbone
+    valueFrom:
+      configMapKeyRef:
+        name: egov-config
+        key: redis-host
   - name: REDISPORT
     value: "6379"            
   - name: SPRING_DATASOURCE_TOMCAT_MAX_ACTIVE
