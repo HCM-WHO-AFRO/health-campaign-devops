@@ -491,10 +491,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: "health-expense-calculator-db"
-        tag: nigeria-go-deep-3fa1c21
+        tag: master-cdc5957
   image:
     repository: egovio/health-expense-calculator
-    tag: nigeria-go-deep-3fa1c21
+    tag: master-cdc5957
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "chaduat-health-expense-calculator"
@@ -548,10 +548,10 @@ health-expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: nigeria-go-deep-verify-fix-7d34fd7
+        tag: master-cdc5957
   image:
     repository: egovio/health-expense
-    tag: nigeria-go-deep-verify-fix-7d34fd7
+    tag: master-cdc5957
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -576,10 +576,10 @@ health-muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: nigeria-go-deep-report-fix-efa6316
+        tag: master-cdc5957
   image:
     repository: egovio/health-muster-roll
-    tag: nigeria-go-deep-report-fix-efa6316
+    tag: master-cdc5957
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -603,10 +603,10 @@ health-attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: nigeria-go-deep-3df8cd8
+        tag: master-cdc5957
   image:
     repository: egovio/health-attendance
-    tag: nigeria-go-deep-3df8cd8
+    tag: master-cdc5957
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:

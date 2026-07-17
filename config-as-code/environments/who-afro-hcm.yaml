@@ -1426,10 +1426,10 @@ attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: nigeria-go-deep-3df8cd8
+        tag: master-cdc5957
   image:
     repository: egovio/health-attendance
-    tag: nigeria-go-deep-3df8cd8
+    tag: master-cdc5957
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1443,10 +1443,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: egovio/health-expense-calculator-db
-        tag: nigeria-go-deep-3fa1c21
+        tag: master-cdc5957
   image:
     repository: egovio/health-expense-calculator
-    tag: nigeria-go-deep-3fa1c21
+    tag: master-cdc5957
   tracing-enabled: true
   java-enable-debug: true
   egov-mdms-service-endpoint-key: "/mdms-v2/v1/_search"
@@ -1462,10 +1462,10 @@ expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: nigeria-go-deep-verify-fix-7d34fd7
+        tag: master-cdc5957
   image:
     repository: egovio/health-expense
-    tag: nigeria-go-deep-verify-fix-7d34fd7
+    tag: master-cdc5957
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1482,10 +1482,10 @@ muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: nigeria-go-deep-report-fix-efa6316
+        tag: master-cdc5957
   image:
     repository: egovio/health-muster-roll
-    tag: nigeria-go-deep-report-fix-efa6316
+    tag: master-cdc5957
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1721,10 +1721,10 @@ health-attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: nigeria-go-deep-3df8cd8
+        tag: master-cdc5957
   image:
     repository: egovio/health-attendance
-    tag: nigeria-go-deep-3df8cd8
+    tag: master-cdc5957
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1735,10 +1735,10 @@ health-expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: nigeria-go-deep-verify-fix-7d34fd7
+        tag: master-cdc5957
   image:
     repository: egovio/health-expense
-    tag: nigeria-go-deep-verify-fix-7d34fd7
+    tag: master-cdc5957
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1748,10 +1748,10 @@ health-muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: nigeria-go-deep-report-fix-efa6316
+        tag: master-cdc5957
   image:
     repository: egovio/health-muster-roll
-    tag: nigeria-go-deep-report-fix-efa6316
+    tag: master-cdc5957
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true

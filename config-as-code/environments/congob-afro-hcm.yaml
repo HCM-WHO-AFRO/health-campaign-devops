@@ -329,10 +329,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: "health-expense-calculator-db"
-        tag: nigeria-go-deep-3fa1c21
+        tag: master-cdc5957
   image:
     repository: egovio/health-expense-calculator
-    tag: nigeria-go-deep-3fa1c21
+    tag: master-cdc5957
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "congob-health-expense-calculator"
