@@ -176,7 +176,7 @@ workbench-ui:
   namespace: egov
   image:
     repository: egovio/workbench-ui
-    tag: HDDF-4931-6fd335c
+    tag: master-4b556da
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -186,7 +186,7 @@ microplan-ui:
   namespace: egov
   image:
     repository: egovio/microplan-ui
-    tag: VAPT-pdfjs-fix-86a9e07-b9d6b21
+    tag: master-88c8318
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -198,7 +198,7 @@ digit-ui:
   namespace: egov
   image:
     repository: egovio/digit-ui
-    tag: v0.0.1-e3046cc-87
+    tag: feature-sso-dev-multiarch-eb9bc14cc2-454
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -220,7 +220,7 @@ payments-ui:
   namespace: egov
   image:
     repository: egovio/payments-ui
-    tag: VAPT-pdfjs-fix-payments-dcd65c2
+    tag: master-a8308ea
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -232,7 +232,7 @@ dashboard-ui:
   
   image:
     repository: egovio/dashboard-ui
-    tag: HDDF-4931-6873013
+    tag: master-a8308ea
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
@@ -341,10 +341,10 @@ egov-filestore:
     dbMigration:
       image:
         repository: egovio/egov-filestore-db
-        tag: master-1e8d2bb
+        tag: master-filestore-fix-5e0acbc
   image:
     repository: egovio/egov-filestore
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-filestore-fix-5e0acbc
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -377,7 +377,7 @@ egov-idgen:
         tag: master-1e8d2bb
   image:
     repository: egovio/egov-idgen
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-1e8d2bb
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -402,10 +402,10 @@ pgr-services:
     dbMigration:
       image:
         repository: egovio/pgr-services-db
-        tag: master-1ffeec1
+        tag: master-7ce35df
   image:
     repository: egovio/pgr-services
-    tag: master-1ffeec1
+    tag: master-7ce35df
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -415,10 +415,10 @@ household:
     dbMigration:
       image:
         repository: egovio/household-db
-        tag: vapt-docker-changes-ee5a31f
+        tag: master-7f8a6b8
   image:
     repository: egovio/household
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -441,10 +441,10 @@ service-request:
     dbMigration:
       image:
         repository: egovio/service-request-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/service-request
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -458,10 +458,10 @@ referralmanagement:
     dbMigration:
       image:
         repository: egovio/referralmanagement-db
-        tag: master-5f6032a
+        tag: master-7f8a6b8
   image:
     repository: egovio/referralmanagement
-    tag: master-5f6032a
+    tag: master-7f8a6b8
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -475,10 +475,10 @@ stock:
     dbMigration:
       image:
         repository: egovio/stock-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/stock
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true 
@@ -488,10 +488,10 @@ egov-otp:
     dbMigration:
       image:
         repository: egovio/egov-otp-db
-        tag: master-1e8d2bb
+        tag: central-instance-a0fc793059-8
   image:
     repository: egovio/egov-otp
-    tag: central-instance-28a606e
+    tag: central-instance-a0fc793059-8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -501,7 +501,7 @@ egov-otp:
 egov-notification-sms:
   image:
     repository: egovio/egov-notification-sms
-    tag: sandbox-d760d6b
+    tag: DIGIT-2.9-LTS-07f47790b8-7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -626,10 +626,10 @@ egov-malware-detection:
       schemaTable: "egov_malware_schema"
       image:
         repository: "egov-malware-detection-db"
-        tag: 2.9.4-malware-detection-master-d07ae66
+        tag: master-d69ce29
   image:
     repository: "egovio/egov-malware-detection"
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-d69ce29
   namespace: egov
   central-instance-name: egov
   central-instance-build: true
@@ -686,7 +686,7 @@ boundary-management:
 egov-indexer:
   image:
     repository: egovio/egov-indexer
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-1e8d2bb
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -706,7 +706,7 @@ egov-indexer:
     dbMigration:
       image:
         repository: egov-indexer-db
-        tag: indexer-17-searchBody-1799f17903-57
+        tag: master-1e8d2bb
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"        ##### Change repo url with Your fork Repo url
       branch: "DEMO"
@@ -715,7 +715,7 @@ egov-indexer:
 egov-persister:
   image:
     repository: egovio/egov-persister
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-3b238aa
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -755,7 +755,7 @@ egov-searcher:
 dashboard-analytics:
   image:
     repository: egovio/dashboard-analytics
-    tag: analytics-raw-response-transform-dc60b55
+    tag: analytics-raw-response-transform-5f98d99
   ingress:
     name: dashboard-analytics
     namespace: egov
@@ -799,7 +799,7 @@ report:
 pdf-service:
   image:
     repository: egovio/pdf-service
-    tag: multiarch-master-99a308d
+    tag: central-instance-pdf-7b3064f
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -967,7 +967,7 @@ egov-workflow-v2:
         tag: central-instance-1248cc50e5-38
   image:
     repository: egovio/egov-workflow-v2
-    tag: central-instance-28a606e
+    tag: central-instance-1248cc50e5-38
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -983,10 +983,10 @@ egov-hrms:
     dbMigration:
       image:
         repository: egovio/egov-hrms-db
-        tag: master-b91815e
+        tag: master-620d748
   image:
     repository: egovio/egov-hrms
-    tag: master-1ffeec1
+    tag: master-620d748
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1011,7 +1011,7 @@ egov-localization:
         tag: redis-localization-key-5c0a4c4
   image:
     repository: egovio/egov-localization
-    tag: base-docker-upgrade-f2da0a7
+    tag: redis-localization-key-5c0a4c4
   replicas: 2
   memory_requests: 3512Mi
   memory_limits: 3768Mi
@@ -1030,10 +1030,10 @@ egov-url-shortening:
     dbMigration:
       image:
         repository: egovio/egov-url-shortening-db
-        tag: master-1e8d2bb
+        tag: DIGIT-2.9-LTS-07f47790b8-12
   image:
     repository: egovio/egov-url-shortening
-    tag: base-docker-upgrade-f2da0a7
+    tag: DIGIT-2.9-LTS-07f47790b8-12
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1041,7 +1041,7 @@ egov-url-shortening:
 egov-notification-mail:
   image:
     repository: egovio/egov-notification-mail
-    tag: base-docker-upgrade-f2da0a7
+    tag: DIGIT-2.9-LTS-07f47790b8-5
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1052,10 +1052,10 @@ mdms-v2:
     dbMigration:
       image:
         repository: egovio/mdms-v2-db
-        tag: central-instance-mdms-2-944672d
+        tag: central-instance-6fae5fdefc-96
   image:
     repository: egovio/mdms-v2
-    tag: central-instance-28a606e
+    tag: central-instance-6fae5fdefc-96
   ingress:
     replenishRate: "10"
     burstCapacity: "60"
@@ -1124,7 +1124,7 @@ boundary-service:
         tag: master-1e8d2bb
   image:
     repository: egovio/boundary-service
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-1e8d2bb
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1134,15 +1134,15 @@ excel-ingestion:
     dbMigration:
       image:
         repository: egovio/excel-ingestion-db
-        tag: master-b91815e
+        tag: master-c5dff1d
   image:
     repository: egovio/excel-ingestion
-    tag: master-b91815e
+    tag: master-c5dff1d
 
 transformer:
   image:
     repository: egovio/transformer
-    tag: master-b91815e
+    tag: HDDF-5226-1403ae9
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1150,14 +1150,14 @@ transformer:
 user-otp:
   image:
     repository: egovio/user-otp
-    tag: base-docker-upgrade-f2da0a7
+    tag: v2.9.0-063968adc7-25
   central-instance-build: true
   central-instance-enabled: true
 inbox:
   replicas: 0
   image:
     repository: egovio/inbox
-    tag: inbox-workflow-fix-b6205e2
+    tag: v1.4.0-bd52511479-19
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1165,7 +1165,7 @@ inbox:
 error-handler:
   image:
     repository: egovio/error-handler
-    tag: master-impel-dump-dd15d3a
+    tag: master-impel-dump-a28582d
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1186,7 +1186,7 @@ egov-enc-service:
         tag: central-instance-e346023dcb-26
   image:
     repository: egovio/egov-enc-service
-    tag: central-instance-12bfc75
+    tag: central-instance-e346023dcb-26
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1197,7 +1197,7 @@ egov-enc-service:
 egov-accesscontrol:
   image:
     repository: egovio/egov-accesscontrol
-    tag: base-docker-upgrade-f2da0a7
+    tag: master-1e8d2bb
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1224,10 +1224,10 @@ facility:
     dbMigration:
       image:
         repository: egovio/facility-db
-        tag: master-b91815e
+        tag: master-7f8a6b8
   image:
     repository: egovio/facility
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -1240,10 +1240,10 @@ project:
     dbMigration:
       image:
         repository: egovio/project-db
-        tag: master-1ffeec1-rebuild-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/project
-    tag: master-1ffeec1-rebuild-1ffeec1
+    tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1256,10 +1256,10 @@ individual:
     dbMigration:
       image:
         repository: egovio/individual-db
-        tag: master-b91815e
+        tag: master-7f8a6b8
   image:
     repository: egovio/individual
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1285,10 +1285,10 @@ product:
     dbMigration:
       image:
         repository: egovio/product-db
-        tag: master-5f6032a
+        tag: master-7f8a6b8
   image:
     repository: egovio/product
-    tag: master-5f6032a
+    tag: master-7f8a6b8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1301,10 +1301,10 @@ beneficiary-idgen:
     dbMigration:
       image:
         repository: egovio/beneficiary-idgen-db
-        tag: master-b91815e
+        tag: master-eb25d83
   image:
     repository: egovio/beneficiary-idgen
-    tag: master-b91815e
+    tag: master-eb25d83
   central-instance-build: true
   central-instance-enabled: true
   idformat-from-mdms: "true"
@@ -1363,10 +1363,10 @@ project-factory:
     dbMigration:
       image:
         repository: egovio/project-factory-db
-        tag: hcm-console-f039e13
+        tag: master-c5dff1d
   image:
     repository: egovio/project-factory
-    tag: hcm-console-f039e13
+    tag: master-c5dff1d
   logLevel: 'info'
   defaultLocale: 'en_CHAD'
   splitBoundariesOn: 'ADMIN_DISTRITO'
@@ -1426,10 +1426,10 @@ attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-3df8cd8
   image:
     repository: egovio/health-attendance
-    tag: master-f6da516
+    tag: nigeria-go-deep-3df8cd8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1443,10 +1443,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: egovio/health-expense-calculator-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-3fa1c21
   image:
     repository: egovio/health-expense-calculator
-    tag: master-89c74d7
+    tag: nigeria-go-deep-3fa1c21
   tracing-enabled: true
   java-enable-debug: true
   egov-mdms-service-endpoint-key: "/mdms-v2/v1/_search"
@@ -1462,10 +1462,10 @@ expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-verify-fix-7d34fd7
   image:
     repository: egovio/health-expense
-    tag: master-6b124f9
+    tag: nigeria-go-deep-verify-fix-7d34fd7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1482,10 +1482,10 @@ muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-report-fix-efa6316
   image:
     repository: egovio/health-muster-roll
-    tag: master-f6da516
+    tag: nigeria-go-deep-report-fix-efa6316
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1721,10 +1721,10 @@ health-attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-3df8cd8
   image:
     repository: egovio/health-attendance
-    tag: master-f6da516
+    tag: nigeria-go-deep-3df8cd8
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1735,10 +1735,10 @@ health-expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-verify-fix-7d34fd7
   image:
     repository: egovio/health-expense
-    tag: master-6b124f9
+    tag: nigeria-go-deep-verify-fix-7d34fd7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1748,10 +1748,10 @@ health-muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: master-6b124f9
+        tag: nigeria-go-deep-report-fix-efa6316
   image:
     repository: egovio/health-muster-roll
-    tag: master-f6da516
+    tag: nigeria-go-deep-report-fix-efa6316
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true

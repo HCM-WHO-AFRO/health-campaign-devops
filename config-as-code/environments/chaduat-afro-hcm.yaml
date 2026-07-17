@@ -12,7 +12,7 @@ disableAnnotationTimestamp: true
 transformer:
   image:
     repository: egovio/transformer
-    tag: master-1ffeec1
+    tag: HDDF-5226-1403ae9
   namespace: "chaduat"
   ingress:
     name: chaduat-transformer
@@ -107,7 +107,7 @@ workbench-ui:
   namespace: chaduat
   image:
     repository: egovio/workbench-ui
-    tag: HDDF-4931-6fd335c
+    tag: master-4b556da
   ingress:
     enabled: true
     context: "workbench-ui"
@@ -120,7 +120,7 @@ microplan-ui:
   namespace: chaduat
   image:
     repository: egovio/microplan-ui
-    tag: console-56ef678
+    tag: master-88c8318
   ingress:
     enabled: true
     context: "chaduat/microplan-ui"
@@ -136,7 +136,7 @@ payments-ui:
   namespace: chaduat
   image:
     repository: egovio/payments-ui
-    tag: HDDF-4931-2e2ecfd
+    tag: master-a8308ea
   ingress:
     enabled: true
     context: "payments-ui"
@@ -151,7 +151,7 @@ dashboard-ui:
   namespace: chaduat  
   image:
     repository: egovio/dashboard-ui
-    tag: vapt-single-web-2bb19c0
+    tag: master-a8308ea
   ingress:
     enabled: true
     context: "dashboard-ui"
@@ -318,10 +318,10 @@ project-factory:
     dbMigration:
       image:
         repository: "project-factory-db"
-        tag: hcm-console-f039e13
+        tag: master-c5dff1d
   image:
     repository: egovio/project-factory
-    tag: hcm-console-f039e13
+    tag: master-c5dff1d
   service:
     internal-gateway-enabled: true
 
@@ -404,10 +404,10 @@ excel-ingestion:
     dbMigration:
       image:
         repository: "excel-ingestion-db"
-        tag: master-1ffeec1
+        tag: master-c5dff1d
   image:
     repository: egovio/excel-ingestion
-    tag: master-1ffeec1
+    tag: master-c5dff1d
   service:
     internal-gateway-enabled: true
 
@@ -437,7 +437,7 @@ excel-ingestion:
 dashboard-analytics:
   image:
     repository: egovio/dashboard-analytics
-    tag: analytics-es8-auth-6a40b6e
+    tag: analytics-raw-response-transform-5f98d99
 
   namespace: chaduat
   ingress:
@@ -491,10 +491,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: "health-expense-calculator-db"
-        tag: master-6b124f9
+        tag: nigeria-go-deep-3fa1c21
   image:
     repository: egovio/health-expense-calculator
-    tag: master-6b124f9
+    tag: nigeria-go-deep-3fa1c21
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "chaduat-health-expense-calculator"
@@ -548,10 +548,10 @@ health-expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: master-f6da516
+        tag: nigeria-go-deep-verify-fix-7d34fd7
   image:
     repository: egovio/health-expense
-    tag: master-f6da516
+    tag: nigeria-go-deep-verify-fix-7d34fd7
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -576,10 +576,10 @@ health-muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: master-f6da516
+        tag: nigeria-go-deep-report-fix-efa6316
   image:
     repository: egovio/health-muster-roll
-    tag: master-f6da516
+    tag: nigeria-go-deep-report-fix-efa6316
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -603,10 +603,10 @@ health-attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: master-f6da516
+        tag: nigeria-go-deep-3df8cd8
   image:
     repository: egovio/health-attendance
-    tag: master-f6da516
+    tag: nigeria-go-deep-3df8cd8
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -630,10 +630,10 @@ product:
     dbMigration:
       image:
         repository: egovio/product-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/product
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx512m -Xms256m"
   hpa:
@@ -655,10 +655,10 @@ household:
     dbMigration:
       image:
         repository: egovio/household-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/household
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -680,10 +680,10 @@ beneficiary-idgen:
     dbMigration:
       image:
         repository: egovio/beneficiary-idgen-db
-        tag: master-1ffeec1
+        tag: master-eb25d83
   image:
     repository: egovio/beneficiary-idgen
-    tag: master-1ffeec1
+    tag: master-eb25d83
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -750,10 +750,10 @@ referralmanagement:
     dbMigration:
       image:
         repository: egovio/referralmanagement-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/referralmanagement
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -775,10 +775,10 @@ individual:
     dbMigration:
       image:
         repository: egovio/individual-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/individual
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -800,10 +800,10 @@ stock:
     dbMigration:
       image:
         repository: egovio/stock-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/stock
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -825,10 +825,10 @@ service-request:
     dbMigration:
       image:
         repository: egovio/service-request-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/service-request
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -850,10 +850,10 @@ pgr-services:
     dbMigration:
       image:
         repository: egovio/pgr-services-db
-        tag: master-1ffeec1
+        tag: master-7ce35df
   image:
     repository: egovio/pgr-services
-    tag: master-1ffeec1
+    tag: master-7ce35df
   namespace: chaduat
   heap: "-Xmx256m -Xms256m"
   hpa:
@@ -875,10 +875,10 @@ facility:
     dbMigration:
       image:
         repository: egovio/facility-db
-        tag: master-1ffeec1
+        tag: master-7f8a6b8
   image:
     repository: egovio/facility
-    tag: master-1ffeec1
+    tag: master-7f8a6b8
   namespace: chaduat
   heap: "-Xmx512m -Xms256m"
   hpa:
@@ -900,10 +900,10 @@ egov-hrms:
     dbMigration:
       image:
         repository: egovio/egov-hrms-db
-        tag: master-1ffeec1
+        tag: master-620d748
   image:
     repository: egovio/egov-hrms
-    tag: master-1ffeec1
+    tag: master-620d748
   namespace: chaduat
   heap: "-Xmx512m -Xms256m"
   hpa:

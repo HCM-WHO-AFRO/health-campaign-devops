@@ -12,7 +12,7 @@ disableAnnotationTimestamp: true
 transformer:
   image:
     repository: egovio/transformer
-    tag: master-b91815e
+    tag: HDDF-5226-1403ae9
   namespace: "congob"
   ingress:
     name: congob-transformer
@@ -108,10 +108,10 @@ project-factory:
     dbMigration:
       image:
         repository: "project-factory-db"
-        tag: hcm-console-f039e13
+        tag: master-c5dff1d
   image:
     repository: egovio/project-factory
-    tag: hcm-console-f039e13
+    tag: master-c5dff1d
   service:
     internal-gateway-enabled: true
   namespace: "congob"
@@ -246,10 +246,10 @@ excel-ingestion:
     dbMigration:
       image:
         repository: "excel-ingestion-db"
-        tag: master-b91815e
+        tag: master-c5dff1d
   image:
     repository: egovio/excel-ingestion
-    tag: master-b91815e
+    tag: master-c5dff1d
   service:
     internal-gateway-enabled: true
   namespace: "congob"
@@ -329,10 +329,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: "health-expense-calculator-db"
-        tag: master-6b124f9
+        tag: nigeria-go-deep-3fa1c21
   image:
     repository: egovio/health-expense-calculator
-    tag: master-6b124f9
+    tag: nigeria-go-deep-3fa1c21
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "congob-health-expense-calculator"
@@ -386,7 +386,7 @@ health-expense-calculator:
 dashboard-analytics:
   image:
     repository: egovio/dashboard-analytics
-    tag: analytics-es8-auth-6a40b6e
+    tag: analytics-raw-response-transform-5f98d99
   namespace: "congob"
   ingress:
     name: congob-dashboard-analytics
@@ -422,7 +422,7 @@ workbench-ui:
   namespace: congob
   image:
     repository: egovio/workbench-ui
-    tag: HDDF-4931-6fd335c
+    tag: master-4b556da
   ingress:
     enabled: true
     context: "workbench-ui"
@@ -435,7 +435,7 @@ microplan-ui:
   namespace: congob
   image:
     repository: egovio/microplan-ui
-    tag: console-56ef678
+    tag: master-88c8318
   ingress:
     enabled: true
     context: "congob/microplan-ui"
@@ -450,7 +450,7 @@ payments-ui:
   namespace: congob
   image:
     repository: egovio/payments-ui
-    tag: HDDF-4931-2e2ecfd
+    tag: master-a8308ea
   ingress:
     enabled: true
     context: "payments-ui"
@@ -465,7 +465,7 @@ dashboard-ui:
   namespace: congob
   image:
     repository: egovio/dashboard-ui
-    tag: HDDF-4931-6873013
+    tag: master-a8308ea
   ingress:
     enabled: true
     context: "dashboard-ui"
