@@ -19,6 +19,8 @@ spec:
           - name: household
           - name: facility
           - name: beneficiary-idgen
+          - name: worker-registry
+          - name: health-notification-service
 
   template:
     metadata:

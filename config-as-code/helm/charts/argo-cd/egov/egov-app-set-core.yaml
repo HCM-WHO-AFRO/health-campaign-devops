@@ -16,6 +16,7 @@ spec:
           - name: egov-indexer
           - name: egov-localization
           - name: egov-notification-mail
+          - name: egov-notification-push
           - name: egov-notification-sms
           - name: egov-otp
           - name: egov-persister
