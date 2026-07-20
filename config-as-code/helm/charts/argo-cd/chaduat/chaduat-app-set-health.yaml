@@ -7,10 +7,8 @@ spec:
   generators:
     - list:
         elements:
-          - name: project-factory
           - name: transformer
           - name: resource-generator
-          - name: excel-ingestion
           - name: census-service
           - name: auth-proxy
           - name: health-expense-calculator

@@ -79,6 +79,8 @@ cluster-configs:
               citizen-services: "http://citizen-services:8080/"
               chad-dashboard-analytics: "http://dashboard-analytics.chad:8080/"
               project-factory: 'http://internal-gateway-scg.egov:8080/'
+              plan-service: 'http://internal-gateway-scg.egov:8080/'
+              census-service: 'http://internal-gateway-scg.egov:8080/'
               chad-resource-generator: 'http://resource-generator.chad:8080/'
               chad-plan-service: 'http://plan-service.chad:8080/'
               chad-census-service: 'http://census-service.chad:8080/'
@@ -1196,6 +1198,28 @@ excel-ingestion:
   image:
     repository: egovio/excel-ingestion
     tag: master-c5dff1d
+  namespace: egov
+  replicas: 1
+  central-instance-name: egov
+  central-instance-build: true
+  central-instance-enabled: true
+  group-id: egov-excel-ingestion
+  project-factory-host: project-factory
+  defaultLocale: 'en_CHAD'
+  egov-mdms-service-host-key: 'mdms-v2'
+  egov-mdms-service-endpoint-key: "mdms-v2/v2/_search"
+  excel-ingestion-generation-save-topic: "save-generated-file"
+  excel-ingestion-generation-update-topic: "update-generated-file"
+  excel-ingestion-processing-save-topic: "save-processing-file"
+  excel-ingestion-processing-update-topic: "update-processing-file"
+  excel-ingestion-sheet-data-save-topic: "save-sheet-data-temp"
+  excel-ingestion-sheet-data-delete-topic: "delete-sheet-data-temp"
+  excel-ingestion-processing-result-topic: "hcm-processing-result"
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    cpuTargetPercentage: 70
 
 transformer:
   image:
@@ -1465,17 +1489,64 @@ project-factory:
   splitBoundariesOn: 'ADMIN_DISTRITO'
   replicas: 1
   namespace: 'egov'
+  central-instance-name: egov
+  central-instance-build: true
+  central-instance-enabled: true
+  IS_ENVIRONMENT_CENTRAL_INSTANCE: true
+  DB_SCHEMA: public
+  defaultTenantId: chad
+  groupId: egov-project-factory
+  centralInstanceTenantIds: "chad,congob,chaduat,zambia"
+  tenantIdPattern: "(chad|congob|chaduat|zambia)-"
+  excel-ingestion-host: excel-ingestion
+  plan-service: plan-service
+  census-service: census-service
   maxDebugChar: '2000'
   egov-mdms-service-host-key: 'mdms-service-v2'
   mdmsV2SearchEndpoint: 'mdms-v2/v2/_search'
   mdmsV1SearchEndpoint: 'mdms-v2/v1/_search'
   validateCampaignIdInMetadata: 'true'
   notCreateUserIfAlreadyThere: 'true'
+  saveCampaignDetails: "save-campaign-details"
+  updateCampaignDetails: "update-campaign-details"
+  saveProjectCampaignDetailsTopic: "save-project-campaign-details"
+  updateProjectCampaignDetailsTopic: "update-project-campaign-details"
+  startCampaignMappingTopic: "start-campaign-mapping"
+  createResourceDetailsTopic: "create-resource-details"
+  updateResourceDetailsTopic: "update-resource-details"
+  createResourceActivityTopic: "create-resource-activity"
+  updateGeneratedResourceDetailsTopic: "update-generated-resource-details"
+  createGeneratedResourceDetailsTopic: "create-generated-resource-details"
+  savePlanFacilityTopic: "project-factory-save-plan-facility"
+  saveSheetDataTopic: "save-sheet-data"
+  updateSheetDataTopic: "update-sheet-data"
+  saveMappingDataTopic: "save-mapping-data"
+  updateMappingDataTopic: "update-mapping-data"
+  deleteMappingDataTopic: "delete-mapping-data"
+  saveProcessDataTopic: "save-process-data"
+  updateProcessDataTopic: "update-process-data"
+  startAdminConsoleTaskTopic: "start-admin-console-task"
+  startAdminConsoleMappingTaskTopic: "start-admin-console-mapping-task"
+  notificationEmailTopic: "egov.core.notification.email"
+  testTopic: "test-topic-project-factory"
+  hcmProcessingResultTopic: "hcm-processing-result"
+  facilityCreateBatchTopic: "hcm-facility-create-batch"
+  userCreateBatchTopic: "hcm-user-create-batch"
+  mappingBatchTopic: "hcm-mapping-batch"
+  campaignMarkFailedTopic: "hcm-campaign-mark-failed"
   hpa:
     enabled: false
     minReplicas: 1
     maxReplicas: 3
     cpuTargetPercentage: 70
+  command: |
+    - sh
+    - -c
+  args: |
+    - |
+      sed -i "s/const groupId = 'project-factory'/const groupId = process.env.KAFKAJS_GROUP_ID || 'project-factory'/g" src/server/kafka/Listener.ts
+      sed -i 's/--max-old-space-size=3072/--max-old-space-size=2048/g' package.json
+      yarn prod
 
 plan-service:
   replicas: 0

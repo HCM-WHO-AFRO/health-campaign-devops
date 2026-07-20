@@ -21,6 +21,8 @@ spec:
           - name: beneficiary-idgen
           - name: worker-registry
           - name: health-notification-service
+          - name: project-factory
+          - name: excel-ingestion
 
   template:
     metadata:
