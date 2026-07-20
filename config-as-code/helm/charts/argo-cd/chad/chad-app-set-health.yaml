@@ -13,6 +13,7 @@ spec:
           - name: census-service
           - name: auth-proxy
           - name: health-expense-calculator
+          - name: excel-ingestion
 
   template:
     metadata:
