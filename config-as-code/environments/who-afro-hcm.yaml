@@ -77,7 +77,7 @@ cluster-configs:
               collection-search-indexer: "http://collection-search-indexer:8080/"
               citizen-indexer: "http://citizen-indexer:8080/"
               citizen-services: "http://citizen-services:8080/"
-              chad-dashboard-analytics: "http://dashboard-analytics.chad:8080/"
+              dashboard-analytics: "http://dashboard-analytics.egov:8080/"
               project-factory: 'http://internal-gateway-scg.egov:8080/'
               plan-service: 'http://internal-gateway-scg.egov:8080/'
               census-service: 'http://internal-gateway-scg.egov:8080/'
@@ -87,19 +87,16 @@ cluster-configs:
               chad-project-factory: 'http://project-factory.chad:8080/'
               chad-transformer: 'http://transformer.chad:8080/'
               excel-ingestion: 'http://internal-gateway-scg.egov:8080/'
-              congob-dashboard-analytics: "http://dashboard-analytics.congob:8080/"
               congob-resource-generator: 'http://resource-generator.congob:8080/'
               congob-plan-service: 'http://plan-service.congob:8080/'
               congob-census-service: 'http://census-service.congob:8080/'
               congob-project-factory: 'http://project-factory.congob:8080/'
               congob-transformer: 'http://transformer.congob:8080/'
-              zambia-dashboard-analytics: "http://dashboard-analytics.zambia:8080/"
               zambia-resource-generator: 'http://resource-generator.zambia:8080/'
               zambia-plan-service: 'http://plan-service.zambia:8080/'
               zambia-census-service: 'http://census-service.zambia:8080/'
               zambia-project-factory: 'http://project-factory.zambia:8080/'
               zambia-transformer: 'http://transformer.zambia:8080/'
-              chaduat-dashboard-analytics: "http://dashboard-analytics.chaduat:8080/"
               chaduat-resource-generator: 'http://resource-generator.chaduat:8080/'
               chaduat-plan-service: 'http://plan-service.chaduat:8080/'
               chaduat-census-service: 'http://census-service.chaduat:8080/'
@@ -182,6 +179,10 @@ citizen:
 
 workbench-ui:
   namespace: egov
+  ingress:
+    enabled: true
+    name: egov-workbench-ui
+    context: "workbench-ui"
   image:
     repository: egovio/workbench-ui
     tag: master-4b556da
@@ -192,6 +193,10 @@ workbench-ui:
 
 microplan-ui:
   namespace: egov
+  ingress:
+    enabled: true
+    name: egov-microplan-ui
+    context: "microplan-ui"
   image:
     repository: egovio/microplan-ui
     tag: master-88c8318
@@ -215,6 +220,10 @@ digit-ui:
 
 hcm-digit-ui:
   namespace: egov
+  ingress:
+    enabled: true
+    name: egov-hcm-digit-ui
+    context: "hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
     tag: vapt-single-web-2dfd36c
@@ -226,6 +235,10 @@ hcm-digit-ui:
 
 payments-ui:
   namespace: egov
+  ingress:
+    enabled: true
+    name: egov-payments-ui
+    context: "payments-ui"
   image:
     repository: egovio/payments-ui
     tag: master-a8308ea
@@ -237,7 +250,11 @@ payments-ui:
       ';"  
 
 dashboard-ui:
-  
+  namespace: egov
+  ingress:
+    enabled: true
+    name: egov-dashboard-ui
+    context: "dashboard-ui"
   image:
     repository: egovio/dashboard-ui
     tag: master-a8308ea
@@ -811,7 +828,7 @@ dashboard-analytics:
   memory_limits: 1Gi
   config-schema-paths: "file:///work-dir/health-campaign-config/egov-dss-dashboards/dashboard-analytics/*.json"
   is-central-instance: "true"
-  central-instance-tenants: "chad,chaduat"
+  central-instance-tenants: "chad,congob,chaduat,zambia"
   central-instance-base-path: "file:///work-dir/health-campaign-config/egov-dss-dashboards"
   initContainers:
     gitSync:

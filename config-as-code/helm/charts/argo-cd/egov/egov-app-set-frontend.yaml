@@ -12,9 +12,6 @@ spec:
           - name: hcm-digit-ui
           - name: dashboard-ui
           - name: payments-ui
-          - name: dss-dashboard
-          - name: core-ui
-          - name: console
           - name: microplan-ui
 
   template:

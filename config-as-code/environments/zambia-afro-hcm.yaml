@@ -15,6 +15,7 @@ transformer:
     tag: HDDF-5226-1403ae9
   namespace: "zambia"
   ingress:
+    enabled: false
     name: zambia-transformer
     namespace: egov
     context: "zambia/transformer"
@@ -88,6 +89,7 @@ hcm-digit-ui:
   namespace: zambia
   ingress:
     enabled: true
+    name: zambia-hcm-digit-ui
     context: "zambia/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
@@ -229,7 +231,7 @@ health-expense-calculator:
   ingress:
     name: zambia-health-expense-calculator
     namespace: egov
-    context: "zambia/health-expense-calculator"
+    context: "health-expense-calculator"
   heap: "-Xmx256m -Xms256m"
   hpa:
     enabled: false
@@ -272,41 +274,6 @@ health-expense-calculator:
   project-management-system-kafka-update-topic: zambia-update-project
   state-level-tenantid: "chad"
 
-dashboard-analytics:
-  image:
-    repository: egovio/dashboard-analytics
-    tag: analytics-raw-response-transform-5f98d99
-  namespace: "zambia"
-  ingress:
-    name: zambia-dashboard-analytics
-    namespace: egov
-    context: "zambia/dashboard-analytics"
-  healthChecks:
-    enabled: true
-    livenessProbePath: "/dashboard-analytics/health"
-    readinessProbePath: "/dashboard-analytics/health"
-  heap: "-Xmx512m -Xms256m"
-  cpu_requests: 200m
-  memory_requests: 768Mi
-  cpu_limits: 300m
-  memory_limits: 1Gi
-  hpa:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 3
-  java-enable-debug: true
-  replicas: 0
-  initContainers:
-    gitSync:
-      enabled: true
-      repo: "git@github.com:HCM-KEBBI/health-campaign-config"
-      branch: "CENTRAL-UAT"
-  config-schema-paths: "file:///work-dir/health-campaign-config/egov-dss-dashboards/zambia/dashboard-analytics/*.json"
-  save-dashboard-config-topic: "zambia-save-dashboard-config-topic"
-  save-dashboard-chart-topic: "zambia-save-dashboard-chart-topic"
-  dashboard-ingest-topic: "zambia-dashboard-ingest-topic"
-  state-level-tenantid: "chad"
-
 workbench-ui:
   namespace: zambia
   image:
@@ -314,6 +281,7 @@ workbench-ui:
     tag: master-4b556da
   ingress:
     enabled: true
+    name: zambia-workbench-ui
     context: "zambia/workbench-ui"
   custom-js-injection: |
     sub_filter.conf: "
@@ -327,6 +295,7 @@ microplan-ui:
     tag: master-88c8318
   ingress:
     enabled: true
+    name: zambia-microplan-ui
     context: "zambia/microplan-ui"
   custom-js-injection: |
     sub_filter.conf: "
@@ -342,6 +311,7 @@ payments-ui:
     tag: master-a8308ea
   ingress:
     enabled: true
+    name: zambia-payments-ui
     context: "zambia/payments-ui"
   custom-js-injection: |
     sub_filter.conf: "
@@ -357,6 +327,7 @@ dashboard-ui:
     tag: master-a8308ea
   ingress:
     enabled: true
+    name: zambia-dashboard-ui
     context: "zambia/dashboard-ui"
   custom-js-injection: |
     sub_filter.conf: "
@@ -374,6 +345,7 @@ core-ui:
     tag: develop-548f854d1d-57
   ingress:
     enabled: true
+    name: zambia-core-ui
     context: "zambia/core-ui"
   custom-js-injection: |
     sub_filter.conf: "
@@ -389,6 +361,7 @@ dss-dashboard:
     tag: v1.8.0-0d70d60e63-53
   ingress:
     enabled: true
+    name: zambia-dss-dashboard
     context: "zambia/dss-dashboard"
 
 console:
@@ -398,6 +371,7 @@ console:
     tag: ondo-proxy-f806f086a2-149
   ingress:
     enabled: true
+    name: zambia-console
     context: "zambia/console"
   custom-js-injection: |
     sub_filter.conf: "
