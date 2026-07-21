@@ -476,3 +476,5 @@ env: |
     value: {{ .Values.maxHttpRetries | default "4" | quote }}
   - name: LAT_LONG_SUBSTRINGS
     value: {{ .Values.latLongSubstrings | default "HCM_ADMIN_CONSOLE_FACILITY_LATITUDE_OPTIONAL_MICROPLAN,HCM_ADMIN_CONSOLE_FACILITY_LONGITUDE_OPTIONAL_MICROPLAN,HCM_ADMIN_CONSOLE_TARGET_LAT_OPT,HCM_ADMIN_CONSOLE_TARGET_LONG_OPT" }}
+  - name: DB_SSL
+    value: "true"
