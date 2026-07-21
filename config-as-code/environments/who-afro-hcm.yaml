@@ -1624,25 +1624,6 @@ attendance:
   egov-mdms-service-host-key: 'mdms-service-v2'
   egov-mdms-service-endpoint-key: "/mdms-v2/v1/_search"
 
-health-expense-calculator:
-  initContainers:
-    dbMigration:
-      image:
-        repository: egovio/health-expense-calculator-db
-        tag: master-cdc5957
-  image:
-    repository: egovio/health-expense-calculator
-    tag: master-cdc5957
-  tracing-enabled: true
-  java-enable-debug: true
-  egov-mdms-service-endpoint-key: "/mdms-v2/v1/_search"
-  report-header-title: "Health Campaign Payment Report"
-  is-attendance-approval-required: "true"
-  register-batch-size: 15
-  bill-generation-async-enabled: "true"
-  bill-generation-async-topic: "bill-generation-async-topic"
-  egov-musterroll-search-endpoint: "/health-muster-roll/v1/_search"
-
 expense:
   initContainers:
     dbMigration:

@@ -220,10 +220,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: "health-expense-calculator-db"
-        tag: master-cdc5957
+        tag: master-404aea5
   image:
     repository: egovio/health-expense-calculator
-    tag: master-cdc5957
+    tag: master-404aea5
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "congob-health-expense-calculator"
