@@ -6,7 +6,7 @@ labels:
 # Ingress Configs
 ingress:
   enabled: true
-  context: "chad/hcm-digit-ui"
+  context: "hcm-digit-ui"
 
 # Init Containers Configs
 initContainers: {}
@@ -24,7 +24,7 @@ healthChecks:
 
 env: |
   - name: COUNTRY_PREFIX
-    value: "chad"
+    value: "default"
   - name: BUILD_VARIANT
     value: "hcm-digit-ui"
 

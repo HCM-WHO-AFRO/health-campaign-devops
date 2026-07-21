@@ -227,6 +227,11 @@ hcm-digit-ui:
   image:
     repository: egovio/hcm-digit-ui
     tag: vapt-single-web-2dfd36c
+  env: |
+    - name: COUNTRY_PREFIX
+      value: ""
+    - name: BUILD_VARIANT
+      value: "hcm-digit-ui"
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
