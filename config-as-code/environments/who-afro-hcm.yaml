@@ -1516,6 +1516,13 @@ project-factory:
   DB_SCHEMA: public
   defaultTenantId: chad
   groupId: egov-project-factory
+  memory_limits: "2Gi"
+  cpu_limits: "500m"
+  memory_requests: "1Gi"
+  cpu_requests: "200m"
+  env: |
+    - name: DB_SSL
+      value: "true"
   centralInstanceTenantIds: "chad,congob,chaduat,zambia"
   tenantIdPattern: "(chad|congob|chaduat|zambia)-"
   excel-ingestion-host: excel-ingestion
