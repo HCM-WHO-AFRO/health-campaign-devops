@@ -224,7 +224,7 @@ hcm-digit-ui:
     context: "hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: afro-url-redirection-0d4d123
+    tag: vapt-single-web-url-fix-748a71c
   env: |
     - name: COUNTRY_PREFIX
       value: ""
