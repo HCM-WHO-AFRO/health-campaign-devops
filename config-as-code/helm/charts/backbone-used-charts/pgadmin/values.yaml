@@ -8,6 +8,8 @@ namespace: playground
 ingress:
   enabled: true
   context: "pgadmin"
+  additionalAnnotations: |
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
   # additionalAnnotations: |
   #   nginx.ingress.kubernetes.io/configuration-snippet: |
   #     proxy_set_header X-Script-Name /pgadmin;
