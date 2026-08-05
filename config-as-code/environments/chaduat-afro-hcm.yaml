@@ -109,7 +109,7 @@ workbench-ui:
   namespace: chaduat
   image:
     repository: egovio/workbench-ui
-    tag: master-4b556da
+    tag: master-2d83e1d
   ingress:
     enabled: true
     name: chaduat-workbench-ui
@@ -140,7 +140,7 @@ payments-ui:
   namespace: chaduat
   image:
     repository: egovio/payments-ui
-    tag: master-a8308ea
+    tag: master-2d83e1d
   ingress:
     enabled: true
     name: chaduat-payments-ui
