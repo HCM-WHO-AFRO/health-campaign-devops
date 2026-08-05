@@ -7,7 +7,11 @@ spec:
   generators:
     - list:
         elements:
+          - name: workbench-ui
           - name: hcm-digit-ui
+          - name: dashboard-ui
+          - name: payments-ui
+          - name: microplan-ui
 
   template:
     metadata:
