@@ -581,7 +581,7 @@ egov-user:
         tag: feature-sso-impl-1e23b63
   image:
     repository: egovio/egov-user
-    tag: central-instance-99d5967
+    tag: feature-sso-impl-1e23b63
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
