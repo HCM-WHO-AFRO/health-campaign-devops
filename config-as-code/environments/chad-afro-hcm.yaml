@@ -12,7 +12,7 @@ disableAnnotationTimestamp: true
 transformer:
   image:
     repository: egovio/transformer
-    tag: HDDF-5226-1403ae9
+    tag: chad-polio-admin-console-changes-6d79850
   namespace: "chad"
   ingress:
     enabled: false
@@ -366,7 +366,7 @@ health-expense-calculator:
         tag: master-404aea5
   image:
     repository: egovio/health-expense-calculator
-    tag: master-404aea5
+    tag: master-6b124f9
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "chad-health-expense-calculator"

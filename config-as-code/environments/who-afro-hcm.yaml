@@ -37,6 +37,8 @@ cluster-configs:
                 is-environment-central-instance: "true"
                 egov-state-level-tenant-id: "chad"
                 state-level-tenant-id: "chad"
+                boundary-hierarchy: "ADMIN"
+                boundary-hierarchy-chad: "POLIO_CHAD"
                 kafka-tenant-id-pattern: "chad-|congob-|chaduat-|zambia-"
                 s3-assets-bucket: "(pg-health-egov-assets|egov-health-playground-assets)"
                 es-host: "elasticsearch-data.es-cluster"
@@ -372,7 +374,7 @@ egov-filestore:
         tag: master-filestore-fix-5e0acbc
   image:
     repository: egovio/egov-filestore
-    tag: master-filestore-fix-5e0acbc
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -405,7 +407,7 @@ egov-idgen:
         tag: master-1e8d2bb
   image:
     repository: egovio/egov-idgen
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -433,7 +435,7 @@ pgr-services:
         tag: master-7ce35df
   image:
     repository: egovio/pgr-services
-    tag: master-7ce35df
+    tag: master-1ffeec1
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -451,7 +453,7 @@ household:
         tag: master-7f8a6b8
   image:
     repository: egovio/household
-    tag: master-7f8a6b8
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -477,7 +479,7 @@ service-request:
         tag: master-7f8a6b8
   image:
     repository: egovio/service-request
-    tag: master-7f8a6b8
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -499,7 +501,7 @@ referralmanagement:
         tag: master-7f8a6b8
   image:
     repository: egovio/referralmanagement
-    tag: master-7f8a6b8
+    tag: master-5f6032a
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -523,7 +525,7 @@ stock:
         tag: master-7f8a6b8
   image:
     repository: egovio/stock
-    tag: master-7f8a6b8
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -541,7 +543,7 @@ egov-otp:
         tag: central-instance-a0fc793059-8
   image:
     repository: egovio/egov-otp
-    tag: central-instance-a0fc793059-8
+    tag: central-instance-28a606e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -551,7 +553,7 @@ egov-otp:
 egov-notification-sms:
   image:
     repository: egovio/egov-notification-sms
-    tag: DIGIT-2.9-LTS-07f47790b8-7
+    tag: sandbox-d760d6b
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -684,7 +686,7 @@ egov-malware-detection:
         tag: master-d69ce29
   image:
     repository: "egovio/egov-malware-detection"
-    tag: master-d69ce29
+    tag: base-docker-upgrade-f2da0a7
   namespace: egov
   central-instance-name: egov
   central-instance-build: true
@@ -746,7 +748,7 @@ boundary-management:
 egov-indexer:
   image:
     repository: egovio/egov-indexer
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -775,7 +777,7 @@ egov-indexer:
 egov-persister:
   image:
     repository: egovio/egov-persister
-    tag: master-3b238aa
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -815,7 +817,7 @@ egov-searcher:
 dashboard-analytics:
   image:
     repository: egovio/dashboard-analytics
-    tag: analytics-raw-response-transform-5f98d99
+    tag: analytics-raw-response-transform-dc60b55
   ingress:
     name: dashboard-analytics
     namespace: egov
@@ -859,7 +861,7 @@ report:
 pdf-service:
   image:
     repository: egovio/pdf-service
-    tag: central-instance-pdf-7b3064f
+    tag: multiarch-master-99a308d
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1032,7 +1034,7 @@ egov-workflow-v2:
         tag: central-instance-1248cc50e5-38
   image:
     repository: egovio/egov-workflow-v2
-    tag: central-instance-1248cc50e5-38
+    tag: central-instance-28a606e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1056,7 +1058,7 @@ egov-hrms:
         tag: master-620d748
   image:
     repository: egovio/egov-hrms
-    tag: master-620d748
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1108,7 +1110,7 @@ egov-url-shortening:
         tag: DIGIT-2.9-LTS-07f47790b8-12
   image:
     repository: egovio/egov-url-shortening
-    tag: DIGIT-2.9-LTS-07f47790b8-12
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1116,7 +1118,7 @@ egov-url-shortening:
 egov-notification-mail:
   image:
     repository: egovio/egov-notification-mail
-    tag: DIGIT-2.9-LTS-07f47790b8-5
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1130,7 +1132,7 @@ mdms-v2:
         tag: central-instance-6fae5fdefc-96
   image:
     repository: egovio/mdms-v2
-    tag: central-instance-6fae5fdefc-96
+    tag: central-instance-28a606e
   ingress:
     replenishRate: "10"
     burstCapacity: "60"
@@ -1199,7 +1201,7 @@ boundary-service:
         tag: master-1e8d2bb
   image:
     repository: egovio/boundary-service
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1246,7 +1248,7 @@ excel-ingestion:
 transformer:
   image:
     repository: egovio/transformer
-    tag: HDDF-5226-1403ae9
+    tag: master-b91815e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1259,14 +1261,14 @@ transformer:
 user-otp:
   image:
     repository: egovio/user-otp
-    tag: v2.9.0-063968adc7-25
+    tag: base-docker-upgrade-f2da0a7
   central-instance-build: true
   central-instance-enabled: true
 inbox:
   replicas: 0
   image:
     repository: egovio/inbox
-    tag: v1.4.0-bd52511479-19
+    tag: inbox-workflow-fix-b6205e2
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1274,7 +1276,7 @@ inbox:
 error-handler:
   image:
     repository: egovio/error-handler
-    tag: master-impel-dump-a28582d
+    tag: master-impel-dump-dd15d3a
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1300,7 +1302,7 @@ egov-enc-service:
         tag: central-instance-e346023dcb-26
   image:
     repository: egovio/egov-enc-service
-    tag: central-instance-e346023dcb-26
+    tag: central-instance-12bfc75
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1316,7 +1318,7 @@ egov-enc-service:
 egov-accesscontrol:
   image:
     repository: egovio/egov-accesscontrol
-    tag: master-1e8d2bb
+    tag: base-docker-upgrade-f2da0a7
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1346,7 +1348,7 @@ facility:
         tag: master-7f8a6b8
   image:
     repository: egovio/facility
-    tag: master-7f8a6b8
+    tag: master-1ffeec1
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -1367,7 +1369,7 @@ project:
         tag: master-7f8a6b8
   image:
     repository: egovio/project
-    tag: master-7f8a6b8
+    tag: master-1ffeec1-rebuild-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1388,7 +1390,7 @@ individual:
         tag: master-7f8a6b8
   image:
     repository: egovio/individual
-    tag: master-7f8a6b8
+    tag: master-1ffeec1
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1417,7 +1419,7 @@ product:
         tag: master-7f8a6b8
   image:
     repository: egovio/product
-    tag: master-7f8a6b8
+    tag: master-5f6032a
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1438,7 +1440,7 @@ beneficiary-idgen:
         tag: master-eb25d83
   image:
     repository: egovio/beneficiary-idgen
-    tag: master-eb25d83
+    tag: master-b91815e
   central-instance-build: true
   central-instance-enabled: true
   idformat-from-mdms: "true"
@@ -1624,7 +1626,7 @@ attendance:
         tag: master-cdc5957
   image:
     repository: egovio/health-attendance
-    tag: master-cdc5957
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1641,7 +1643,7 @@ expense:
         tag: master-cdc5957
   image:
     repository: egovio/health-expense
-    tag: master-cdc5957
+    tag: master-6b124f9
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1661,7 +1663,7 @@ muster-roll:
         tag: master-cdc5957
   image:
     repository: egovio/health-muster-roll
-    tag: master-cdc5957
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: false
@@ -1900,7 +1902,7 @@ health-attendance:
         tag: master-cdc5957
   image:
     repository: egovio/health-attendance
-    tag: master-cdc5957
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1919,7 +1921,7 @@ health-expense:
         tag: master-cdc5957
   image:
     repository: egovio/health-expense
-    tag: master-cdc5957
+    tag: master-6b124f9
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1932,7 +1934,7 @@ health-muster-roll:
         tag: master-cdc5957
   image:
     repository: egovio/health-muster-roll
-    tag: master-cdc5957
+    tag: master-f6da516
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
