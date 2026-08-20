@@ -34,6 +34,7 @@ heap: "-Xmx256m -Xms256m"
 memory_limits: 512Mi
 java-args: ""
 cpu_limits: "300m"
+boundary-hierarchy: "ADMIN"
 
 # Additional Container Envs
 env: |
@@ -199,3 +200,7 @@ env: |
     value: "/individual/v1/_search"
   - name: EGOV_FILESTORE_PATH
     value: "/filestore/v1/files"
+  {{- if index .Values "boundary-hierarchy" }}
+  - name: EGOV_BOUNDARY_HIERARCHY_NAME
+    value: {{ index .Values "boundary-hierarchy" | quote }}
+  {{- end }}

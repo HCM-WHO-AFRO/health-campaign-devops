@@ -86,12 +86,6 @@ env: |
         key: boundary-service
   - name: EGOV_BOUNDARY_SEARCH_URL
     value: "/boundary-service/boundary/_search"
-  - name: EGOV_BOUNDARY_HIERARCHY_NAME
-    valueFrom:
-      configMapKeyRef:
-        name: egov-config
-        key: boundary-hierarchy
-  
   - name: FACILITY.KAFKA.CREATE.TOPIC
     value: "save-facility-topic"
   - name: FACILITY.KAFKA.UPDATE.TOPIC

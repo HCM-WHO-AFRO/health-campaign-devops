@@ -270,11 +270,6 @@ env: |
     value: "/facility/v1/_search"
   - name: PROJECT_MDMS_MODULE
     value: "HCM-PROJECT-TYPES"
-  - name: EGOV_LOCATION_HIERARCHY_TYPE
-    valueFrom:
-      configMapKeyRef:
-        name: egov-config
-        key: boundary-hierarchy-chad
   - name: EGOV_LOCATION_CODE_QUERY_PARAM
     value: "code"
   - name: EGOV_BOUNDARY_HOST
@@ -284,11 +279,6 @@ env: |
         key: boundary-service
   - name: EGOV_BOUNDARY_SEARCH_URL
     value: "/boundary-service/boundary/_search"
-  - name: EGOV_BOUNDARY_HIERARCHY_NAME
-    valueFrom:
-      configMapKeyRef:
-        name: egov-config
-        key: boundary-hierarchy-chad
 
   - name: EGOV_USER_CONTEXT_PATH
     value: "/user/users"
