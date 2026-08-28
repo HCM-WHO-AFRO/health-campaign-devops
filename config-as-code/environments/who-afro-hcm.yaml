@@ -797,7 +797,7 @@ egov-persister:
   initContainers:
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"      ##### Change repo url with Your fork Repo url
-      branch: "DEMO"                                    ##### Change repo branch with Your fork Repo branch
+      branch: "DEMO-2.1-changes"                                    ##### Change repo branch with Your fork Repo branch
 
 egov-data-uploader:
   initContainers:
