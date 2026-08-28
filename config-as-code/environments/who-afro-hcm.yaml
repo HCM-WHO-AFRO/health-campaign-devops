@@ -1263,10 +1263,10 @@ user-otp:
   central-instance-build: true
   central-instance-enabled: true
 inbox:
-  replicas: 0
+  replicas: 1
   image:
     repository: egovio/inbox
-    tag: v1.4.0-bd52511479-19
+    tag: master-d673cfa
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
