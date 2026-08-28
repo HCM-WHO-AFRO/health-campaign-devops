@@ -784,11 +784,11 @@ egov-persister:
   memory_requests: 512Mi
   cpu_limits: 300m
   memory_limits: 768Mi
-  replicas: 4
+  replicas: 1
   hpa:
     enabled: true
-    minReplicas: 2
-    maxReplicas: 10
+    minReplicas: 1
+    maxReplicas: 2
     cpuTargetPercentage: 70
     memoryTargetPercentage: 80
   images:
