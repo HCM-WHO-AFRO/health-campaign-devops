@@ -153,10 +153,10 @@ payments-ui:
       ';"  
 
 dashboard-ui:
-  namespace: chaduat  
+  namespace: chaduat
   image:
     repository: egovio/dashboard-ui
-    tag: master-a8308ea
+    tag: vapt-single-web-2bb19c0
   ingress:
     enabled: true
     name: chaduat-dashboard-ui
