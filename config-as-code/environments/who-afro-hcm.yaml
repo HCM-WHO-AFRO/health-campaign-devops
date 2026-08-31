@@ -1435,10 +1435,10 @@ beneficiary-idgen:
     dbMigration:
       image:
         repository: egovio/beneficiary-idgen-db
-        tag: master-eb25d83
+        tag: beneficiary-igden-tenant-specific-d5d2336
   image:
     repository: egovio/beneficiary-idgen
-    tag: master-eb25d83
+    tag: beneficiary-igden-tenant-specific-d5d2336
   central-instance-build: true
   central-instance-enabled: true
   idformat-from-mdms: "true"
