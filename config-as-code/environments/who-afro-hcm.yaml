@@ -1506,31 +1506,35 @@ project-factory:
   image:
     repository: egovio/project-factory
     tag: master-c5dff1d
-  logLevel: 'info'
-  defaultLocale: 'en_CHAD'
   splitBoundariesOn: 'ADMIN_DISTRITO'
-  replicas: 1
   namespace: 'egov'
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
+  heap: "-Xmx2048m -Xms512m"
+  replicas: 3
+  cpu_requests: 200m
+  memory_requests: 1500Mi
+  cpu_limits: 1500m
+  memory_limits: 2.5Gi
+  groupId: "project-factory"
+  ingress:
+    name: project-factory
+    namespace: egov
+  logLevel: "debug"
+  maxDebugChar: "2000"
+  mdmsV2SearchEndpoint: "mdms-v2/v2/_search"
+  mdmsV1SearchEndpoint: "mdms-v2/v1/_search"
+  defaultLocale: "en_CHAD"
+  plan-service: plan-service
+  census-service: census-service
+  excel-ingestion-host: excel-ingestion
   IS_ENVIRONMENT_CENTRAL_INSTANCE: true
   DB_SCHEMA: public
   defaultTenantId: chad
-  groupId: egov-project-factory
-  memory_limits: "2Gi"
-  cpu_limits: "500m"
-  memory_requests: "1Gi"
-  cpu_requests: "200m"
   centralInstanceTenantIds: "chad,congob,chaduat,zambia"
   tenantIdPattern: "(chad|congob|chaduat|zambia)-"
-  excel-ingestion-host: excel-ingestion
-  plan-service: plan-service
-  census-service: census-service
-  maxDebugChar: '2000'
-  egov-mdms-service-host-key: 'mdms-service-v2'
-  mdmsV2SearchEndpoint: 'mdms-v2/v2/_search'
-  mdmsV1SearchEndpoint: 'mdms-v2/v1/_search'
+  egov-mdms-service-host-key: 'mdms-v2'
   validateCampaignIdInMetadata: 'true'
   notCreateUserIfAlreadyThere: 'true'
   saveCampaignDetails: "save-campaign-details"
@@ -1560,6 +1564,24 @@ project-factory:
   userCreateBatchTopic: "hcm-user-create-batch"
   mappingBatchTopic: "hcm-mapping-batch"
   campaignMarkFailedTopic: "hcm-campaign-mark-failed"
+  userMainBoundary: "TCHAD"
+  userMainBoundaryType: "COUNTRY"
+  maxResourceCreationAttempts: "200"
+  waitTimeOfEachAttemptMs: "5000"
+  retryTillResourceCreationCompletes: "50"
+  serverTimezone: "UTC"
+  attendanceAttendeeSearchPageSize: "100"
+  attendanceStaffSearchPageSize: "100"
+  userKafkaCreateBatchSize: '100'
+  mappingBulkCreateChunkSize: '150'
+  projectBulkCreateChunkSize: '100'
+  projectCreatePaceDelayMs: '100'
+  userWorkerCreateBatchLag: '7'
+  userIndividualConsistencyMaxPollAttempts: '10'
+  userIndividualSearchBatchSize: '150'
+  mappingKafkaBatchSize: '300'
+  projectConfirmRetries: '45'
+  projectBulkCreateConcurrency: '3'
   hpa:
     enabled: false
     minReplicas: 1
