@@ -1122,7 +1122,6 @@ egov-notification-mail:
   central-instance-enabled: true
 
 mdms-v2:
-  replicas: 1
   initContainers:
     dbMigration:
       image:
@@ -1131,9 +1130,10 @@ mdms-v2:
   image:
     repository: egovio/mdms-v2
     tag: central-instance-6fae5fdefc-96
-  ingress:
-    replenishRate: "10"
-    burstCapacity: "60"
+  service:
+    additionalAnnotations: |
+      gateway-replenishRate: "10"
+      gateway-burstCapacity: "60"
   central-instance-build: true
   central-instance-enabled: true
   heap: "-Xmx2048m -Xms1024m"
