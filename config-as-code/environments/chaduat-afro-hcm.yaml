@@ -93,7 +93,7 @@ hcm-digit-ui:
     context: "chaduat/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: afro-url-redirection-350bfab
+    tag: afro-url-redirection-bd16270
   env: |
     - name: COUNTRY_PREFIX
       value: "chaduat"
