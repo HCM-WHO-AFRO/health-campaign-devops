@@ -416,25 +416,25 @@ env: |
           name: egov-service-host
           key: attendance-service
   - name: ATTENDANCE_REGISTER_CREATE_PATH
-    value: attendance/v1/_create
+    value: health-attendance/v1/_create
   - name: ATTENDANCE_REGISTER_SEARCH_PATH
-    value: attendance/v1/_search
+    value: health-attendance/v1/_search
   - name: ATTENDANCE_ATTENDEE_CREATE_PATH
-    value: {{ .Values.attendanceAttendeeCreatePath | default "attendance/attendee/v1/_create" }}
+    value: {{ .Values.attendanceAttendeeCreatePath | default "health-attendance/attendee/v1/_create" }}
   - name: ATTENDANCE_ATTENDEE_DELETE_PATH
-    value: {{ .Values.attendanceAttendeeDeletePath | default "attendance/attendee/v1/_delete" }}
+    value: {{ .Values.attendanceAttendeeDeletePath | default "health-attendance/attendee/v1/_delete" }}
   - name: ATTENDANCE_ATTENDEE_UPDATE_TAG_PATH
-    value: {{ .Values.attendanceAttendeeUpdateTagPath | default "attendance/attendee/v1/_updateTag" }}
+    value: {{ .Values.attendanceAttendeeUpdateTagPath | default "health-attendance/attendee/v1/_updateTag" }}
   - name: ATTENDANCE_STAFF_CREATE_PATH
-    value: {{ .Values.attendanceStaffCreatePath | default "attendance/staff/v1/_create" }}
+    value: {{ .Values.attendanceStaffCreatePath | default "health-attendance/staff/v1/_create" }}
   - name: ATTENDANCE_STAFF_DELETE_PATH
-    value: {{ .Values.attendanceStaffDeletePath | default "attendance/staff/v1/_delete" }}
+    value: {{ .Values.attendanceStaffDeletePath | default "health-attendance/staff/v1/_delete" }}
   - name: ATTENDANCE_REGISTER_UPDATE_PATH
-    value: {{ .Values.attendanceRegisterUpdatePath | default "attendance/v1/_update" }}
+    value: {{ .Values.attendanceRegisterUpdatePath | default "health-attendance/v1/_update" }}
   - name: ATTENDANCE_ATTENDEE_UPDATE_PATH
-    value: {{ .Values.attendanceAttendeeUpdatePath | default "attendance/attendee/v1/_update" }}
+    value: {{ .Values.attendanceAttendeeUpdatePath | default "health-attendance/attendee/v1/_update" }}
   - name: ATTENDANCE_STAFF_UPDATE_PATH
-    value: {{ .Values.attendanceStaffUpdatePath | default "attendance/staff/v1/_update" }}
+    value: {{ .Values.attendanceStaffUpdatePath | default "health-attendance/staff/v1/_update" }}
   - name: ATTENDANCE_REGISTER_DEFAULT_EVENT_TYPE
     value: {{ .Values.attendanceRegisterDefaultEventType | default "Training" }}
   - name: ATTENDANCE_REGISTER_DEFAULT_SESSIONS
@@ -448,9 +448,9 @@ env: |
   - name: ATTENDANCE_STAFF_SEARCH_PAGE_SIZE
     value: {{ .Values.attendanceStaffSearchPageSize | default "100" | quote }}
   - name: ATTENDANCE_ATTENDEE_SEARCH_PATH
-    value: {{ .Values.attendanceAttendeeSearchPath | default "attendance/attendee/v1/_search" }}
+    value: {{ .Values.attendanceAttendeeSearchPath | default "health-attendance/attendee/v1/_search" }}
   - name: ATTENDANCE_STAFF_SEARCH_PATH
-    value: {{ .Values.attendanceStaffSearchPath | default "attendance/staff/v1/_search" }}
+    value: {{ .Values.attendanceStaffSearchPath | default "health-attendance/staff/v1/_search" }}
   - name: SERVER_TIMEZONE
     value: {{ .Values.serverTimezone | default "UTC" }}
   - name: KAFKA_CONSUMER_TOPIC_PREFIX

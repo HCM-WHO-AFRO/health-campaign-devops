@@ -356,7 +356,7 @@ env: |
   - name: EGOV_PROGRAM_MANDATE_DIVIDING_FACTOR
     value: "1.8"
   - name: EGOV_SEARCH_ATTENDANCE_REGISTER_URL
-    value: "attendance/v1/_search"
+    value: "health-attendance/v1/_search"
   - name: TRANSFORMER_CONSUMER_SAVE_ATTENDANCE_LOG_TOPIC
     value: {{ index .Values "save-attendance-log-topic" | default "save-attendance-log" | quote }}
   - name: TRANSFORMER_CONSUMER_UPDATE_ATTENDANCE_LOG_TOPIC
