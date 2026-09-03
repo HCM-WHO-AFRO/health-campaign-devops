@@ -1414,10 +1414,10 @@ product:
     dbMigration:
       image:
         repository: egovio/product-db
-        tag: master-7f8a6b8
+        tag: customize-2.1-product-4c59c40
   image:
     repository: egovio/product
-    tag: master-7f8a6b8
+    tag: customize-2.1-product-4c59c40
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
