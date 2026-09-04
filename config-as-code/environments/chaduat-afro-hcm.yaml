@@ -350,6 +350,7 @@ auth-proxy:
   kibanaBasePath: "/kibana-upgrade"
 
 health-expense-calculator:
+  egov-bill-host-configmap-key: "health-expense-chaduat"
   initContainers:
     dbMigration:
       image:
@@ -375,7 +376,9 @@ health-expense-calculator:
   memory_requests: 368Mi
   cpu_limits: 600m
   memory_limits: 512Mi
-  replicas: 0
+  central-instance-build: false
+  tracing-enabled: true
+  java-enable-debug: false
   egov-mdms-service-endpoint-key: "/mdms-v2/v1/_search"
   report-header-title: "Health Campaign Payment Report"
   report-date-time-format: "dd/MM/yyyy HH:mm:ss z"
@@ -383,19 +386,25 @@ health-expense-calculator:
   register-batch-size: 15
   tenantId: "chaduat"
   excell-state-level-tenant-id: "chaduat"
+  boundary-hierarchy-name: "POLIO_CHAD"
+  egov-localization-module-name: "hcm-boundary-polio_chad"
+  report-localization-boundary-module-name: "hcm-boundary-polio_chad"
   calculate-musterroll-health: chaduat-calculate-musterroll-health
   calculate-error-health: chaduat-calculate-error-health
   calculate-billmeta-health: chaduat-calculate-billmeta-health
+  expense-calculator-create-topic: chaduat-save-calculator
   report-error-queue-topic: chaduat-report-error-queue-topic
   report-retry-queue-topic: chaduat-report-retry-queue-topic
-  report-generation-trigger-topic: chaduat-report-generation-trigger-topic
-  report-generation-retry-trigger-topic: chaduat-report-generation-retry-trigger-topic
+  report-generation-trigger-topic: chaduat-report-generation-trigger
+  report-generation-retry-trigger-topic: chaduat-report-generation-retry-trigger
   bill-generation-async-topic: chaduat-bill-generation-async-topic
   bill-generation-async-enabled: "true"
   expense-bill-create-topic: chaduat-expense-bill-create-health
   expense-bill-update-topic: chaduat-expense-bill-update-health
   expense-bill-index-topic: chaduat-expense-bill-index-health
   payment-pdf-key: "health-bill-payment-chaduat"
+  egov-filestore-signature-connect-timeout-ms: "3000"
+  egov-filestore-signature-read-timeout-ms: "10000"
   billing-frequency-custom-minimum-days: "1"
   billing-config-v2-enabled: "true"
   billing-config-create-topic: chaduat-billing-config-create
@@ -405,6 +414,7 @@ health-expense-calculator:
   billing-muster-roll-period-aware-enabled: "true"
   egov-musterroll-search-endpoint: "/health-muster-roll/v1/_search"
   project-management-system-kafka-update-topic: chaduat-update-project
+  project-management-system-kafka-update-date-topic: chaduat-update-project-date
 
 health-expense:
   initContainers:

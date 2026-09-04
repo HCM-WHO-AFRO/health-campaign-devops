@@ -11,6 +11,8 @@ ingress:
   enabled: true
   zuul: true
   context: "health-expense-calculator"
+  additionalAnnotations: |
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
 
 # Init Containers Configs
 initContainers:
@@ -34,7 +36,9 @@ heap: "-Xmx256m -Xms256m"
 memory_limits: 512Mi
 java-args: ""
 cpu_limits: "300m"
-boundary-hierarchy: "ADMIN"
+spring-kafka-producer-properties-max-request-size: "10485760"
+expense-calculator-create-topic: save-calculator
+kafka-topics-consumer: service-consumer-topic
 
 # Additional Container Envs
 env: |
@@ -49,11 +53,11 @@ env: |
   - name: SERVER_SERVLET_CONTEXT-PATH
     value: /health-expense-calculator
   - name: EXPENSE_CALCULATOR_CONSUME_TOPIC
-    value: "calculate-musterroll-health"
+    value: {{ index .Values "calculate-musterroll-health" | quote }}
   - name: EXPENSE_CALCULATOR_ERROR_TOPIC
-    value: "calculate-error-health"
+    value: {{ index .Values "calculate-error-health" | quote }}
   - name: EXPENSE_CALCULATOR_CREATE_BILL_TOPIC
-    value: "calculate-billmeta-health"
+    value: {{ index .Values "calculate-billmeta-health" | quote }}
   - name: EGOV_MUSTERROLL_HOST
     valueFrom:
       configMapKeyRef:
@@ -68,9 +72,9 @@ env: |
     valueFrom:
       configMapKeyRef:
         name: egov-service-host
-        key: egov-mdms-service
+        key: mdms-v2
   - name: EGOV_MDMS_SEARCH_ENDPOINT
-    value: "egov-mdms-service/v1/_search"      
+    value: "mdms-v2/v1/_search"      
   - name: EGOV_IDGEN_HOST
     valueFrom: 
       configMapKeyRef:
@@ -85,7 +89,7 @@ env: |
     valueFrom:
       configMapKeyRef:
         name: egov-service-host
-        key: mdms-service-v2
+        key: mdms-v2
   - name: EGOV_MDMS_SEARCH_V2_ENDPOINT
     value: "mdms-v2/v1/_search"   
   - name: WORKS_ATTENDANCE_LOG_HOST
@@ -98,6 +102,14 @@ env: |
       configMapKeyRef:
         name: egov-service-host
         key: boundary-service
+  - name: EGOV_BOUNDARY_SEARCH_URL
+    value: {{ index .Values "egov-boundary-search-url" | default "/boundary-service/boundary-relationships/_search" }}
+  - name: EGOV_BOUNDARY_HIERARCHY_NAME
+    value: {{ index .Values "boundary-hierarchy-name" | default "ADMIN" | quote }}
+  - name: EGOV_LOCALIZATION_MODULE_NAME
+    value: {{ index .Values "egov-localization-module-name" | default "hcm-boundary-admin" | quote }}
+  - name: EGOV_LOCALIZATION_LOCALE_CODE
+    value: {{ index .Values "egov-localization-locale-code" | default "en_NG" | quote }}
   - name: PROJECT_SERVICE_HOST
     valueFrom:
       configMapKeyRef:
@@ -115,29 +127,35 @@ env: |
       configMapKeyRef:
         name: egov-service-host
         key: pdf-service
-  {{- if index .Values "state-level-tenant-id" }}
+  {{- if index .Values "excell-state-level-tenant-id" }}
   - name: STATE_LEVEL_TENANT_ID
-    value: {{ index .Values "state-level-tenant-id" | quote }} 
+    value: {{ index .Values "excell-state-level-tenant-id" | quote }}
+  {{- else }}
+  - name: STATE_LEVEL_TENANT_ID
+    valueFrom:
+      configMapKeyRef:
+        name: egov-config
+        key: egov-state-level-tenant-id
   {{- end }}
   {{- if index .Values "payment-pdf-key" }}
   - name: PAYMENT_PDF_KEY
     value: {{ index .Values "payment-pdf-key" | quote }}
   {{- end }}
+  {{- if index .Values "egov-filestore-signature-connect-timeout-ms" }}
+  - name: EGOV_FILESTORE_SIGNATURE_CONNECT_TIMEOUT_MS
+    value: {{ index .Values "egov-filestore-signature-connect-timeout-ms" | quote }}
+  {{- end }}
+  {{- if index .Values "egov-filestore-signature-read-timeout-ms" }}
+  - name: EGOV_FILESTORE_SIGNATURE_READ_TIMEOUT_MS
+    value: {{ index .Values "egov-filestore-signature-read-timeout-ms" | quote }}
+  {{- end }}
 
-  {{- if index .Values "report-localization-module-name" }}
   - name: REPORT_LOCALIZATION_MODULE_NAME
-    value: {{ index .Values "report-localization-module-name" | quote }}
-  {{- end }}
-
-  {{- if index .Values "report-localization-boundary-module-name" }}
+    value: {{ index .Values "report-localization-module-name" | default "hcm-payments" | quote }}
   - name: REPORT_LOCALIZATION_BOUNDARY_MODULE_NAME
-    value: {{ index .Values "report-localization-boundary-module-name" | quote }}
-  {{- end }}
-
-  {{- if index .Values "report-localization-locale-code" }}
+    value: {{ index .Values "report-localization-boundary-module-name" | default "hcm-boundary-admin" | quote }}
   - name: REPORT_LOCALIZATION_LOCALE_CODE
-    value: {{ index .Values "report-localization-locale-code" | quote }}
-  {{- end }}
+    value: {{ index .Values "report-localization-locale-code" | default "en_NG" | quote }}
 
   {{- if index .Values "report-header-title" }}
   - name: REPORT_HEADER_TITLE
@@ -158,8 +176,22 @@ env: |
   - name: REPORT_ERROR_QUEUE_TOPIC
     value: {{ index .Values "report-error-queue-topic" | quote }}
   {{- end }}
+  {{- if index .Values "report-retry-queue-topic" }}
+  - name: REPORT_RETRY_QUEUE_TOPIC
+    value: {{ index .Values "report-retry-queue-topic" | quote }}
+  {{- end }}
+  {{- if index .Values "expense-bill-create-topic" }}
   - name: EXPENSE_BILLING_BILL_CREATE
-    value: "expense-bill-create-health"
+    value: {{ index .Values "expense-bill-create-topic" | quote }}
+  {{- end }}
+  {{- if index .Values "expense-bill-update-topic" }}
+  - name: EXPENSE_BILLING_BILL_UPDATE
+    value: {{ index .Values "expense-bill-update-topic" | quote }}
+  {{- end }}
+  {{- if index .Values "expense-bill-index-topic" }}
+  - name: EXPENSE_BILLING_BILL_INDEX
+    value: {{ index .Values "expense-bill-index-topic" | quote }}
+  {{- end }}
   - name: EGOV_LOCALIZATION_HOST
     valueFrom:
       configMapKeyRef:
@@ -181,6 +213,14 @@ env: |
   - name: BILL_GENERATION_ASYNC_TOPIC
     value: {{ index .Values "bill-generation-async-topic" | quote }}
   {{- end }}
+  {{- if index .Values "report-generation-trigger-topic" }}
+  - name: REPORT_GENERATION_TRIGGER_TOPIC
+    value: {{ index .Values "report-generation-trigger-topic" | quote }}
+  {{- end }}
+  {{- if index .Values "report-generation-retry-trigger-topic" }}
+  - name: REPORT_GENERATION_RETRY_TRIGGER_TOPIC
+    value: {{ index .Values "report-generation-retry-trigger-topic" | quote }}
+  {{- end }}
   - name: SPRING_DATA_REDIS_HOST
     valueFrom:
       configMapKeyRef:
@@ -188,10 +228,16 @@ env: |
         key: redis-host
   - name: SPRING_DATA_REDIS_PORT
     value: "6379"
+  - name: SPRING_KAFKA_CONSUMER_GROUP_ID
+    value: {{ index .Values "spring-kafka-consumer-group-id" | quote }}
   {{- if index .Values "spring-kafka-producer-properties-max-request-size" }}
   - name: SPRING_KAFKA_PRODUCER_PROPERTIES_MAX_REQUEST_SIZE
     value: {{ index .Values "spring-kafka-producer-properties-max-request-size" | quote }} 
   {{- end }}
+  - name: WORKS_ATTENDANCE_REGISTER_SEARCH_ENDPOINT
+    value: health-attendance/v1/_search
+  - name: WORKS_ATTENDANCE_REGISTER_UPDATE_ENDPOINT
+    value: health-attendance/v1/_update
   - name: EGOV_MUSTERROLL_SEARCH_ENDPOINT 
     value: {{ index .Values "egov-musterroll-search-endpoint" | quote }} 
   - name: IS_HEALTH_CONTEXT_ENABLED
@@ -199,8 +245,33 @@ env: |
   - name: EGOV_INDIVIDUAL_SEARCH_ENDPOINT
     value: "/individual/v1/_search"
   - name: EGOV_FILESTORE_PATH
-    value: "/filestore/v1/files"
-  {{- if index .Values "boundary-hierarchy" }}
-  - name: EGOV_BOUNDARY_HIERARCHY_NAME
-    value: {{ index .Values "boundary-hierarchy" | quote }}
-  {{- end }}
+    value: "filestore/v1/files"
+  - name: BILLING_FREQUENCY_CUSTOM_MINIMUM_DAYS
+    value: {{ index .Values "billing-frequency-custom-minimum-days" | quote }}
+  - name: BILLING_CONFIG_V2_ENABLED
+    value: {{ index .Values "billing-config-v2-enabled" | default "false" | quote }}
+  - name: BILLING_CONFIG_CREATE_TOPIC
+    value: {{ index .Values "billing-config-create-topic" | default "billing-config-create" | quote }}
+  - name: BILLING_CONFIG_UPDATE_TOPIC
+    value: {{ index .Values "billing-config-update-topic" | default "billing-config-update" | quote }}
+  - name: BILLING_PERIOD_STATUS_UPDATE_TOPIC
+    value: {{ index .Values "billing-period-status-update-topic" | default "billing-period-status-update" | quote }}
+  - name: BILLING_PERIOD_GENERATION_ENABLED
+    value: {{ index .Values "billing-period-generation-enabled" | default "false" | quote }}
+  - name: BILLING_MUSTER_ROLL_PERIOD_AWARE_ENABLED
+    value: {{ index .Values "billing-muster-roll-period-aware-enabled" | default "false" | quote }}
+  - name: BILLING_V2_BATCH_PROCESSING_ENABLED
+    value: "false"
+  - name: PROJECT_MANAGEMENT_SYSTEM_KAFKA_UPDATE_TOPIC
+    value: {{ index .Values "project-management-system-kafka-update-topic" | default "update-project" | quote }}
+  - name: PROJECT_MANAGEMENT_SYSTEM_KAFKA_UPDATE_DATE_TOPIC
+    value: {{ index .Values "project-management-system-kafka-update-date-topic" | default "update-project-date" | quote }}
+  - name: EXPENSE_CALCULATOR_CREATE_TOPIC
+    value: {{ index .Values "expense-calculator-create-topic" | quote }}
+  - name: KAFKA_TOPICS_CONSUMER
+    value: {{ index .Values "kafka-topics-consumer" | quote }}
+  - name: SPRING_KAFKA_CONSUMER_PROPERTIES_MAX_PARTITION_FETCH_BYTES
+    value: "15728640"
+  - name: SPRING_KAFKA_CONSUMER_PROPERTIES_FETCH_MAX_BYTES
+    value: "15728640"
+
