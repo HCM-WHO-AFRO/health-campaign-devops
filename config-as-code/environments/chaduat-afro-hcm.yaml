@@ -156,11 +156,16 @@ dashboard-ui:
   namespace: chaduat
   image:
     repository: egovio/dashboard-ui
-    tag: vapt-single-web-2bb19c0
+    tag: vapt-single-web-tenant-specific-dashboard-877f6e0
   ingress:
     enabled: true
     name: chaduat-dashboard-ui
     context: "chaduat/dashboard-ui"
+  env: |
+    - name: COUNTRY_PREFIX
+      value: "chaduat"
+    - name: BUILD_VARIANT
+      value: "dashboard-ui"
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
