@@ -354,10 +354,10 @@ health-expense-calculator:
     dbMigration:
       image:
         repository: "health-expense-calculator-db"
-        tag: master-404aea5
+        tag: master-a5e4c31
   image:
     repository: egovio/health-expense-calculator
-    tag: master-404aea5
+    tag: master-a5e4c31
   service:
     internal-gateway-enabled: true
   spring-kafka-consumer-group-id: "chaduat-health-expense-calculator"
