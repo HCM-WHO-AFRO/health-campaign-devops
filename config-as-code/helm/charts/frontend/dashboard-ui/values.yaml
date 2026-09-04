@@ -20,8 +20,8 @@ appType: "java-spring"
 httpPort: 80
 healthChecks:
   enabled: true
-  livenessProbePath: "/dashboard-ui/"
-  readinessProbePath: "/dashboard-ui/"
+  livenessProbePath: "/"
+  readinessProbePath: "/"
 tracing-enabled: true
 memory_limits: "256Mi"
 cpu_limits: '100m'
