@@ -819,6 +819,10 @@ dashboard-analytics:
   ingress:
     name: dashboard-analytics
     namespace: egov
+  service:
+    additionalAnnotations: |
+      gateway-replenishRate: "40"
+      gateway-burstCapacity: "80"
   heap: "-Xmx512m -Xms256m"
   replicas: 3
   hpa:
