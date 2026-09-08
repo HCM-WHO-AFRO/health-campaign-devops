@@ -986,7 +986,7 @@ internal-gateway-scg:
   initContainers:
     gitSync:
       repo: "git@github.com:HCM-WHO-AFRO/health-campaign-config"
-      branch: "DEMO"
+      branch: "DEMO-2.1-changes"
 
 
 collection-services:
