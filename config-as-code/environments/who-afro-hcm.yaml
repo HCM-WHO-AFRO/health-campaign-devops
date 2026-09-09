@@ -576,10 +576,10 @@ egov-user:
     dbMigration:
       image:
         repository: egovio/egov-user-db
-        tag: feature-sso-impl-1e23b63
+        tag: feature-sso-impl-97df160
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-1e23b63
+    tag: feature-sso-impl-97df160
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
