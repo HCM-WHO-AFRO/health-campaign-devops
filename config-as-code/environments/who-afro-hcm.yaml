@@ -224,7 +224,7 @@ hcm-digit-ui:
     context: "hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: vapt-single-web-4004808
+    tag: vapt-single-web-f58acf9
   env: |
     - name: COUNTRY_PREFIX
       value: ""
