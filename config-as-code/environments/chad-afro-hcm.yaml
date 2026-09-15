@@ -170,7 +170,7 @@ dashboard-ui:
   namespace: chad  
   image:
     repository: egovio/dashboard-ui
-    tag: master-a8308ea
+    tag: vapt-single-web-tenant-specific-dashboard-877f6e0
   ingress:
     enabled: true
     name: chad-dashboard-ui
