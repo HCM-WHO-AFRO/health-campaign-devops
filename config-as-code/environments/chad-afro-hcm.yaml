@@ -171,6 +171,11 @@ dashboard-ui:
   image:
     repository: egovio/dashboard-ui
     tag: vapt-single-web-tenant-specific-dashboard-877f6e0
+  env: |
+    - name: COUNTRY_PREFIX
+      value: "chad"
+    - name: BUILD_VARIANT
+      value: "dashboard-ui"
   ingress:
     enabled: true
     name: chad-dashboard-ui
