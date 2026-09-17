@@ -700,7 +700,9 @@ egov-malware-detection:
   is-s3-enabled: false
   is-azure-storage-enabled: true
   minio-enabled: false
-  mail-alert-recipients: "divij.goyal@egov.global"
+  fixed-bucketname: "egov-rainmaker"
+  quarantine-bucketname: "egov-rainmaker-quarantine"
+  mail-alert-recipients: "holash.chand@egovernments.org"
   replicas: 1
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
