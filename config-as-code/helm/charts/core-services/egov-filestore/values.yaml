@@ -35,6 +35,13 @@ is-s3-enabled: true
 memory_limits: "512Mi"
 cpu_limits: "300m"
 
+# Malware scan (Kafka) integration - disabled by default; enable per-environment
+kafka-malware-scan-enabled: false
+kafka-topics-malware-scan-request: "egov.malware.file-scan-request"
+
+# Multipart request size - unset by default (falls back to Spring default); set per-environment
+spring-servlet-multipart-max-request-size: ""
+
 persistence:
   enabled: false
 
@@ -52,6 +59,16 @@ env: |
     value: "/tmp"
   - name: SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE
     value: "6MB"
+  {{- if index .Values "spring-servlet-multipart-max-request-size" }}
+  - name: SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE
+    value: {{ index .Values "spring-servlet-multipart-max-request-size" | quote }}
+  {{- end }}
+  {{- if index .Values "kafka-malware-scan-enabled" }}
+  - name: KAFKA_MALWARE_SCAN_ENABLED
+    value: "true"
+  - name: KAFKA_TOPICS_MALWARE_SCAN_REQUEST
+    value: {{ index .Values "kafka-topics-malware-scan-request" | quote }}
+  {{- end }}
   - name: ISAZURESTORAGEENABLED
     value: "true"
   - name: ISNFSSTORAGEENABLED
