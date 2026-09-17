@@ -369,10 +369,10 @@ egov-filestore:
     dbMigration:
       image:
         repository: egovio/egov-filestore-db
-        tag: master-filestore-fix-5e0acbc
+        tag: master-1e8d2bb
   image:
     repository: egovio/egov-filestore
-    tag: master-filestore-fix-5e0acbc
+    tag: master-1e8d2bb
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -683,11 +683,11 @@ egov-malware-detection:
       enabled: false
       schemaTable: "egov_malware_schema"
       image:
-        repository: "egov-malware-detection-db"
-        tag: master-d69ce29
+        repository: "egovio/egov-malware-detection-db"
+        tag: master-malware-fix-77a437a
   image:
     repository: "egovio/egov-malware-detection"
-    tag: master-d69ce29
+    tag: master-malware-fix-77a437a
   namespace: egov
   central-instance-name: egov
   central-instance-build: true
