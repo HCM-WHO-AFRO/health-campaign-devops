@@ -383,8 +383,8 @@ egov-filestore:
   cpu_limits: 600m
   hpa:
     enabled: true
-    minReplicas: 3
-    maxReplicas: 8
+    minReplicas: 1
+    maxReplicas: 1
     cpuTargetPercentage: 70
     memoryTargetPercentage: 85
   is-bucket-fixed: "true"
@@ -698,7 +698,7 @@ egov-malware-detection:
   cpu_limits: 500m
   memory_limits: 768Mi
   mail-alert-recipients: "divij.goyal@egov.global"
-  replicas: 2
+  replicas: 1
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 egov-mdms-service:
