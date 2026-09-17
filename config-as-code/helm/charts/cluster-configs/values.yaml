@@ -59,6 +59,10 @@ cluster-configs:
       namespace: playground
       name: pgadmin       
 
+    argocd-repo-server:
+      namespace: argocd
+      name: argocd-repo-server-azure-creds
+
     egov-enc-service: 
       namespace: egov
       name: egov-enc-service       
