@@ -584,8 +584,8 @@ egov-user:
   central-instance-enabled: true
   replicas: 2
   heap: "-Xmx512m -Xms256m"
-  memory_requests: 384Mi
-  memory_limits: 512Mi
+  memory_requests: 512Mi
+  memory_limits: 768Mi
   cpu_requests: 100m
   cpu_limits: 300m
   hpa:
