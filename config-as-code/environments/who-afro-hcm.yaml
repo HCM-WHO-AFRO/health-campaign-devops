@@ -697,6 +697,8 @@ egov-malware-detection:
   memory_requests: 256Mi
   cpu_limits: 500m
   memory_limits: 768Mi
+  is-s3-enabled: false
+  is-azure-storage-enabled: true
   mail-alert-recipients: "divij.goyal@egov.global"
   replicas: 1
 
