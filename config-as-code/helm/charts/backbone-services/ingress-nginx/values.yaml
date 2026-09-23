@@ -52,7 +52,33 @@ controller:
   # -- Will add custom headers before sending traffic to backends according to https://github.com/kubernetes/ingress-nginx/tree/main/docs/examples/customization/custom-headers
   proxySetHeaders: {}
   # -- Will add custom headers before sending response traffic to the client according to: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#add-headers
-  addHeaders: {}
+  addHeaders: 
+    Cache-Control: no-store, no-cache, must-revalidate, private
+    Content-Security-Policy: 'default-src ''self'' https: ''unsafe-eval'' ''unsafe-inline'';
+    object-src ''none''; img-src ''self'' https: data: blob:; style-src https: blob:
+    ''unsafe-inline''; worker-src ''self'' blob:; font-src ''self'' https: data: blob:;
+    child-src ''self'' https: data: blob:; frame-src *.digit.org https://central-instance-uat-assets.s3.af-south-1.amazonaws.com/ 
+    https://view.officeapps.live.com/; frame-ancestors *.digit.org;'
+    Expires: "0"
+    Pragma: no-cache
+    Referrer-Policy: no-referrer-when-downgrade
+    Strict-Transport-Security: max-age=63072000; includeSubdomains; preload
+    X-Content-Type-Options: nosniff
+    X-Download-Options: noopen
+    X-Frame-Options: sameorigin
+    X-XSS-Protection: "0"
+    force-ssl-redirect: "true"
+    hide-headers: Server,X-Powered-By
+    hsts: "true"
+    hsts-include-subdomains: "true"
+    hsts-max-age: "31536000"
+    hsts-preload: "true"
+    server-tokens: "false"
+    ssl-ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305
+    ssl-prefer-server-ciphers: "true"
+    ssl-protocols: TLSv1.2 TLSv1.3
+    ssl-redirect: "true"
+    ssl-session-tickets: "false" 
   # -- Optionally customize the pod dnsConfig.
   dnsConfig: {}
   # -- Optionally customize the pod hostAliases.
