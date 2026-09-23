@@ -106,12 +106,13 @@ hcm-digit-ui:
       ';"
     
 workbench-ui:
+  replicas: 0
   namespace: chaduat
   image:
     repository: egovio/workbench-ui
     tag: master-2d83e1d
   ingress:
-    enabled: true
+    enabled: false
     name: chaduat-workbench-ui
     context: "chaduat/workbench-ui"
   custom-js-injection: |
@@ -120,12 +121,13 @@ workbench-ui:
       <script src=https://central-instance-uat-assets.s3.af-south-1.amazonaws.com/globalConfigsWorkbench-chaduat.js type=text/javascript></script>';" 
 
 microplan-ui:
+  replicas: 0
   namespace: chaduat
   image:
     repository: egovio/microplan-ui
     tag: master-88c8318
   ingress:
-    enabled: true
+    enabled: false
     name: chaduat-microplan-ui
     context: "chaduat/microplan-ui"
   custom-js-injection: |
@@ -137,12 +139,13 @@ microplan-ui:
 
 
 payments-ui:
+  replicas: 0
   namespace: chaduat
   image:
     repository: egovio/payments-ui
     tag: master-2d83e1d
   ingress:
-    enabled: true
+    enabled: false
     name: chaduat-payments-ui
     context: "chaduat/payments-ui"
   custom-js-injection: |

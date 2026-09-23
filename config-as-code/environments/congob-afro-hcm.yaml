@@ -275,12 +275,13 @@ health-expense-calculator:
   state-level-tenantid: "chad"
 
 workbench-ui:
+  replicas: 0
   namespace: congob
   image:
     repository: egovio/workbench-ui
     tag: master-4b556da
   ingress:
-    enabled: true
+    enabled: false
     name: congob-workbench-ui
     context: "congob/workbench-ui"
   custom-js-injection: |
@@ -289,12 +290,13 @@ workbench-ui:
       <script src=https://central-instance-uat-assets.s3.af-south-1.amazonaws.com/globalConfigsWorkbench-congob.js type=text/javascript></script>';"
 
 microplan-ui:
+  replicas: 0
   namespace: congob
   image:
     repository: egovio/microplan-ui
     tag: master-88c8318
   ingress:
-    enabled: true
+    enabled: false
     name: congob-microplan-ui
     context: "congob/microplan-ui"
   custom-js-injection: |
@@ -305,12 +307,13 @@ microplan-ui:
       ';"
 
 payments-ui:
+  replicas: 0
   namespace: congob
   image:
     repository: egovio/payments-ui
     tag: master-a8308ea
   ingress:
-    enabled: true
+    enabled: false
     name: congob-payments-ui
     context: "congob/payments-ui"
   custom-js-injection: |
@@ -339,12 +342,13 @@ dashboard-ui:
   memory_limits: 1024Mi
 
 core-ui:
+  replicas: 0
   namespace: congob
   image:
     repository: egovio/core-ui
     tag: develop-548f854d1d-57
   ingress:
-    enabled: true
+    enabled: false
     name: congob-core-ui
     context: "congob/core-ui"
   custom-js-injection: |
@@ -355,22 +359,24 @@ core-ui:
       ';"
 
 dss-dashboard:
+  replicas: 0
   namespace: congob
   image:
     repository: egovio/dss-dashboard
     tag: v1.8.0-0d70d60e63-53
   ingress:
-    enabled: true
+    enabled: false
     name: congob-dss-dashboard
     context: "congob/dss-dashboard"
 
 console:
+  replicas: 0
   namespace: congob
   image:
     repository: egovio/console
     tag: ondo-proxy-f806f086a2-149
   ingress:
-    enabled: true
+    enabled: false
     name: congob-console
     context: "congob/console"
   custom-js-injection: |
