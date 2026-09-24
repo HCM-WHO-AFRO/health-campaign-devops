@@ -206,6 +206,8 @@ env: |
     value: chaduat
   - name: AUTH_OIDC_ENABLED
     value: "true"
+  - name: AUTH_OIDC_SHARED_LOGIN_TENANT_ID
+    value: "public"
   - name: EGOV_BOUNDARY_HOST
     valueFrom:
       configMapKeyRef:
