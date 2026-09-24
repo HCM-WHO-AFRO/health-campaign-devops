@@ -452,6 +452,7 @@ configs:
     # You can customize parameters by adding parameters here.
     # (e.g.)
     # otlp.address: ''
+    reposerver.parallelism.limit: "10"
 
   # Argo CD RBAC policy configuration
   ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md
@@ -3063,11 +3064,11 @@ repoServer:
   # -- Resource limits and requests for the repo server pods
   resources:
    limits:
-     cpu: 200m
-     memory: 1Gi
+     cpu: "1"
+     memory: 2Gi
    requests:
      cpu: 10m
-     memory: 64Mi
+     memory: 512Mi
 
   # Repo server container ports
   containerPorts:
