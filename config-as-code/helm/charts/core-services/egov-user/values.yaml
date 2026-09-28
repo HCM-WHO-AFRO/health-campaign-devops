@@ -30,6 +30,10 @@ tracing-enabled: true
 
 decryption-abac-enabled: "false"
 account-unlock-cool-down-period-minutes: "30"
+auth-oidc-id-token-check-enabled: "false"
+shared-login-tenant-id: "public"
+employee-login-digit-disabled: "false"
+employee-login-digit-allowed-usernames: ""
 otp-validation: "true"
 citizen-otp-enabled: "true"
 employee-otp-enabled: "false"
@@ -207,7 +211,13 @@ env: |
   - name: AUTH_OIDC_ENABLED
     value: "true"
   - name: AUTH_OIDC_SHARED_LOGIN_TENANT_ID
-    value: "public"
+    value: {{ index .Values "shared-login-tenant-id" | quote }}
+  - name: AUTH_OIDC_DETAILS_ID_TOKEN_CHECK_ENABLED
+    value: {{ index .Values "auth-oidc-id-token-check-enabled" | quote }}
+  - name: EMPLOYEE_LOGIN_DIGIT_DISABLED
+    value: {{ index .Values "employee-login-digit-disabled" | quote }}
+  - name: EMPLOYEE_LOGIN_DIGIT_ALLOWED_USERNAMES
+    value: {{ index .Values "employee-login-digit-allowed-usernames" | quote }}
   - name: EGOV_BOUNDARY_HOST
     valueFrom:
       configMapKeyRef:

@@ -591,10 +591,10 @@ egov-user:
     dbMigration:
       image:
         repository: egovio/egov-user-db
-        tag: feature-sso-impl-multitenant-test-b72187d
+        tag: feature-sso-impl-multitenant-test-e45fe99
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-multitenant-test-b72187d
+    tag: feature-sso-impl-multitenant-test-e45fe99
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
@@ -623,6 +623,9 @@ egov-user:
   egov-state-level-tenant-id: "chad"
   state-level-tenant-id: "chad"
   decryption-abac-enabled: "false"
+  auth-oidc-id-token-check-enabled: "true"
+  employee-login-digit-disabled: "true"
+  employee-login-digit-allowed-usernames: "chaduat-cm-02"
   extraEnv:
     app: |
       - name: AUTH_OIDC_TEST_MODE_ENABLED
