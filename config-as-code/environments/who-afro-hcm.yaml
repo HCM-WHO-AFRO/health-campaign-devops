@@ -975,7 +975,7 @@ zuul:
 gateway:
   image:
     repository: egovio/gateway
-    tag: gatewat-rate-limit-per-route-7713c5c
+    tag: gatewat-rate-limit-per-route-b9818d0
   replicas: 4
   custom-filter-property: "false"
   cpu_requests: 200m
