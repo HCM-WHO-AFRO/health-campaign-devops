@@ -207,7 +207,7 @@ env: |
   - name: EGOV_HRMS_EMPLOYEE_CREATE_URL
     value: /egov-hrms/employees/_create
   - name: MDMS_OIDCPROVIDERS_TENANTID
-    value: chaduat
+    value: chaduat,chad,public,congob,zambia
   - name: AUTH_OIDC_ENABLED
     value: "true"
   - name: AUTH_OIDC_SHARED_LOGIN_TENANT_ID
