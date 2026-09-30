@@ -107,7 +107,7 @@ hcm-digit-ui:
     context: "chad/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: afro-url-redirection-350bfab
+    tag: vapt-dashboard-ui-7036fbc
   env: |
     - name: COUNTRY_PREFIX
       value: "chad"
