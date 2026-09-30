@@ -591,10 +591,10 @@ egov-user:
     dbMigration:
       image:
         repository: egovio/egov-user-db
-        tag: feature-sso-impl-multitenant-test-e45fe99
+        tag: feature-sso-impl-multitenant-test-a25ba96
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-multitenant-test-e45fe99
+    tag: feature-sso-impl-multitenant-test-a25ba96
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
@@ -629,7 +629,7 @@ egov-user:
   extraEnv:
     app: |
       - name: AUTH_OIDC_TEST_MODE_ENABLED
-        value: "true"
+        value: "false"
       - name: AUTH_OIDC_TEST_MODE_TENANTS
         value: "chad,chaduat,congob,zambia"
       - name: AUTH_OIDC_TEST_MODE_JWK_SET
