@@ -1354,7 +1354,7 @@ egov-enc-service:
 egov-accesscontrol:
   image:
     repository: egovio/egov-accesscontrol
-    tag: base-docker-upgrade-f2da0a7
+    tag: base-docker-upgrade-83f6768
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
