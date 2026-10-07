@@ -591,10 +591,10 @@ egov-user:
     dbMigration:
       image:
         repository: egovio/egov-user-db
-        tag: feature-sso-impl-multitenant-aa945b3
+        tag: feature-sso-impl-multitenant-8868228
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-multitenant-aa945b3
+    tag: feature-sso-impl-multitenant-8868228
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
