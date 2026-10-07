@@ -107,7 +107,7 @@ hcm-digit-ui:
     context: "chad/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: vapt-dashboard-ui-c4ebde3
+    tag: vapt-dashboard-ui-3447d1d
   env: |
     - name: COUNTRY_PREFIX
       value: "chad"
@@ -173,7 +173,7 @@ dashboard-ui:
   namespace: chad  
   image:
     repository: egovio/dashboard-ui
-    tag: vapt-single-web-tenant-specific-dashboard-877f6e0
+    tag: vapt-dashboard-ui-3447d1d
   env: |
     - name: COUNTRY_PREFIX
       value: "chad"
