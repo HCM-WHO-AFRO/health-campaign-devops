@@ -93,7 +93,7 @@ hcm-digit-ui:
     context: "chaduat/hcm-digit-ui"
   image:
     repository: egovio/hcm-digit-ui
-    tag: vapt-dashboard-ui-0a1f296
+    tag: vapt-dashboard-ui-82bb0d5
   env: |
     - name: COUNTRY_PREFIX
       value: "chaduat"
