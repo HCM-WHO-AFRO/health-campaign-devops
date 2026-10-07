@@ -159,7 +159,7 @@ dashboard-ui:
   namespace: chaduat
   image:
     repository: egovio/dashboard-ui
-    tag: vapt-dashboard-ui-3447d1d
+    tag: vapt-dashboard-ui-3211928
   ingress:
     enabled: true
     name: chaduat-dashboard-ui

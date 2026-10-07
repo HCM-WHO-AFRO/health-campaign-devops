@@ -173,7 +173,7 @@ dashboard-ui:
   namespace: chad  
   image:
     repository: egovio/dashboard-ui
-    tag: vapt-dashboard-ui-3447d1d
+    tag: vapt-dashboard-ui-3211928
   env: |
     - name: COUNTRY_PREFIX
       value: "chad"
