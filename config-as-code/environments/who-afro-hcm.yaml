@@ -445,10 +445,10 @@ pgr-services:
     dbMigration:
       image:
         repository: egovio/pgr-services-db
-        tag: master-7ce35df
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/pgr-services
-    tag: master-7ce35df
+    tag: HCMPRE-1437-master-9c09017
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -463,10 +463,10 @@ household:
     dbMigration:
       image:
         repository: egovio/household-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/household
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-9c09017
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -511,10 +511,10 @@ referralmanagement:
     dbMigration:
       image:
         repository: egovio/referralmanagement-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/referralmanagement
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-9c09017
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -535,10 +535,10 @@ stock:
     dbMigration:
       image:
         repository: egovio/stock-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/stock
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-9c09017
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -754,10 +754,10 @@ boundary-management:
     dbMigration:
       image:
         repository: egovio/boundary-management-db
-        tag: master-aa57e79
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/boundary-management
-    tag: master-aa57e79
+    tag: HCMPRE-1437-master-9c09017
   central-instance-build: true
   central-instance-enabled: true
   DEBUG: 'true'
@@ -1354,7 +1354,7 @@ egov-enc-service:
 egov-accesscontrol:
   image:
     repository: egovio/egov-accesscontrol
-    tag: base-docker-upgrade-83f6768
+    tag: HCMPRE-1437-base-docker-upgrade-a1ae347
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1381,10 +1381,10 @@ facility:
     dbMigration:
       image:
         repository: egovio/facility-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/facility
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-9c09017
   central-instance-build: true
   central-instance-name: egov
   central-instance-enabled: true
@@ -1402,10 +1402,10 @@ project:
     dbMigration:
       image:
         repository: egovio/project-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/project
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-9c09017
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1423,10 +1423,10 @@ individual:
     dbMigration:
       image:
         repository: egovio/individual-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/individual
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-9c09017
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1540,10 +1540,10 @@ project-factory:
     dbMigration:
       image:
         repository: egovio/project-factory-db
-        tag: master-c5dff1d
+        tag: HCMPRE-1437-master-9c09017
   image:
     repository: egovio/project-factory
-    tag: master-c5dff1d
+    tag: HCMPRE-1437-master-9c09017
   splitBoundariesOn: 'ADMIN_DISTRITO'
   namespace: 'egov'
   central-instance-name: egov
