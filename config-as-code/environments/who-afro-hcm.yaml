@@ -1961,10 +1961,10 @@ health-attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: HCMPRE-1437-master-cdc5957-5f988d9
+        tag: HCMPRE-1437-master-cdc5957-6659426
   image:
     repository: egovio/health-attendance
-    tag: HCMPRE-1437-master-cdc5957-5f988d9
+    tag: HCMPRE-1437-master-cdc5957-6659426
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1980,10 +1980,10 @@ health-expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: HCMPRE-1437-master-cdc5957-5f988d9
+        tag: HCMPRE-1437-master-cdc5957-6659426
   image:
     repository: egovio/health-expense
-    tag: HCMPRE-1437-master-cdc5957-5f988d9
+    tag: HCMPRE-1437-master-cdc5957-6659426
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -2007,10 +2007,10 @@ health-muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: HCMPRE-1437-master-cdc5957-5f988d9
+        tag: HCMPRE-1437-master-cdc5957-6659426
   image:
     repository: egovio/health-muster-roll
-    tag: HCMPRE-1437-master-cdc5957-5f988d9
+    tag: HCMPRE-1437-master-cdc5957-6659426
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true

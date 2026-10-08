@@ -259,10 +259,10 @@ plan-service:
     dbMigration:
       image:
         repository: "plan-service-db"
-        tag: master-1ffeec1
+        tag: HCMPRE-1437-master-1ffeec1-032d60e
   image:
     repository: egovio/plan-service
-    tag: master-1ffeec1
+    tag: HCMPRE-1437-master-1ffeec1-032d60e
 
   namespace: "chaduat"
   group-id: "chaduat-plan-service"
