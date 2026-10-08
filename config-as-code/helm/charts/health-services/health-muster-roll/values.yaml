@@ -220,12 +220,12 @@ env: |
   - name: ELASTICSEARCH_USERNAME
     valueFrom:
       secretKeyRef:
-        name: elastic
+        name: elasticsearch-master-credentials
         key: username
   - name: ELASTICSEARCH_PASSWORD
     valueFrom:
       secretKeyRef:
-        name: elastic
+        name: elasticsearch-master-credentials
         key: password
   - name: EGOV_WORKER_REGISTRY_ENABLED
     value: "true"
