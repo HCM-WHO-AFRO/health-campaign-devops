@@ -489,10 +489,10 @@ service-request:
     dbMigration:
       image:
         repository: egovio/service-request-db
-        tag: master-7f8a6b8
+        tag: HCMPRE-1437-master-7f8a6b8-e8a2a4a
   image:
     repository: egovio/service-request
-    tag: master-7f8a6b8
+    tag: HCMPRE-1437-master-7f8a6b8-e8a2a4a
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -591,10 +591,10 @@ egov-user:
     dbMigration:
       image:
         repository: egovio/egov-user-db
-        tag: feature-sso-impl-multitenant-8868228
+        tag: HCMPRE-1437-feature-sso-impl-multitenant-8868228-b577e37
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-multitenant-8868228
+    tag: HCMPRE-1437-feature-sso-impl-multitenant-8868228-b577e37
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
@@ -849,7 +849,7 @@ egov-searcher:
 dashboard-analytics:
   image:
     repository: egovio/dashboard-analytics
-    tag: analytics-raw-response-transform-5f98d99
+    tag: HCMPRE-1437-analytics-raw-response-transform-5f98d99-c6d131d
   ingress:
     name: dashboard-analytics
     namespace: egov
@@ -897,11 +897,15 @@ report:
 pdf-service:
   image:
     repository: egovio/pdf-service
-    tag: central-instance-pdf-7b3064f
+    tag: HCMPRE-1437-central-instance-pdf-7b3064f-fac1d55
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
   initContainers:
+    dbMigration:
+      image:
+        repository: egovio/pdf-service-db
+        tag: HCMPRE-1437-central-instance-pdf-7b3064f-fac1d55
     gitSync:
       repo: "https://github.com/HCM-WHO-AFRO/health-campaign-config"     ##### Change repo url with Your fork Repo url
       branch: "DEMO"                                   ##### Change repo branch with Your fork Repo branch
@@ -1067,10 +1071,10 @@ egov-workflow-v2:
     dbMigration:
       image:
         repository: egovio/egov-workflow-v2-db
-        tag: central-instance-1248cc50e5-38
+        tag: HCMPRE-1437-central-instance-1248cc5-b641bce
   image:
     repository: egovio/egov-workflow-v2
-    tag: central-instance-1248cc50e5-38
+    tag: HCMPRE-1437-central-instance-1248cc5-b641bce
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1091,10 +1095,10 @@ egov-hrms:
     dbMigration:
       image:
         repository: egovio/egov-hrms-db
-        tag: master-620d748
+        tag: HCMPRE-1437-master-620d748-f923b94
   image:
     repository: egovio/egov-hrms
-    tag: master-620d748
+    tag: HCMPRE-1437-master-620d748-f923b94
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1121,10 +1125,10 @@ egov-localization:
     dbMigration:
       image:
         repository: egovio/egov-localization-db
-        tag: redis-localization-key-5c0a4c4
+        tag: HCMPRE-1437-redis-localization-key-e372154
   image:
     repository: egovio/egov-localization
-    tag: redis-localization-key-5c0a4c4
+    tag: HCMPRE-1437-redis-localization-key-e372154
   replicas: 2
   memory_requests: 3512Mi
   memory_limits: 3768Mi
@@ -1164,10 +1168,10 @@ mdms-v2:
     dbMigration:
       image:
         repository: egovio/mdms-v2-db
-        tag: central-instance-mdms-2-590b8ea
+        tag: HCMPRE-1437-central-instance-mdms-2-75fb4bd
   image:
     repository: egovio/mdms-v2
-    tag: central-instance-mdms-2-590b8ea
+    tag: HCMPRE-1437-central-instance-mdms-2-75fb4bd
   service:
     additionalAnnotations: |
       gateway-replenishRate: "10"
@@ -1234,10 +1238,10 @@ boundary-service:
     dbMigration:
       image:
         repository: egovio/boundary-service-db
-        tag: base-docker-upgrade-f2da0a7
+        tag: HCMPRE-1437-base-docker-upgrade-f2da0a7-8ba2fbc
   image:
     repository: egovio/boundary-service
-    tag: base-docker-upgrade-f2da0a7
+    tag: HCMPRE-1437-base-docker-upgrade-f2da0a7-8ba2fbc
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1252,10 +1256,10 @@ excel-ingestion:
     dbMigration:
       image:
         repository: egovio/excel-ingestion-db
-        tag: master-c5dff1d
+        tag: HCMPRE-1437-master-c5dff1d-d75ed2b
   image:
     repository: egovio/excel-ingestion
-    tag: master-c5dff1d
+    tag: HCMPRE-1437-master-c5dff1d-d75ed2b
   namespace: egov
   replicas: 1
   central-instance-name: egov
@@ -1304,7 +1308,7 @@ inbox:
   replicas: 1
   image:
     repository: egovio/inbox
-    tag: master-d673cfa
+    tag: HCMPRE-1437-master-d673cfa-58be67e
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1452,10 +1456,10 @@ product:
     dbMigration:
       image:
         repository: egovio/product-db
-        tag: customize-2.1-product-4c59c40
+        tag: HCMPRE-1437-customize-2-1-product-b84f1fe
   image:
     repository: egovio/product
-    tag: customize-2.1-product-4c59c40
+    tag: HCMPRE-1437-customize-2-1-product-b84f1fe
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1473,10 +1477,10 @@ beneficiary-idgen:
     dbMigration:
       image:
         repository: egovio/beneficiary-idgen-db
-        tag: beneficiary-igden-tenant-specific-d5d2336
+        tag: HCMPRE-1437-beneficiary-igden-tenant-specific-4740700
   image:
     repository: egovio/beneficiary-idgen
-    tag: beneficiary-igden-tenant-specific-d5d2336
+    tag: HCMPRE-1437-beneficiary-igden-tenant-specific-4740700
   central-instance-build: true
   central-instance-enabled: true
   idformat-from-mdms: "true"
@@ -1640,10 +1644,10 @@ plan-service:
     dbMigration:
       image:
         repository: egovio/plan-service-db
-        tag: master-b91815e
+        tag: HCMPRE-1437-master-b91815e-9e80655
   image:
     repository: egovio/plan-service
-    tag: master-b91815e
+    tag: HCMPRE-1437-master-b91815e-9e80655
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1658,16 +1662,16 @@ census-service:
     dbMigration:
       image:
         repository: egovio/census-service-db
-        tag: master-1ffeec1
+        tag: HCMPRE-1437-master-1ffeec1-032d60e
   image:
     repository: egovio/census-service
-    tag: master-1ffeec1
+    tag: HCMPRE-1437-master-1ffeec1-032d60e
   kafka-producer-max-request-size: "5000000"
 
 resource-generator:
   image:
     repository: egovio/resource-generator
-    tag: master-b91815e
+    tag: HCMPRE-1437-master-b91815e-9e80655
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1957,10 +1961,10 @@ health-attendance:
     dbMigration:
       image:
         repository: egovio/health-attendance-db
-        tag: master-cdc5957
+        tag: HCMPRE-1437-master-cdc5957-5f988d9
   image:
     repository: egovio/health-attendance
-    tag: master-cdc5957
+    tag: HCMPRE-1437-master-cdc5957-5f988d9
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -1976,10 +1980,10 @@ health-expense:
     dbMigration:
       image:
         repository: egovio/health-expense-db
-        tag: master-cdc5957
+        tag: HCMPRE-1437-master-cdc5957-5f988d9
   image:
     repository: egovio/health-expense
-    tag: master-cdc5957
+    tag: HCMPRE-1437-master-cdc5957-5f988d9
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -2003,10 +2007,10 @@ health-muster-roll:
     dbMigration:
       image:
         repository: egovio/health-muster-roll-db
-        tag: master-cdc5957
+        tag: HCMPRE-1437-master-cdc5957-5f988d9
   image:
     repository: egovio/health-muster-roll
-    tag: master-cdc5957
+    tag: HCMPRE-1437-master-cdc5957-5f988d9
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -2050,10 +2054,10 @@ egov-notification-push:
     dbMigration:
       image:
         repository: egovio/egov-notification-push-db
-        tag: nigeria-go-deep-push-notification-batch-7d2ba39
+        tag: HCMPRE-1437-nigeria-go-deep-push-notification-batch-7d2ba39-255364a
   image:
     repository: egovio/egov-notification-push
-    tag: nigeria-go-deep-push-notification-batch-7d2ba39
+    tag: HCMPRE-1437-nigeria-go-deep-push-notification-batch-7d2ba39-255364a
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -2068,10 +2072,10 @@ health-notification-service:
     dbMigration:
       image:
         repository: egovio/health-notification-service-db
-        tag: health-notification-service-cache-ca7303e
+        tag: HCMPRE-1437-health-notification-service-cache-ca7303e-043c8c0
   image:
     repository: egovio/health-notification-service
-    tag: health-notification-service-cache-ca7303e
+    tag: HCMPRE-1437-health-notification-service-cache-ca7303e-043c8c0
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
@@ -2086,10 +2090,10 @@ worker-registry:
     dbMigration:
       image:
         repository: egovio/worker-registry-db
-        tag: customize-2.0-worker-registry-8fce267
+        tag: HCMPRE-1437-customize-2-0-worker-registry-fa0c14f
   image:
     repository: egovio/worker-registry
-    tag: customize-2.0-worker-registry-8fce267
+    tag: HCMPRE-1437-customize-2-0-worker-registry-fa0c14f
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true

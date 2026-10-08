@@ -242,10 +242,10 @@ census-service:
     dbMigration:
       image:
         repository: "census-service-db"
-        tag: master-b91815e
+        tag: HCMPRE-1437-master-b91815e-9e80655
   image:
     repository: egovio/census-service
-    tag: master-b91815e
+    tag: HCMPRE-1437-master-b91815e-9e80655
 
   namespace: "chad"
   group-id: "chad-census-service"
@@ -276,10 +276,10 @@ plan-service:
     dbMigration:
       image:
         repository: "plan-service-db"
-        tag: master-b91815e
+        tag: HCMPRE-1437-master-b91815e-9e80655
   image:
     repository: egovio/plan-service
-    tag: master-b91815e
+    tag: HCMPRE-1437-master-b91815e-9e80655
 
   namespace: "chad"
   group-id: "chad-plan-service"
@@ -318,7 +318,7 @@ plan-service:
 resource-generator:
   image:
     repository: egovio/resource-generator
-    tag: master-b91815e
+    tag: HCMPRE-1437-master-b91815e-9e80655
   namespace: "chad"
   group-id: "chad-resource-generator"
   ingress:
