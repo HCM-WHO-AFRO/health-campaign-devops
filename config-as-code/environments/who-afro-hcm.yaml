@@ -82,7 +82,7 @@ cluster-configs:
               citizen-indexer: "http://citizen-indexer:8080/"
               citizen-services: "http://citizen-services:8080/"
               dashboard-analytics: "http://dashboard-analytics.egov:8080/"
-              project-factory: 'http://internal-gateway-scg.egov:8080/'
+              project-factory: 'http://project-factory.egov:8080/'
               plan-service: 'http://internal-gateway-scg.egov:8080/'
               census-service: 'http://internal-gateway-scg.egov:8080/'
               chad-resource-generator: 'http://resource-generator.chad:8080/'
@@ -90,7 +90,7 @@ cluster-configs:
               chad-census-service: 'http://census-service.chad:8080/'
               chad-project-factory: 'http://project-factory.chad:8080/'
               chad-transformer: 'http://transformer.chad:8080/'
-              excel-ingestion: 'http://internal-gateway-scg.egov:8080/'
+              excel-ingestion: 'http://excel-ingestion.egov:8080/'
               congob-resource-generator: 'http://resource-generator.congob:8080/'
               congob-plan-service: 'http://plan-service.congob:8080/'
               congob-census-service: 'http://census-service.congob:8080/'
