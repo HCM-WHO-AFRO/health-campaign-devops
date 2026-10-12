@@ -225,10 +225,10 @@ census-service:
     dbMigration:
       image:
         repository: "census-service-db"
-        tag: HCMPRE-1437-master-1ffeec1-032d60e
+        tag: master-1ffeec1
   image:
     repository: egovio/census-service
-    tag: HCMPRE-1437-master-1ffeec1-032d60e
+    tag: master-1ffeec1
 
   namespace: "chaduat"
   group-id: "chaduat-census-service"
@@ -301,7 +301,7 @@ plan-service:
 resource-generator:
   image:
     repository: egovio/resource-generator
-    tag: HCMPRE-1437-master-1ffeec1-032d60e
+    tag: master-1ffeec1
   namespace: "chaduat"
   group-id: "chaduat-resource-generator"
   ingress:
