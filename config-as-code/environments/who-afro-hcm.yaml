@@ -272,7 +272,7 @@ dashboard-ui:
     context: "dashboard-ui"
   image:
     repository: egovio/dashboard-ui
-    tag: vapt-dashboard-ui-320a3ec
+    tag: vapt-dashboard-ui-53cf677
   custom-js-injection: |
     sub_filter.conf: "
       sub_filter  '<head>' '<head>
