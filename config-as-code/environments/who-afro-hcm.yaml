@@ -591,10 +591,10 @@ egov-user:
     dbMigration:
       image:
         repository: egovio/egov-user-db
-        tag: feature-sso-impl-multitenant-8868228
+        tag: sqli-fix-egov-user-feature-sso-impl-multitenant-8868228-9e6aea6
   image:
     repository: egovio/egov-user
-    tag: feature-sso-impl-multitenant-8868228
+    tag: sqli-fix-egov-user-feature-sso-impl-multitenant-8868228-9e6aea6
   central-instance-build: true
   central-instance-enabled: true
   replicas: 2
@@ -1354,7 +1354,7 @@ egov-enc-service:
 egov-accesscontrol:
   image:
     repository: egovio/egov-accesscontrol
-    tag: base-docker-upgrade-83f6768
+    tag: sqli-fix-egov-accesscontrol-base-docker-upgrade-83f6768-3ace234
   central-instance-name: egov
   central-instance-build: true
   central-instance-enabled: true
