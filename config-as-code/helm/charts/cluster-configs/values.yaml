@@ -35,8 +35,8 @@ cluster-configs:
       namespace: [ egov, chaduat ] 
 
   secrets:
-    db: 
-      namespace: [ egov, chaduat, chad, zambia ]
+    db:
+      namespace: [ egov, chaduat, chad, zambia, congob, es-cluster ]
       name: db
 
     egov-notification-sms:
