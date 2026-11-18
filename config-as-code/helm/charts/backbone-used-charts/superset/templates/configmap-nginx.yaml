@@ -59,7 +59,7 @@ data:
 
             # Probe target — kubelet has no /analytics prefix to send.
             location = /health {
-                proxy_pass http://superset_app{{ .Values.contextPath }}/health;
+                proxy_pass http://superset_app/health;
                 proxy_set_header Host $http_host;
             }
 
@@ -68,15 +68,22 @@ data:
                 return 301 {{ .Values.contextPath }}/;
             }
 
+            # Superset serves at the root: APPLICATION_ROOT does not move Flask's
+            # routes, it only sets the cookie path. So nginx strips the prefix
+            # (the trailing / on proxy_pass) and tells Superset what it was via
+            # X-Forwarded-Prefix, which ProxyFix turns into SCRIPT_NAME so
+            # generated URLs keep the prefix.
             location {{ .Values.contextPath }}/static/ {
-                proxy_pass http://superset_app{{ .Values.contextPath }}/static/;
+                proxy_pass http://superset_app/static/;
+                proxy_set_header X-Forwarded-Prefix {{ .Values.contextPath }};
                 expires 30d;
                 add_header Cache-Control "public, immutable";
                 access_log off;
             }
 
             location {{ .Values.contextPath }}/ {
-                proxy_pass http://superset_app{{ .Values.contextPath }}/;
+                proxy_pass http://superset_app/;
+                proxy_set_header X-Forwarded-Prefix {{ .Values.contextPath }};
                 proxy_set_header Host $http_host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

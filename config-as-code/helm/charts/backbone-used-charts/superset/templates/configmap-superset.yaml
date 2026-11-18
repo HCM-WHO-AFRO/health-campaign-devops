@@ -11,9 +11,13 @@ data:
     import os
     from celery.schedules import crontab
 
-    # Serve the app under /analytics rather than at the domain root.
+    # Scopes the session cookie to the sub-path. It does NOT relocate Flask's
+    # routes — the nginx sidecar strips the prefix and passes it back as
+    # X-Forwarded-Prefix, which PROXY_FIX_CONFIG's x_prefix turns into
+    # SCRIPT_NAME so url_for() keeps the prefix. STATIC_ASSETS_PREFIX is
+    # deliberately unset: SCRIPT_NAME already prefixes generated asset URLs,
+    # and setting it too yields /analytics/analytics/static/...
     APPLICATION_ROOT = "{{ .Values.contextPath }}"
-    STATIC_ASSETS_PREFIX = "{{ .Values.contextPath }}"
 
     # Trust the X-Forwarded-* headers set by ingress-nginx and the sidecar.
     ENABLE_PROXY_FIX = True
