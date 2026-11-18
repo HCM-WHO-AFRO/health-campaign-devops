@@ -11,32 +11,27 @@ data:
     import os
     from celery.schedules import crontab
 
-    # Scopes the session cookie to the sub-path. It does NOT relocate Flask's
-    # routes — the nginx sidecar strips the prefix and passes it back as
-    # X-Forwarded-Prefix, which PROXY_FIX_CONFIG's x_prefix turns into
-    # SCRIPT_NAME so url_for() keeps the prefix.
+    # Superset 6 genuinely mounts the app here: routes answer at
+    # /analytics/... and every generated URL carries the prefix. (Superset 4
+    # ignored this for routing and only used it as the cookie path, which is
+    # why older revisions of this chart stripped the prefix at the proxy.)
     APPLICATION_ROOT = "{{ .Values.contextPath }}"
 
-    # SESSION_COOKIE_PATH defaults to APPLICATION_ROOT, which would scope the
-    # cookie to /analytics. The frontend's API calls go to /api/v1/... at the
-    # domain root, so the browser would not send it and every request would
-    # come back 401.
-    SESSION_COOKIE_PATH = "/"
-
-    # Superset's webpack bundles are emitted as raw "/static/assets/..." strings
-    # rather than through url_for, so SCRIPT_NAME never reaches them and the
-    # whole UI loads unstyled. This is the only thing that prefixes them; it
-    # does not touch the Flask-AppBuilder URLs, which url_for already handles.
+    # Prefixes the webpack bundle URLs, which are built from the asset manifest
+    # rather than url_for.
     STATIC_ASSETS_PREFIX = "{{ .Values.contextPath }}"
 
     # Trust the X-Forwarded-* headers set by ingress-nginx and the sidecar.
+    # x_prefix is off: the sidecar deliberately sends no X-Forwarded-Prefix,
+    # because APPLICATION_ROOT already mounts the app and ProxyFix would stack
+    # a second prefix on top of it.
     ENABLE_PROXY_FIX = True
     PROXY_FIX_CONFIG = {
         "x_for": 1,
         "x_proto": 1,
         "x_host": 1,
         "x_port": 1,
-        "x_prefix": 1
+        "x_prefix": 0
     }
 
     # Metadata database (Azure PostgreSQL), injected from the superset secret.
@@ -97,11 +92,10 @@ data:
     WTF_CSRF_TIME_LIMIT = None
 
     APP_NAME = "{{ .Values.branding.appName }}"
-    # navbar.html renders appbuilder.app_icon verbatim, so this one needs the
-    # context path. FAVICONS does not: basic.html already prepends
-    # assets_prefix to favicon.href, and prefixing here too yields
-    # /analytics/analytics/static/...
-    APP_ICON = "{{ .Values.contextPath }}{{ .Values.branding.appIcon }}"
+    # Both are consumed by the React shell, which applies the prefix itself —
+    # so neither carries it here. (Superset 4 rendered APP_ICON verbatim in a
+    # Jinja navbar and did need it.)
+    APP_ICON = "{{ .Values.branding.appIcon }}"
     APP_ICON_WIDTH = {{ .Values.branding.iconWidth }}
     FAVICONS = [{"href": "{{ .Values.branding.favicon }}"}]
 

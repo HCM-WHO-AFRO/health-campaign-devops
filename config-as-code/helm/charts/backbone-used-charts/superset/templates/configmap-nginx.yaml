@@ -63,76 +63,33 @@ data:
             absolute_redirect off;
             port_in_redirect off;
 
-            # Probe target — kubelet has no /analytics prefix to send.
+            # Probe target — the kubelet has no /analytics prefix to send, but
+            # the app only answers under it.
             location = /health {
-                proxy_pass http://superset_app/health;
+                proxy_pass http://superset_app{{ .Values.contextPath }}/health;
                 proxy_set_header Host $http_host;
             }
 
-            # Bare /analytics would otherwise miss the prefix location below.
-            location = {{ .Values.contextPath }} {
-                return 301 {{ .Values.contextPath }}/;
-            }
-
-            # Superset's "/" route redirects to a hardcoded /superset/welcome/
-            # that bypasses SCRIPT_NAME, so the prefix is lost and the next hop
-            # 404s here. Everything else builds URLs with url_for and picks the
-            # prefix up from X-Forwarded-Prefix, so only the entry point needs
-            # this shortcut.
-            location = {{ .Values.contextPath }}/ {
-                return 302 {{ .Values.contextPath }}/superset/welcome/;
-            }
-
-            # Paths Superset's frontend addresses from the domain root rather
-            # than through the /analytics prefix. The companion Ingress routes
-            # them to this pod; these pass the URI through untouched, which is
-            # where Superset actually serves them.
+            # Superset 6 mounts itself at APPLICATION_ROOT and builds every URL
+            # — pages, assets and API calls alike — with the prefix already in
+            # place. So the prefix is passed straight through, and no
+            # X-Forwarded-Prefix is sent: ProxyFix would add a second one on
+            # top of the mount point.
             #
-            # X-Forwarded-Prefix is still set. ProxyFix only strips the prefix
-            # from PATH_INFO when it is actually there, so routing is
-            # unaffected, but SCRIPT_NAME gets set and url_for() keeps
-            # generating /analytics links. Without it a login posted to the
-            # root /login/ redirects to "/", which the catch-all root ingress
-            # sends to /workbench-ui.
-            {{- range .Values.ingress.rootPaths.paths }}
-            # No trailing slash and no URI on proxy_pass: the request URI goes
-            # upstream untouched, so both /sqllab and /sqllab/... match.
-            location {{ . }} {
-                proxy_pass http://superset_app;
-                proxy_set_header X-Forwarded-Prefix {{ $.Values.contextPath }};
-                proxy_set_header Host $http_host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto $scheme;
-                proxy_http_version 1.1;
-                proxy_connect_timeout {{ $.Values.web.nginx.proxyTimeout }};
-                proxy_read_timeout {{ $.Values.web.nginx.proxyTimeout }};
-                proxy_send_timeout {{ $.Values.web.nginx.proxyTimeout }};
-                proxy_buffering off;
-              {{- if eq . "/static/assets" }}
-                expires 30d;
-                add_header Cache-Control "public, immutable";
-                access_log off;
-              {{- end }}
-            }
-            {{- end }}
-
-            # Superset serves at the root: APPLICATION_ROOT does not move Flask's
-            # routes, it only sets the cookie path. So nginx strips the prefix
-            # (the trailing / on proxy_pass) and tells Superset what it was via
-            # X-Forwarded-Prefix, which ProxyFix turns into SCRIPT_NAME so
-            # generated URLs keep the prefix.
+            # Superset 4 did none of this, which is why earlier revisions of
+            # this chart stripped the prefix and routed ~40 paths at the domain
+            # root. Reinstate none of that without re-testing against the
+            # running version.
             location {{ .Values.contextPath }}/static/ {
-                proxy_pass http://superset_app/static/;
-                proxy_set_header X-Forwarded-Prefix {{ .Values.contextPath }};
+                proxy_pass http://superset_app;
+                proxy_set_header Host $http_host;
                 expires 30d;
                 add_header Cache-Control "public, immutable";
                 access_log off;
             }
 
-            location {{ .Values.contextPath }}/ {
-                proxy_pass http://superset_app/;
-                proxy_set_header X-Forwarded-Prefix {{ .Values.contextPath }};
+            location {{ .Values.contextPath }} {
+                proxy_pass http://superset_app;
                 proxy_set_header Host $http_host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -141,7 +98,6 @@ data:
                 proxy_set_header X-Forwarded-Port $server_port;
                 proxy_http_version 1.1;
                 proxy_redirect off;
-                port_in_redirect off;
                 proxy_connect_timeout {{ .Values.web.nginx.proxyTimeout }};
                 proxy_read_timeout {{ .Values.web.nginx.proxyTimeout }};
                 proxy_send_timeout {{ .Values.web.nginx.proxyTimeout }};

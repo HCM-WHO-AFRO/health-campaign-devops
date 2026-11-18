@@ -98,9 +98,10 @@ spec:
               protocol: TCP
           startupProbe:
             httpGet:
-              # Probed directly on the container port, bypassing the nginx
-              # sidecar, so this must be the unprefixed route Superset serves.
-              path: /health
+              # Probed directly on the container port, bypassing the sidecar.
+              # Superset 6 mounts itself at APPLICATION_ROOT, so even here the
+              # path carries the prefix.
+              path: {{ .Values.contextPath }}/health
               port: 8088
             initialDelaySeconds: {{ .Values.web.probes.startup.initialDelay }}
             timeoutSeconds: {{ .Values.web.probes.startup.timeout }}
@@ -108,9 +109,10 @@ spec:
             periodSeconds: {{ .Values.web.probes.startup.period }}
           livenessProbe:
             httpGet:
-              # Probed directly on the container port, bypassing the nginx
-              # sidecar, so this must be the unprefixed route Superset serves.
-              path: /health
+              # Probed directly on the container port, bypassing the sidecar.
+              # Superset 6 mounts itself at APPLICATION_ROOT, so even here the
+              # path carries the prefix.
+              path: {{ .Values.contextPath }}/health
               port: 8088
             initialDelaySeconds: {{ .Values.web.probes.liveness.initialDelay }}
             timeoutSeconds: {{ .Values.web.probes.liveness.timeout }}
@@ -118,9 +120,10 @@ spec:
             periodSeconds: {{ .Values.web.probes.liveness.period }}
           readinessProbe:
             httpGet:
-              # Probed directly on the container port, bypassing the nginx
-              # sidecar, so this must be the unprefixed route Superset serves.
-              path: /health
+              # Probed directly on the container port, bypassing the sidecar.
+              # Superset 6 mounts itself at APPLICATION_ROOT, so even here the
+              # path carries the prefix.
+              path: {{ .Values.contextPath }}/health
               port: 8088
             initialDelaySeconds: {{ .Values.web.probes.readiness.initialDelay }}
             timeoutSeconds: {{ .Values.web.probes.readiness.timeout }}
