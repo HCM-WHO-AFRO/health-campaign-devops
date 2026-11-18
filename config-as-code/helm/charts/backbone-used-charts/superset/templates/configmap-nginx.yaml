@@ -68,6 +68,15 @@ data:
                 return 301 {{ .Values.contextPath }}/;
             }
 
+            # Superset's "/" route redirects to a hardcoded /superset/welcome/
+            # that bypasses SCRIPT_NAME, so the prefix is lost and the next hop
+            # 404s here. Everything else builds URLs with url_for and picks the
+            # prefix up from X-Forwarded-Prefix, so only the entry point needs
+            # this shortcut.
+            location = {{ .Values.contextPath }}/ {
+                return 302 {{ .Values.contextPath }}/superset/welcome/;
+            }
+
             # Superset serves at the root: APPLICATION_ROOT does not move Flask's
             # routes, it only sets the cookie path. So nginx strips the prefix
             # (the trailing / on proxy_pass) and tells Superset what it was via
