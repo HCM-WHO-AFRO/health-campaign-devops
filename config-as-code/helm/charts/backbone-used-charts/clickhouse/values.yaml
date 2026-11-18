@@ -59,6 +59,9 @@ persistence:
   enabled: true
   storageClassName: default
   accessMode: ReadWriteOnce
+  # Set explicitly: the API server defaults it anyway, and leaving it out makes
+  # ArgoCD see a permanent diff on the volumeClaimTemplate.
+  volumeMode: Filesystem
   size: 50Gi
 
 resources:
