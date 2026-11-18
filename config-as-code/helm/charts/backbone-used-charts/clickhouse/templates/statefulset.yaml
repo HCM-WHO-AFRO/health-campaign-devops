@@ -1,0 +1,132 @@
+{{- include "clickhouse.init" . -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "clickhouse.name" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clickhouse.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "clickhouse.name" . }}-headless
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "clickhouse.labels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "clickhouse.labels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+        runAsGroup: {{ .Values.securityContext.runAsGroup }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+      containers:
+        - name: {{ include "clickhouse.name" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.httpPort }}
+              protocol: TCP
+            - name: native
+              containerPort: {{ .Values.nativePort }}
+              protocol: TCP
+            {{- if .Values.server.prometheus.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.metricsPort }}
+              protocol: TCP
+            {{- end }}
+          env:
+            - name: CLICKHOUSE_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.name }}
+                  key: admin-password
+            - name: CLICKHOUSE_SUPERSET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.name }}
+                  key: superset-password
+            # The image entrypoint authenticates as `default` to run init.sql.
+            - name: CLICKHOUSE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.name }}
+                  key: admin-password
+            # Without this the entrypoint also writes its own users.d/default-user.xml
+            # with a second <password> field, and the server refuses to start
+            # (exit 91) because users.xml above already defines one.
+            - name: CLICKHOUSE_SKIP_USER_SETUP
+              value: "1"
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/clickhouse
+            - name: config
+              mountPath: /etc/clickhouse-server/config.d/server.xml
+              subPath: server.xml
+              readOnly: true
+            - name: config
+              mountPath: /etc/clickhouse-server/users.d/users.xml
+              subPath: users.xml
+              readOnly: true
+            - name: config
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
+              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: {{ .Values.probes.startup.initialDelay }}
+            periodSeconds: {{ .Values.probes.startup.period }}
+            timeoutSeconds: {{ .Values.probes.startup.timeout }}
+            failureThreshold: {{ .Values.probes.startup.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelay }}
+            periodSeconds: {{ .Values.probes.readiness.period }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeout }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelay }}
+            periodSeconds: {{ .Values.probes.liveness.period }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeout }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "clickhouse.name" . }}-config
+      {{- if not .Values.persistence.enabled }}
+        - name: data
+          emptyDir: {}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessMode | quote }}
+        storageClassName: {{ .Values.persistence.storageClassName | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+  {{- end }}

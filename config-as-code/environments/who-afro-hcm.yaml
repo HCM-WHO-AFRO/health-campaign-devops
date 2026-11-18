@@ -16,6 +16,11 @@ cluster-configs:
       
     root-ingress:
       cert-issuer: letsencrypt-prod
+
+    secrets:
+        superset:
+            db-host: afrohcm-t-euw-server.postgres.database.azure.com ## Superset metadata DB lives on the same Azure PostgreSQL server
+
     configmaps:
         egov-config:
             namespace: [ egov, es-cluster, monitoring, chad, congob, chaduat, zambia ]
@@ -1951,6 +1956,41 @@ pgadmin:
   persistence:
     enabled: true
     dataDirSize: "10Gi"
+
+clickhouse:
+  namespace: backbone
+  replicas: 1
+  database: analytics
+  persistence:
+    enabled: true
+    storageClassName: default
+    size: 50Gi
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "2Gi"
+    limits:
+      cpu: "2"
+      memory: "6Gi"
+
+superset:
+  namespace: backbone
+  contextPath: /analytics
+  branding:
+    appName: "AFRO Analytics"
+  initJob:
+    adminUsername: admin
+    adminEmail: devops@egovernments.org
+  clickhouseDatabase:
+    register: true
+    name: ClickHouse
+  web:
+    replicas: 1
+  worker:
+    replicas: 1
+  ingress:
+    enabled: true
+    context: analytics
 
 health-attendance:
   initContainers:

@@ -1,0 +1,96 @@
+# ClickHouse — OLAP store queried by Superset.
+# Single node, no operator and no Keeper: replication is not needed for a
+# single-shard BI datasource and the cluster has no cert-manager for the
+# clickhouse-operator webhooks.
+
+namespace: backbone
+
+# Common Labels
+labels:
+  app: "clickhouse"
+  group: "backbone"
+
+# Container Configs
+image:
+  repository: "clickhouse/clickhouse-server"
+  tag: "26.3.66.4-alpine"
+  pullPolicy: IfNotPresent
+
+replicas: 1
+
+# Ports
+httpPort: 8123
+nativePort: 9000
+metricsPort: 9363
+
+# Secret holding the user passwords. Created by the cluster-configs chart from
+# environments/who-afro-hcm-secrets.yaml, keys: admin-password, superset-password.
+secrets:
+  name: clickhouse
+
+# Database created on first start; Superset reads from it.
+database: analytics
+
+# Read-only BI user Superset authenticates as.
+supersetUser:
+  name: superset
+  # readonly=2 allows SELECT plus per-query setting changes, which is what
+  # SQL Lab needs; it still blocks INSERT/DDL.
+  readonly: 2
+  maxExecutionTime: 300
+  # Quoted so Helm does not render them in scientific notation, which
+  # ClickHouse cannot parse.
+  maxResultRows: "1000000"
+  maxMemoryUsage: "4000000000"
+
+# Server-level overrides merged into /etc/clickhouse-server/config.d
+server:
+  maxConnections: 1024
+  maxConcurrentQueries: 100
+  keepAliveTimeout: 64
+  # Cap on total server memory; keep below the container memory limit.
+  maxServerMemoryUsageToRamRatio: "0.8"
+  # Prometheus endpoint is scraped by kube-prometheus-stack via the Service annotations.
+  prometheus:
+    enabled: true
+    endpoint: /metrics
+
+persistence:
+  enabled: true
+  storageClassName: default
+  accessMode: ReadWriteOnce
+  size: 50Gi
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "2Gi"
+  limits:
+    cpu: "2"
+    memory: "6Gi"
+
+# ClickHouse runs as uid/gid 101 in the official image.
+securityContext:
+  runAsUser: 101
+  runAsGroup: 101
+  fsGroup: 101
+
+probes:
+  readiness:
+    initialDelay: 15
+    period: 10
+    timeout: 3
+    failureThreshold: 3
+  liveness:
+    initialDelay: 60
+    period: 30
+    timeout: 5
+    failureThreshold: 6
+  startup:
+    initialDelay: 10
+    period: 10
+    timeout: 3
+    failureThreshold: 30
+
+nodeSelector: {}
+tolerations: []

@@ -1,0 +1,208 @@
+# Apache Superset — web + celery worker + celery beat, fronted by an nginx
+# sidecar so the app can be served under the /analytics sub-path.
+#
+# Metadata (users, dashboards, charts) lives in a dedicated `superset` database
+# on the environment's Azure PostgreSQL server; the analytical data it charts
+# lives in ClickHouse. Both connection strings come from the `superset` secret
+# that the cluster-configs chart creates.
+
+name: superset
+namespace: backbone
+contextPath: /analytics
+
+# Common Labels
+labels:
+  app: "superset"
+  group: "backbone"
+
+# Container Configs
+image:
+  repository: "apache/superset"
+  tag: "4.1.4"
+  pullPolicy: IfNotPresent
+
+# Python drivers the stock image does not ship. Installed into a shared
+# emptyDir by an init container and prepended to PYTHONPATH, so the image stays
+# unmodified. Requires egress to PyPI from the cluster.
+drivers:
+  - psycopg2-binary==2.9.9
+  - clickhouse-connect==0.8.15
+
+# Secret created by cluster-configs. Mounted wholesale via envFrom, so every key
+# in it becomes an environment variable: SQLALCHEMY_DATABASE_URI, SECRET_KEY,
+# ADMIN_PASSWORD, DB_HOST, DB_PORT, REDIS_HOST, REDIS_PORT,
+# CLICKHOUSE_SQLALCHEMY_URI.
+secrets:
+  name: superset
+
+# Celery broker / results backend and the Superset cache.
+redis:
+  host: redis.backbone.svc.cluster.local
+  port: 6379
+  celeryDb: "2"
+  resultsDb: "3"
+
+cache:
+  timeout: 300
+  keyPrefix: "superset_"
+
+query:
+  maxRows: 100000
+  asyncTimeLimit: 300
+  webserverTimeout: 60
+
+session:
+  lifetime: 43200 # 12 hours
+
+features:
+  alertReports: true
+  dashboardRbac: true
+  crossFilters: true
+  templateProcessing: true
+  drillToDetail: true
+  drillBy: true
+
+branding:
+  appName: "AFRO Analytics"
+  appIcon: "/static/assets/images/superset-logo-horiz.png"
+  iconWidth: 126
+  favicon: "/static/assets/images/favicon.png"
+  primaryColor: "#0093D5" # WHO blue
+
+# Pre-registers the ClickHouse connection in Superset so analysts do not have to
+# paste a URI. Reads CLICKHOUSE_SQLALCHEMY_URI from the secret. Deliberately not
+# called `clickhouse`: that key is the ClickHouse chart's own override block in
+# the environment file and would merge into this chart's values.
+clickhouseDatabase:
+  register: true
+  name: ClickHouse
+
+web:
+  enabled: true
+  replicas: 1
+
+  gunicorn:
+    workers: 4
+    workerClass: gthread
+    threads: 20
+    timeout: 60
+    keepAlive: 2
+    maxRequests: 1000
+    maxRequestsJitter: 100
+    logLevel: info
+
+  probes:
+    startup:
+      initialDelay: 15
+      timeout: 3
+      failureThreshold: 60
+      period: 5
+    liveness:
+      initialDelay: 15
+      timeout: 3
+      failureThreshold: 3
+      period: 30
+    readiness:
+      initialDelay: 15
+      timeout: 3
+      failureThreshold: 3
+      period: 15
+
+  resources:
+    requests:
+      cpu: "300m"
+      memory: "1Gi"
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+
+  nginx:
+    image: nginx:1.27-alpine
+    port: 8080
+    clientMaxBodySize: "100M"
+    proxyTimeout: 300
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "300m"
+        memory: "256Mi"
+
+worker:
+  enabled: true
+  replicas: 1
+  poolType: prefork
+  concurrency: 4
+  logLevel: info
+
+  probes:
+    initialDelay: 120
+    timeout: 60
+    failureThreshold: 3
+    period: 60
+
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+beat:
+  enabled: true
+  logLevel: info
+
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "256Mi"
+    limits:
+      cpu: "300m"
+      memory: "512Mi"
+
+initContainers:
+  waitImage: busybox:1.36
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+# Runs `superset db upgrade`, `superset init` and creates the admin user.
+# Re-runs on every sync; all three steps are idempotent.
+initJob:
+  enabled: true
+  ttl: 86400
+  adminUsername: admin
+  adminEmail: devops@egovernments.org
+  loadExamples: false
+  resources:
+    requests:
+      cpu: "300m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# Rendered by the shared common.ingress template:
+# host = global.domain, path = /{{ ingress.context }}, TLS = <domain>-tls-certs.
+httpPort: 8080
+ingress:
+  enabled: true
+  context: analytics
+  servicePort: 8080
+  waf:
+    enabled: false
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"

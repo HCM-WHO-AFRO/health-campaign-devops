@@ -1,0 +1,75 @@
+{{- include "superset.init" . -}}
+{{- if .Values.worker.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}-worker
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.labels.group }}
+    component: worker
+spec:
+  replicas: {{ .Values.worker.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      component: worker
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-superset.yaml") . | sha256sum }}
+      labels:
+        app: {{ .Values.name }}
+        group: {{ .Values.labels.group }}
+        component: worker
+    spec:
+      initContainers:
+        {{- include "superset.installDrivers" . | nindent 8 }}
+      containers:
+        - name: worker
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secrets.name }}
+          env:
+            - name: SUPERSET_ENV
+              value: "production"
+          volumeMounts:
+            - name: superset-config
+              mountPath: /app/pythonpath
+              readOnly: true
+            - name: python-packages
+              mountPath: /python-packages
+              readOnly: true
+          command:
+            - /bin/sh
+            - -c
+            - |
+              {{ include "superset.pythonPath" . }}
+              exec celery --app=superset.tasks.celery_app:app worker \
+                --pool={{ .Values.worker.poolType }} \
+                --concurrency={{ .Values.worker.concurrency }} \
+                --loglevel={{ .Values.worker.logLevel }}
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - |
+                  {{ include "superset.pythonPath" . }}
+                  celery -A superset.tasks.celery_app:app inspect ping -d celery@$HOSTNAME
+            initialDelaySeconds: {{ .Values.worker.probes.initialDelay }}
+            timeoutSeconds: {{ .Values.worker.probes.timeout }}
+            failureThreshold: {{ .Values.worker.probes.failureThreshold }}
+            periodSeconds: {{ .Values.worker.probes.period }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+      volumes:
+        - name: superset-config
+          configMap:
+            name: {{ .Values.name }}-config
+        - name: python-packages
+          emptyDir: {}
+{{- end }}

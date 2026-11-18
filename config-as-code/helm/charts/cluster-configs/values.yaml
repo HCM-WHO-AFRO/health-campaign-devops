@@ -162,3 +162,23 @@ cluster-configs:
     sso:
       namespace: egov
       name: sso
+
+    # Non-sensitive halves of the Superset connection strings; the passwords,
+    # SECRET_KEY and admin password come from who-afro-hcm-secrets.yaml.
+    superset:
+      namespace: backbone
+      name: superset
+      db-host: ""
+      db-port: "5432"
+      db-name: superset
+      db-user: superset
+      redis-host: redis.backbone.svc.cluster.local
+      redis-port: "6379"
+      clickhouse-host: clickhouse.backbone.svc.cluster.local
+      clickhouse-port: "8123"
+      clickhouse-db: analytics
+      clickhouse-user: superset
+
+    clickhouse:
+      namespace: backbone
+      name: clickhouse

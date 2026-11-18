@@ -1,0 +1,56 @@
+{{- include "clickhouse.init" . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "clickhouse.name" . }}
+  namespace: {{ .Values.namespace }}
+  {{- if .Values.server.prometheus.enabled }}
+  annotations:
+    prometheus.io/path: {{ .Values.server.prometheus.endpoint | quote }}
+    prometheus.io/port: {{ .Values.metricsPort | quote }}
+    prometheus.io/scrape: "true"
+  {{- end }}
+  labels:
+    {{- include "clickhouse.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "clickhouse.labels" . | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.httpPort }}
+      targetPort: http
+      protocol: TCP
+    - name: native
+      port: {{ .Values.nativePort }}
+      targetPort: native
+      protocol: TCP
+    {{- if .Values.server.prometheus.enabled }}
+    - name: metrics
+      port: {{ .Values.metricsPort }}
+      targetPort: metrics
+      protocol: TCP
+    {{- end }}
+---
+# Stable per-pod DNS for the StatefulSet.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "clickhouse.name" . }}-headless
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clickhouse.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    {{- include "clickhouse.labels" . | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.httpPort }}
+      targetPort: http
+      protocol: TCP
+    - name: native
+      port: {{ .Values.nativePort }}
+      targetPort: native
+      protocol: TCP

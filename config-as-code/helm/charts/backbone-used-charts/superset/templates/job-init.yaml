@@ -1,0 +1,85 @@
+{{- include "superset.init" . -}}
+{{- if .Values.initJob.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.name }}-init-db
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.labels.group }}
+    component: init
+  annotations:
+    # A Job spec is immutable, so run it as a sync hook and let ArgoCD replace it
+    # on every sync instead of trying to patch it in place.
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: {{ .Values.initJob.ttl }}
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+        component: init
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        {{- include "superset.installDrivers" . | nindent 8 }}
+      containers:
+        - name: init-db
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secrets.name }}
+          volumeMounts:
+            - name: superset-config
+              mountPath: /app/pythonpath
+              readOnly: true
+            - name: python-packages
+              mountPath: /python-packages
+              readOnly: true
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              {{ include "superset.pythonPath" . }}
+
+              echo "Running metadata database migrations..."
+              superset db upgrade
+
+              echo "Initializing roles and permissions..."
+              superset init
+
+              echo "Creating admin user (no-op if it already exists)..."
+              superset fab create-admin \
+                --username {{ .Values.initJob.adminUsername }} \
+                --firstname Admin \
+                --lastname User \
+                --email {{ .Values.initJob.adminEmail }} \
+                --password "${ADMIN_PASSWORD}"
+              {{- if .Values.clickhouseDatabase.register }}
+
+              echo "Registering the ClickHouse database connection..."
+              superset set-database-uri \
+                -d "{{ .Values.clickhouseDatabase.name }}" \
+                -u "${CLICKHOUSE_SQLALCHEMY_URI}"
+              {{- end }}
+              {{- if .Values.initJob.loadExamples }}
+
+              echo "Loading example dashboards..."
+              superset load-examples
+              {{- end }}
+
+              echo "Initialization complete."
+          resources:
+            {{- toYaml .Values.initJob.resources | nindent 12 }}
+      volumes:
+        - name: superset-config
+          configMap:
+            name: {{ .Values.name }}-config
+        - name: python-packages
+          emptyDir: {}
+{{- end }}

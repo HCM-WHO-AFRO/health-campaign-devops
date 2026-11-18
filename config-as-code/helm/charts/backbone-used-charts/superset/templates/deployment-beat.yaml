@@ -1,0 +1,63 @@
+{{- include "superset.init" . -}}
+{{- if .Values.beat.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}-beat
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.labels.group }}
+    component: beat
+spec:
+  # The celery scheduler must be a singleton, otherwise reports fire twice.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      component: beat
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-superset.yaml") . | sha256sum }}
+      labels:
+        app: {{ .Values.name }}
+        group: {{ .Values.labels.group }}
+        component: beat
+    spec:
+      initContainers:
+        {{- include "superset.installDrivers" . | nindent 8 }}
+      containers:
+        - name: beat
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secrets.name }}
+          env:
+            - name: SUPERSET_ENV
+              value: "production"
+          volumeMounts:
+            - name: superset-config
+              mountPath: /app/pythonpath
+              readOnly: true
+            - name: python-packages
+              mountPath: /python-packages
+              readOnly: true
+          command:
+            - /bin/sh
+            - -c
+            - |
+              {{ include "superset.pythonPath" . }}
+              exec celery --app=superset.tasks.celery_app:app beat \
+                --loglevel={{ .Values.beat.logLevel }} \
+                --schedule /tmp/celerybeat-schedule
+          resources:
+            {{- toYaml .Values.beat.resources | nindent 12 }}
+      volumes:
+        - name: superset-config
+          configMap:
+            name: {{ .Values.name }}-config
+        - name: python-packages
+          emptyDir: {}
+{{- end }}

@@ -1,0 +1,62 @@
+{{- include "clickhouse.init" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "clickhouse.name" . }}-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clickhouse.labels" . | nindent 4 }}
+data:
+  # Dropped into /etc/clickhouse-server/config.d — merged over the image defaults.
+  server.xml: |
+    <clickhouse>
+      <listen_host>0.0.0.0</listen_host>
+      <max_connections>{{ .Values.server.maxConnections }}</max_connections>
+      <max_concurrent_queries>{{ .Values.server.maxConcurrentQueries }}</max_concurrent_queries>
+      <keep_alive_timeout>{{ .Values.server.keepAliveTimeout }}</keep_alive_timeout>
+      <max_server_memory_usage_to_ram_ratio>{{ .Values.server.maxServerMemoryUsageToRamRatio }}</max_server_memory_usage_to_ram_ratio>
+      {{- if .Values.server.prometheus.enabled }}
+      <prometheus>
+        <endpoint>{{ .Values.server.prometheus.endpoint }}</endpoint>
+        <port>{{ .Values.metricsPort }}</port>
+        <metrics>true</metrics>
+        <events>true</events>
+        <asynchronous_metrics>true</asynchronous_metrics>
+      </prometheus>
+      {{- end }}
+    </clickhouse>
+
+  # Dropped into /etc/clickhouse-server/users.d. Passwords are read from the
+  # container environment so they never land in the ConfigMap.
+  users.xml: |
+    <clickhouse>
+      <users>
+        <default>
+          <password from_env="CLICKHOUSE_ADMIN_PASSWORD"/>
+          <networks><ip>::/0</ip></networks>
+          <profile>default</profile>
+          <quota>default</quota>
+          <access_management>1</access_management>
+          <named_collection_control>1</named_collection_control>
+        </default>
+        <{{ .Values.supersetUser.name }}>
+          <password from_env="CLICKHOUSE_SUPERSET_PASSWORD"/>
+          <networks><ip>::/0</ip></networks>
+          <profile>bi_readonly</profile>
+          <quota>default</quota>
+        </{{ .Values.supersetUser.name }}>
+      </users>
+      <profiles>
+        <bi_readonly>
+          <readonly>{{ .Values.supersetUser.readonly }}</readonly>
+          <max_execution_time>{{ .Values.supersetUser.maxExecutionTime }}</max_execution_time>
+          <max_result_rows>{{ .Values.supersetUser.maxResultRows }}</max_result_rows>
+          <max_memory_usage>{{ .Values.supersetUser.maxMemoryUsage }}</max_memory_usage>
+          <result_overflow_mode>break</result_overflow_mode>
+        </bi_readonly>
+      </profiles>
+    </clickhouse>
+
+  # Executed by the image entrypoint on first start only (empty data directory).
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS {{ .Values.database }};

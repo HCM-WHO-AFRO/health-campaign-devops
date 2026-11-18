@@ -1,0 +1,102 @@
+{{- include "superset.init" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.name }}
+data:
+  superset_config.py: |
+    import os
+    from celery.schedules import crontab
+
+    # Serve the app under /analytics rather than at the domain root.
+    APPLICATION_ROOT = "{{ .Values.contextPath }}"
+    STATIC_ASSETS_PREFIX = "{{ .Values.contextPath }}"
+
+    # Trust the X-Forwarded-* headers set by ingress-nginx and the sidecar.
+    ENABLE_PROXY_FIX = True
+    PROXY_FIX_CONFIG = {
+        "x_for": 1,
+        "x_proto": 1,
+        "x_host": 1,
+        "x_port": 1,
+        "x_prefix": 1
+    }
+
+    # Metadata database (Azure PostgreSQL), injected from the superset secret.
+    SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
+
+    # Redis — shared backbone instance; DBs {{ .Values.redis.celeryDb }} and {{ .Values.redis.resultsDb }} are reserved for Superset.
+    REDIS_HOST = "{{ .Values.redis.host }}"
+    REDIS_PORT = "{{ .Values.redis.port }}"
+    REDIS_CELERY_DB = "{{ .Values.redis.celeryDb }}"
+    REDIS_RESULTS_DB = "{{ .Values.redis.resultsDb }}"
+
+    CACHE_CONFIG = {
+        'CACHE_TYPE': 'RedisCache',
+        'CACHE_DEFAULT_TIMEOUT': {{ .Values.cache.timeout }},
+        'CACHE_KEY_PREFIX': '{{ .Values.cache.keyPrefix }}',
+        'CACHE_REDIS_HOST': REDIS_HOST,
+        'CACHE_REDIS_PORT': REDIS_PORT,
+        'CACHE_REDIS_DB': REDIS_RESULTS_DB,
+    }
+    DATA_CACHE_CONFIG = CACHE_CONFIG
+    THUMBNAIL_CACHE_CONFIG = CACHE_CONFIG
+
+    class CeleryConfig:
+        broker_url = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_CELERY_DB}"
+        imports = (
+            "superset.sql_lab",
+            "superset.tasks.scheduler",
+            "superset.tasks.thumbnails",
+            "superset.tasks.cache",
+        )
+        result_backend = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_RESULTS_DB}"
+        worker_prefetch_multiplier = 1
+        task_acks_late = False
+        beat_schedule = {
+            "reports.scheduler": {
+                "task": "reports.scheduler",
+                "schedule": crontab(minute="*", hour="*"),
+            },
+            "reports.prune_log": {
+                "task": "reports.prune_log",
+                "schedule": crontab(minute=10, hour=0),
+            },
+        }
+
+    CELERY_CONFIG = CeleryConfig
+
+    FEATURE_FLAGS = {
+        "ALERT_REPORTS": {{ if .Values.features.alertReports }}True{{ else }}False{{ end }},
+        "DASHBOARD_RBAC": {{ if .Values.features.dashboardRbac }}True{{ else }}False{{ end }},
+        "DASHBOARD_CROSS_FILTERS": {{ if .Values.features.crossFilters }}True{{ else }}False{{ end }},
+        "ENABLE_TEMPLATE_PROCESSING": {{ if .Values.features.templateProcessing }}True{{ else }}False{{ end }},
+        "DRILL_TO_DETAIL": {{ if .Values.features.drillToDetail }}True{{ else }}False{{ end }},
+        "DRILL_BY": {{ if .Values.features.drillBy }}True{{ else }}False{{ end }},
+    }
+
+    SECRET_KEY = os.environ["SECRET_KEY"]
+    WTF_CSRF_ENABLED = True
+    WTF_CSRF_TIME_LIMIT = None
+
+    APP_NAME = "{{ .Values.branding.appName }}"
+    APP_ICON = "{{ .Values.branding.appIcon }}"
+    APP_ICON_WIDTH = {{ .Values.branding.iconWidth }}
+    FAVICONS = [{"href": "{{ .Values.branding.favicon }}"}]
+
+    THEME_OVERRIDES = {
+        "colors": {
+            "primary": {
+                "base": "{{ .Values.branding.primaryColor }}",
+            },
+        },
+    }
+
+    PERMANENT_SESSION_LIFETIME = {{ .Values.session.lifetime }}
+
+    SQL_MAX_ROW = {{ .Values.query.maxRows }}
+    SQLLAB_ASYNC_TIME_LIMIT_SEC = {{ .Values.query.asyncTimeLimit }}
+    SUPERSET_WEBSERVER_TIMEOUT = {{ .Values.query.webserverTimeout }}
