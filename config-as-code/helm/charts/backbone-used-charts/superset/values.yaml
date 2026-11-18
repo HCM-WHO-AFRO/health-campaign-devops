@@ -206,18 +206,59 @@ ingress:
   # Verified unclaimed by anything else on this domain; all are
   # Superset-specific names except /api, which is the one to watch if another
   # service ever wants it.
+  # Taken from `flask routes` in the running app, not guessed: every top-level
+  # prefix Superset serves, minus the ones below. Deliberately excluded:
+  # /health, /healthcheck and /ping, whose names are too generic to claim on a
+  # shared platform domain and which nothing needs here (the kubelet probes the
+  # container directly); and bare /static, narrowed to /static/assets, the only
+  # part the frontend requests unprefixed.
+  #
+  # Several of these — /login, /logout, /users, /roles, /dashboard, /chart —
+  # are generic enough to collide with a future service on this domain. None
+  # are claimed today; checked against all 115 paths on the host.
   rootPaths:
     enabled: true
     paths:
       - /static/assets
+      - /alert
+      - /annotationlayer
       - /api
-      - /superset
-      - /sqllab
-      - /explore
+      - /back
+      - /chart
+      - /csstemplateasyncmodelview
+      - /csstemplatemodelview
+      - /dashboard
+      - /dashboardasync
+      - /databaseview
+      - /dataset
       - /datasource
+      - /dynamic-plugins
+      - /embedded
+      - /explore
+      - /kv
+      - /lang
+      - /login
+      - /logmodelview
+      - /logout
+      - /report
+      - /resetmypassword
+      - /resetpassword
+      - /roles
+      - /rowlevelsecurity
+      - /savedqueryview
+      - /savedqueryviewapi
+      - /sliceasync
+      - /sqllab
+      - /sqlmetricinlineview
+      - /superset
+      - /swagger
+      - /tablecolumninlineview
+      - /tablemodelview
       - /tableschemaview
       - /tabstateview
-      - /kv
+      - /tagview
+      - /userinfoeditview
+      - /users
   waf:
     enabled: false
   annotations:
