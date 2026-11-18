@@ -18,7 +18,7 @@ labels:
 # Container Configs
 image:
   repository: "apache/superset"
-  tag: "4.1.4"
+  tag: "6.1.0"
   pullPolicy: IfNotPresent
 
 # Python drivers the stock image does not ship. Installed into a shared
@@ -26,7 +26,8 @@ image:
 # unmodified. Requires egress to PyPI from the cluster.
 drivers:
   - psycopg2-binary==2.9.9
-  - clickhouse-connect==0.8.15
+  # Superset 6.1 requires >=0.13.0,<1.0 (pyproject extras); 0.8.x no longer satisfies it.
+  - clickhouse-connect==0.15.1
 
 # Secret created by cluster-configs. Mounted wholesale via envFrom, so every key
 # in it becomes an environment variable: SQLALCHEMY_DATABASE_URI, SECRET_KEY,
@@ -213,52 +214,58 @@ ingress:
   # container directly); and bare /static, narrowed to /static/assets, the only
   # part the frontend requests unprefixed.
   #
-  # Several of these — /login, /logout, /users, /roles, /dashboard, /chart —
-  # are generic enough to collide with a future service on this domain. None
-  # are claimed today; checked against all 115 paths on the host.
+  # Several of these — /login, /logout, /users, /roles, /dashboard, /chart,
+  # /register, /version, /redirect — are generic enough to collide with a
+  # future service on this domain. None are claimed today; checked against all
+  # 115 paths on the host. Re-run the enumeration after any Superset upgrade:
+  # 6.1 added /theme, /tasks, /groups and /extensions and dropped /kv,
+  # /sliceasync and /dashboardasync, so a stale list silently 503s.
   rootPaths:
     enabled: true
     paths:
       - /static/assets
+      - /actionlog
       - /alert
       - /annotationlayer
       - /api
       - /back
       - /chart
-      - /csstemplateasyncmodelview
       - /csstemplatemodelview
       - /dashboard
-      - /dashboardasync
       - /databaseview
       - /dataset
       - /datasource
       - /dynamic-plugins
       - /embedded
       - /explore
-      - /kv
+      - /extensions
+      - /groups
       - /lang
+      - /list_groups
       - /login
-      - /logmodelview
       - /logout
+      - /redirect
+      - /register
+      - /registrations
       - /report
       - /resetmypassword
       - /resetpassword
       - /roles
       - /rowlevelsecurity
       - /savedqueryview
-      - /savedqueryviewapi
-      - /sliceasync
       - /sqllab
-      - /sqlmetricinlineview
       - /superset
       - /swagger
-      - /tablecolumninlineview
       - /tablemodelview
       - /tableschemaview
       - /tabstateview
       - /tagview
+      - /tasks
+      - /theme
+      - /user_info
       - /userinfoeditview
       - /users
+      - /version
   waf:
     enabled: false
   annotations:

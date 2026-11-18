@@ -105,13 +105,11 @@ data:
     APP_ICON_WIDTH = {{ .Values.branding.iconWidth }}
     FAVICONS = [{"href": "{{ .Values.branding.favicon }}"}]
 
-    THEME_OVERRIDES = {
-        "colors": {
-            "primary": {
-                "base": "{{ .Values.branding.primaryColor }}",
-            },
-        },
-    }
+    # Superset 6 replaced THEME_OVERRIDES with THEME_DEFAULT / THEME_DARK and a
+    # different token schema. Leaving the stock theme in place rather than
+    # guessing at it: a malformed theme breaks startup, and branding still comes
+    # through APP_NAME / APP_ICON / FAVICONS above. branding.primaryColor is
+    # kept in values.yaml for when the new schema is confirmed.
 
     PERMANENT_SESSION_LIFETIME = {{ .Values.session.lifetime }}
 
