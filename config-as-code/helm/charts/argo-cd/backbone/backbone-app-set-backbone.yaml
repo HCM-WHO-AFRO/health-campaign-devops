@@ -39,6 +39,19 @@ spec:
           jsonPointers:
             - /spec/replicas
 
+        # The API server stamps apiVersion, kind, creationTimestamp and status
+        # onto every volumeClaimTemplate, which no chart emits, so a StatefulSet
+        # is reported OutOfSync forever and selfHeal re-applies it on every
+        # reconcile. Scoped to those injected fields, so a real storage change
+        # is still flagged.
+        - group: apps
+          kind: StatefulSet
+          jqPathExpressions:
+            - '.spec.volumeClaimTemplates[]?.apiVersion'
+            - '.spec.volumeClaimTemplates[]?.kind'
+            - '.spec.volumeClaimTemplates[]?.metadata.creationTimestamp'
+            - '.spec.volumeClaimTemplates[]?.status'
+
       syncPolicy:
         automated:
           prune: false
