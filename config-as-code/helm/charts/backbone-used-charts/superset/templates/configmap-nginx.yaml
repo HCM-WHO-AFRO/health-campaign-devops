@@ -57,6 +57,12 @@ data:
             server_name _;
             client_max_body_size {{ .Values.web.nginx.clientMaxBodySize }};
 
+            # Emit relative Location headers. Otherwise nginx builds them from
+            # its own listen port and the browser is sent to
+            # https://<domain>:8080/analytics/, which is not reachable.
+            absolute_redirect off;
+            port_in_redirect off;
+
             # Probe target — kubelet has no /analytics prefix to send.
             location = /health {
                 proxy_pass http://superset_app/health;
