@@ -12,7 +12,13 @@ metadata:
   annotations:
     # A Job spec is immutable, so run it as a sync hook and let ArgoCD replace it
     # on every sync instead of trying to patch it in place.
-    argocd.argoproj.io/hook: PreSync
+    #
+    # Sync rather than PreSync: the job mounts {{ .Values.name }}-config, and a
+    # PreSync hook runs before that ConfigMap exists, so the pod never starts.
+    # Wave 1 puts it after the ConfigMap (wave 0) and before the deployments
+    # (wave 2), so migrations finish before any app pod rolls.
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
   ttlSecondsAfterFinished: {{ .Values.initJob.ttl }}

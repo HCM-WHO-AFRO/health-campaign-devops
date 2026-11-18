@@ -9,6 +9,9 @@ metadata:
     app: {{ .Values.name }}
     group: {{ .Values.labels.group }}
     component: web
+  annotations:
+    # Roll only after the wave-1 migration hook has completed.
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.web.replicas }}
   selector:
