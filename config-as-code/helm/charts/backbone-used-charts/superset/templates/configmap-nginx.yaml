@@ -85,14 +85,21 @@ data:
 
             # Paths Superset's frontend addresses from the domain root rather
             # than through the /analytics prefix. The companion Ingress routes
-            # them to this pod; these pass them straight through unprefixed,
-            # which is where Superset actually serves them. No
-            # X-Forwarded-Prefix here: these really are root paths.
+            # them to this pod; these pass the URI through untouched, which is
+            # where Superset actually serves them.
+            #
+            # X-Forwarded-Prefix is still set. ProxyFix only strips the prefix
+            # from PATH_INFO when it is actually there, so routing is
+            # unaffected, but SCRIPT_NAME gets set and url_for() keeps
+            # generating /analytics links. Without it a login posted to the
+            # root /login/ redirects to "/", which the catch-all root ingress
+            # sends to /workbench-ui.
             {{- range .Values.ingress.rootPaths.paths }}
             # No trailing slash and no URI on proxy_pass: the request URI goes
             # upstream untouched, so both /sqllab and /sqllab/... match.
             location {{ . }} {
                 proxy_pass http://superset_app;
+                proxy_set_header X-Forwarded-Prefix {{ $.Values.contextPath }};
                 proxy_set_header Host $http_host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
