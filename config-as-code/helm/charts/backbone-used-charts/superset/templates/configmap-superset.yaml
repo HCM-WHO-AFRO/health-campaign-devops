@@ -91,10 +91,13 @@ data:
     WTF_CSRF_TIME_LIMIT = None
 
     APP_NAME = "{{ .Values.branding.appName }}"
-    # Raw <img src> values, so the context path has to be prepended here too.
+    # navbar.html renders appbuilder.app_icon verbatim, so this one needs the
+    # context path. FAVICONS does not: basic.html already prepends
+    # assets_prefix to favicon.href, and prefixing here too yields
+    # /analytics/analytics/static/...
     APP_ICON = "{{ .Values.contextPath }}{{ .Values.branding.appIcon }}"
     APP_ICON_WIDTH = {{ .Values.branding.iconWidth }}
-    FAVICONS = [{"href": "{{ .Values.contextPath }}{{ .Values.branding.favicon }}"}]
+    FAVICONS = [{"href": "{{ .Values.branding.favicon }}"}]
 
     THEME_OVERRIDES = {
         "colors": {

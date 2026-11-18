@@ -200,6 +200,11 @@ ingress:
   enabled: true
   context: analytics
   servicePort: 8080
+  # Second Ingress for the unprefixed /static/assets URLs Superset's webpack
+  # bundles are served at. Nothing else on this domain claims the path.
+  staticAssets:
+    enabled: true
+    path: /static/assets
   waf:
     enabled: false
   annotations:

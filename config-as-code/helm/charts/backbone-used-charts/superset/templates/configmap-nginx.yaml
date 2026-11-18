@@ -83,6 +83,19 @@ data:
                 return 302 {{ .Values.contextPath }}/superset/welcome/;
             }
 
+            # Superset 4.1 renders its webpack bundles straight from the
+            # manifest (asset_bundle.html emits {{ "{{ entry }}" }} with no
+            # assets_prefix), so they are requested at an unprefixed
+            # /static/assets/... that no other app on this domain serves. The
+            # companion Ingress routes that path here; this serves it.
+            location /static/assets/ {
+                proxy_pass http://superset_app/static/assets/;
+                proxy_set_header Host $http_host;
+                expires 30d;
+                add_header Cache-Control "public, immutable";
+                access_log off;
+            }
+
             # Superset serves at the root: APPLICATION_ROOT does not move Flask's
             # routes, it only sets the cookie path. So nginx strips the prefix
             # (the trailing / on proxy_pass) and tells Superset what it was via
