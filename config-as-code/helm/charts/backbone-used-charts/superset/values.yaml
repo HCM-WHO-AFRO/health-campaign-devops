@@ -64,6 +64,7 @@ features:
 
 branding:
   appName: "AFRO Analytics"
+  # Relative to the Superset app root — contextPath is prepended at render time.
   appIcon: "/static/assets/images/superset-logo-horiz.png"
   iconWidth: 126
   favicon: "/static/assets/images/favicon.png"
