@@ -83,18 +83,32 @@ data:
                 return 302 {{ .Values.contextPath }}/superset/welcome/;
             }
 
-            # Superset 4.1 renders its webpack bundles straight from the
-            # manifest (asset_bundle.html emits {{ "{{ entry }}" }} with no
-            # assets_prefix), so they are requested at an unprefixed
-            # /static/assets/... that no other app on this domain serves. The
-            # companion Ingress routes that path here; this serves it.
-            location /static/assets/ {
-                proxy_pass http://superset_app/static/assets/;
+            # Paths Superset's frontend addresses from the domain root rather
+            # than through the /analytics prefix. The companion Ingress routes
+            # them to this pod; these pass them straight through unprefixed,
+            # which is where Superset actually serves them. No
+            # X-Forwarded-Prefix here: these really are root paths.
+            {{- range .Values.ingress.rootPaths.paths }}
+            # No trailing slash and no URI on proxy_pass: the request URI goes
+            # upstream untouched, so both /sqllab and /sqllab/... match.
+            location {{ . }} {
+                proxy_pass http://superset_app;
                 proxy_set_header Host $http_host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_http_version 1.1;
+                proxy_connect_timeout {{ $.Values.web.nginx.proxyTimeout }};
+                proxy_read_timeout {{ $.Values.web.nginx.proxyTimeout }};
+                proxy_send_timeout {{ $.Values.web.nginx.proxyTimeout }};
+                proxy_buffering off;
+              {{- if eq . "/static/assets" }}
                 expires 30d;
                 add_header Cache-Control "public, immutable";
                 access_log off;
+              {{- end }}
             }
+            {{- end }}
 
             # Superset serves at the root: APPLICATION_ROOT does not move Flask's
             # routes, it only sets the cookie path. So nginx strips the prefix

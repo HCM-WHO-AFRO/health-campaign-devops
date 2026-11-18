@@ -1,0 +1,39 @@
+{{- include "superset.init" . -}}
+{{- if and .Values.ingress.enabled .Values.ingress.rootPaths.enabled }}
+# Superset's React frontend has no sub-path support: the bundles address
+# /api/v1/..., /superset/..., /explore and friends absolutely from the domain
+# root, and the bootstrap payload carries no base-URL setting to change that.
+# Serving the app under /analytics therefore only gets the Jinja-rendered
+# chrome; every data fetch misses unless these paths are routed here too.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.name }}-rootpaths
+  namespace: {{ .Values.namespace }}
+  annotations:
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.labels.group }}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.global.domain }}
+      http:
+        paths:
+          {{- range .Values.ingress.rootPaths.paths }}
+          - path: {{ . }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $.Values.name }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+  tls:
+    - secretName: {{ .Values.global.domain }}-tls-certs
+      hosts:
+        - {{ .Values.global.domain }}
+{{- end }}

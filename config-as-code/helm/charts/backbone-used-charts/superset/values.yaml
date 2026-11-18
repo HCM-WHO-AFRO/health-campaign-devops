@@ -200,11 +200,24 @@ ingress:
   enabled: true
   context: analytics
   servicePort: 8080
-  # Second Ingress for the unprefixed /static/assets URLs Superset's webpack
-  # bundles are served at. Nothing else on this domain claims the path.
-  staticAssets:
+  # Superset's React bundles address these paths absolutely from the domain
+  # root — the frontend has no sub-path support, so SCRIPT_NAME never reaches
+  # them — and without routing they fall through to the catch-all root ingress.
+  # Verified unclaimed by anything else on this domain; all are
+  # Superset-specific names except /api, which is the one to watch if another
+  # service ever wants it.
+  rootPaths:
     enabled: true
-    path: /static/assets
+    paths:
+      - /static/assets
+      - /api
+      - /superset
+      - /sqllab
+      - /explore
+      - /datasource
+      - /tableschemaview
+      - /tabstateview
+      - /kv
   waf:
     enabled: false
   annotations:

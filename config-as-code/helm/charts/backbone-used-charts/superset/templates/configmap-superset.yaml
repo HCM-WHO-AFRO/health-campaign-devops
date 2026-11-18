@@ -17,6 +17,12 @@ data:
     # SCRIPT_NAME so url_for() keeps the prefix.
     APPLICATION_ROOT = "{{ .Values.contextPath }}"
 
+    # SESSION_COOKIE_PATH defaults to APPLICATION_ROOT, which would scope the
+    # cookie to /analytics. The frontend's API calls go to /api/v1/... at the
+    # domain root, so the browser would not send it and every request would
+    # come back 401.
+    SESSION_COOKIE_PATH = "/"
+
     # Superset's webpack bundles are emitted as raw "/static/assets/..." strings
     # rather than through url_for, so SCRIPT_NAME never reaches them and the
     # whole UI loads unstyled. This is the only thing that prefixes them; it
