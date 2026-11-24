@@ -33,7 +33,14 @@ spec:
             enabled: true
             accessModes:
               - ReadWriteOnce
-            size: 30Gi
+            # Grown from 30Gi after the volume ran out of INODES (not bytes) on
+            # ~2026-10-13 and Loki rejected every push for six weeks. ~1.97M
+            # orphaned files under /data/loki/chunks held all 1,966,080 inodes
+            # while only 74% of the bytes were used. Growing the ext4 filesystem
+            # adds block groups and therefore inodes: now 6.55M, 4.59M free.
+            # The orphaned chunks predate the move to object_store: azure and
+            # are still to be cleaned up; see the ticket before shrinking this.
+            size: 100Gi
           # Use the existing secret we created
           existingSecret: loki-config-secret
           # Override the config to not use the default
