@@ -28,6 +28,12 @@ spec:
         prometheus:
           prometheusSpec:
             retention: 90d
+            # Time-based retention alone does not bound disk usage. Without this
+            # the 30Gi volume filled on 2026-06-19 and every scrape commit failed
+            # with "no space left on device" for five months, unnoticed. Keep
+            # retentionSize comfortably under the volume so compaction and the
+            # WAL always have room.
+            retentionSize: 80GiB
             storageSpec:
               volumeClaimTemplate:
                 spec:
@@ -35,7 +41,7 @@ spec:
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
-                      storage: 30Gi
+                      storage: 100Gi
             externalLabels:
               cluster: afrohcm-t-euw
             additionalScrapeConfigs:
