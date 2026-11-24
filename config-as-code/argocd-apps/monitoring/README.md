@@ -10,7 +10,8 @@ This directory contains ArgoCD Application manifests for deploying the monitorin
 2. **prometheus-stack-app.yaml** - Prometheus for metrics collection
 3. **grafana-app.yaml** - Grafana for visualization
 4. **blackbox-exporter-app.yaml** - Blackbox exporter for endpoint monitoring
-5. **monitoring-stack-app.yaml** - Parent app to manage all monitoring apps
+5. **opencost-app.yaml** - OpenCost for per-namespace cost allocation (tenant chargeback)
+6. **monitoring-stack-app.yaml** - Parent app to manage all monitoring apps
 
 ## Migration Steps
 

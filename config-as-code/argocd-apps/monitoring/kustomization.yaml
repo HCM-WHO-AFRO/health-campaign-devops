@@ -7,6 +7,7 @@ resources:
   - prometheus-stack-app.yaml
   - grafana-app.yaml
   - blackbox-exporter-app.yaml
+  - opencost-app.yaml
 
 # Add common labels to all child applications
 commonLabels:

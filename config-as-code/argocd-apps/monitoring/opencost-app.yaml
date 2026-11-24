@@ -1,0 +1,82 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opencost
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: monitoring-stack
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    monitoring-stack/managed: "true"
+    monitoring-stack/do-not-deploy-standalone: "This app is managed by monitoring-stack"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://opencost.github.io/opencost-helm-chart
+    chart: opencost
+    targetRevision: 2.5.34
+    helm:
+      values: |
+        opencost:
+          exporter:
+            defaultClusterId: afrohcm-t-euw
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 1Gi
+
+          # Reuse the existing kube-prometheus-stack rather than the chart's
+          # bundled Prometheus. Every node sits at 84-94% CPU requested with the
+          # autoscaler off, so a second Prometheus would not schedule.
+          prometheus:
+            internal:
+              enabled: true
+              serviceName: kube-prometheus-stack-prometheus
+              namespaceName: monitoring
+              port: 9090
+              scheme: http
+
+          metrics:
+            serviceMonitor:
+              enabled: true
+              additionalLabels:
+                release: kube-prometheus-stack
+
+          # Renders as RESOLUTION_1D_RETENTION. The 15-day default cannot close
+          # a monthly chargeback cycle; 45 covers a month plus reconciliation.
+          retention1d: 45
+
+          # Azure billing export is not wired up yet - the reporting principal
+          # has no Cost Management Reader, so OpenCost falls back to Azure public
+          # list prices. Good enough for allocation shares, not for invoicing.
+          cloudCost:
+            enabled: false
+
+          ui:
+            enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 55Mi
+              limits:
+                memory: 256Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
